@@ -83,19 +83,17 @@
 
 
 
-<meta name="description" content="一、css的优先级类别通常情况下，我们可以按照一下优先级确定某个元素的样式  样式后面加!important的(权重值为Infinity)； 内联样式style添加的样式(权重值为1000)； id选择器添加的样式(权重值为100)； 类选择器、属性选择器、伪类选择器添加的样式(权重值为10)； 标签选择器添加的样式(权重值为1); 通配符选择器,&amp;gt;子选择器，+相邻元素选择器添加的样式(权重">
+<meta name="description" content="一、Object.keys()返回对象自身属性key的数组，不包括原型链上的属性,不包括不可枚举属性123456var obj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;var keys = Object.keys(obj);console.log(keys);// [&quot;name&quot;, &quot;age&quot;] 二、Object.values()返回自身属性v">
 <meta property="og:type" content="article">
-<meta property="og:title" content="css知识快餐(一) 样式优先级">
-<meta property="og:url" content="http://yoursite.com/2018/02/11/css知识快餐-一/index.html">
+<meta property="og:title" content="javascript的Object对象--属性遍历相关(三)">
+<meta property="og:url" content="http://yoursite.com/2018/02/16/javascript的Object对象-三/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="一、css的优先级类别通常情况下，我们可以按照一下优先级确定某个元素的样式  样式后面加!important的(权重值为Infinity)； 内联样式style添加的样式(权重值为1000)； id选择器添加的样式(权重值为100)； 类选择器、属性选择器、伪类选择器添加的样式(权重值为10)； 标签选择器添加的样式(权重值为1); 通配符选择器,&amp;gt;子选择器，+相邻元素选择器添加的样式(权重">
+<meta property="og:description" content="一、Object.keys()返回对象自身属性key的数组，不包括原型链上的属性,不包括不可枚举属性123456var obj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;var keys = Object.keys(obj);console.log(keys);// [&quot;name&quot;, &quot;age&quot;] 二、Object.values()返回自身属性v">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/02/11/css知识快餐-一/css_weight.jpg">
-<meta property="og:updated_time" content="2018-02-11T16:30:29.306Z">
+<meta property="og:updated_time" content="2018-02-16T13:54:06.194Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="css知识快餐(一) 样式优先级">
-<meta name="twitter:description" content="一、css的优先级类别通常情况下，我们可以按照一下优先级确定某个元素的样式  样式后面加!important的(权重值为Infinity)； 内联样式style添加的样式(权重值为1000)； id选择器添加的样式(权重值为100)； 类选择器、属性选择器、伪类选择器添加的样式(权重值为10)； 标签选择器添加的样式(权重值为1); 通配符选择器,&amp;gt;子选择器，+相邻元素选择器添加的样式(权重">
-<meta name="twitter:image" content="http://yoursite.com/2018/02/11/css知识快餐-一/css_weight.jpg">
+<meta name="twitter:title" content="javascript的Object对象--属性遍历相关(三)">
+<meta name="twitter:description" content="一、Object.keys()返回对象自身属性key的数组，不包括原型链上的属性,不包括不可枚举属性123456var obj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;var keys = Object.keys(obj);console.log(keys);// [&quot;name&quot;, &quot;age&quot;] 二、Object.values()返回自身属性v">
 
 
 
@@ -125,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/11/css知识快餐-一/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/16/javascript的Object对象-三/"/>
 
 
 
 
 
-  <title>css知识快餐(一) 样式优先级 | Maserati总裁的博客</title>
+  <title>javascript的Object对象--属性遍历相关(三) | Maserati总裁的博客</title>
   
 
 
@@ -238,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/css知识快餐-一/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-三/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wen qingxin">
@@ -255,7 +253,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">css知识快餐(一) 样式优先级</h2>
+          <h2 class="post-title" itemprop="name headline">javascript的Object对象--属性遍历相关(三)</h2>
         
 
         <div class="post-meta">
@@ -267,8 +265,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-11T20:29:47+08:00">
-                2018-02-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T21:41:49+08:00">
+                2018-02-16
               </time>
             
 
@@ -305,20 +303,10 @@
       
 
       
-        <h2 id="一、css的优先级类别"><a href="#一、css的优先级类别" class="headerlink" title="一、css的优先级类别"></a>一、css的优先级类别</h2><p>通常情况下，我们可以按照一下优先级确定某个元素的样式</p>
-<ol>
-<li>样式后面加!important的(权重值为<font color="red"><strong>Infinity</strong></font>)；</li>
-<li>内联样式style添加的样式(权重值为<font color="red"><strong>1000</strong></font>)；</li>
-<li>id选择器添加的样式(权重值为<font color="red"><strong>100</strong></font>)；</li>
-<li>类选择器、属性选择器、伪类选择器添加的样式(权重值为<font color="red"><strong>10</strong></font>)；</li>
-<li>标签选择器添加的样式(权重值为<font color="red"><strong>1</strong></font>);</li>
-<li>通配符选择器,&gt;子选择器，+相邻元素选择器添加的样式(权重值为<font color="red"><strong>0</strong></font>)；</li>
-</ol>
-<h2 id="二、样式类别的权重"><a href="#二、样式类别的权重" class="headerlink" title="二、样式类别的权重"></a>二、样式类别的权重</h2><p>在实际开发当中，某个元素的某个样式往往是多种上述类别的样式优先级的组合，那这种情况我们又如何确定样式的优先级呢？一般情况下，就是从左到右<font color="red"><strong>计算样式权重的和，权重值大的优先级就高</strong></font>(更准确的做法请看第三点)。<br><img src="/2018/02/11/css知识快餐-一/css_weight.jpg" title="css样式权重"><br>举个栗子：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span><span class="selector-class">.cls-p</span> <span class="selector-tag">p</span><span class="selector-class">.cls-c</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: yellow;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-id">#ide</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"cls-p"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"ide"</span> <span class="attr">class</span>=<span class="string">"cls-c"</span>&gt;</span>我是什么颜色<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>其中，第一个选择器的样式权重值和为 1 + 10 + 1 + 10 = 22；<br>第二个选择器的样式权重值为 1 + 100 = 101；<br>第二个选择器权重值(101)大于第一个选择器权重值(22)，所以颜色就应该是红色。</p>
-<h2 id="三、需要注意的点"><a href="#三、需要注意的点" class="headerlink" title="三、需要注意的点"></a>三、需要注意的点</h2><p>跨权重级别的权重值累加方式<br>    如果同一个元素被两个选择器添加样式是这样：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.class1</span><span class="selector-class">.class2</span><span class="selector-class">.class3</span><span class="selector-class">.class4</span><span class="selector-class">.class5</span><span class="selector-class">.class6</span><span class="selector-class">.class7</span><span class="selector-class">.class8</span><span class="selector-class">.class9</span><span class="selector-class">.class10</span><span class="selector-class">.class11</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: yellow;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#id</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>按上面的计算原则，10 * 11 &gt; 100,我们会得出颜色是yellow的结论，但事实并非这样，实际结果仍然是red。为什么呢？原因就在于：<br>在旧版本的火狐、IE浏览器中<font color="red"><strong>权重值的进制并不是十进制</strong></font>，每一个权重位是由8位来表示，也就是2^8 256进制，那么如果需要往高位进位的话，需要等于256，如果要让类选择器大于id，需要256个10才等于100，也就是说你需要写超过256个class的权重才能超过id。<br>在15年后的浏览器不存在低权重位累加后可以大于高权重位的情况了，也就是说<font color="red"><strong>权重位高的选择器的权重永远大于权重位低的选择器</strong></font>(一个id优先级永远大于n个class)，所以我们在累加权重的时候，需要首先找出权重位最高的选择器累加后先比较，如果能比较出大小，就不用再比较权重位低的了，如果权重位最高的权重值相等，再去比较下一权重位，依此类推。</p>
+        <h2 id="一、Object-keys"><a href="#一、Object-keys" class="headerlink" title="一、Object.keys()"></a>一、Object.keys()</h2><p>返回对象自身属性key的数组，不包括原型链上的属性,不包括不可枚举属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span>,</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> keys = <span class="built_in">Object</span>.keys(obj);</span><br><span class="line"><span class="built_in">console</span>.log(keys);<span class="comment">// ["name", "age"]</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="二、Object-values"><a href="#二、Object-values" class="headerlink" title="二、Object.values()"></a>二、Object.values()</h2><p>返回自身属性value的数组，不包括原型链上的属性,不包括不可枚举属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span>,</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> values = <span class="built_in">Object</span>.values(obj);</span><br><span class="line"><span class="built_in">console</span>.log(values);<span class="comment">// ["xiaoming", 18]</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="二、Object-entries"><a href="#二、Object-entries" class="headerlink" title="二、Object.entries()"></a>二、Object.entries()</h2><p>返回自身属性键值对的二位数组，不包括原型链上的属性,不包括不可枚举属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span>,</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> entries = <span class="built_in">Object</span>.entries(obj);</span><br><span class="line"><span class="built_in">console</span>.log(entries);<span class="comment">// [["name", "xiaoming"], ["age", 18]]</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Object-getOwnPropertyNames"><a href="#Object-getOwnPropertyNames" class="headerlink" title="Object.getOwnPropertyNames()"></a>Object.getOwnPropertyNames()</h2><p>返回对象自身属性名称的数组，跟Object.keys()的区别是这个方法可以返回不可枚举属性名称<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">'name'</span>, &#123;</span><br><span class="line">	value: <span class="string">'xiaoming'</span>,</span><br><span class="line">	enumerable: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> propertyNames = <span class="built_in">Object</span>.getOwnPropertyNames(obj);</span><br><span class="line"><span class="built_in">console</span>.log(propertyNames);<span class="comment">// ["name"]</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -343,14 +331,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/02/16/javascript的Object对象-二/" rel="next" title="javascript的Object对象--配置限制相关(二)">
+                <i class="fa fa-chevron-left"></i> javascript的Object对象--配置限制相关(二)
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/12/区块链小记/" rel="prev" title="区块链小记">
-                区块链小记 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/16/javascript的Object对象-四/" rel="prev" title="javascript的Object对象--常用静态方法(四)">
+                javascript的Object对象--常用静态方法(四) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -465,7 +457,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、css的优先级类别"><span class="nav-number">1.</span> <span class="nav-text">一、css的优先级类别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、样式类别的权重"><span class="nav-number">2.</span> <span class="nav-text">二、样式类别的权重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、需要注意的点"><span class="nav-number">3.</span> <span class="nav-text">三、需要注意的点</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Object-keys"><span class="nav-number">1.</span> <span class="nav-text">一、Object.keys()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Object-values"><span class="nav-number">2.</span> <span class="nav-text">二、Object.values()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Object-entries"><span class="nav-number">3.</span> <span class="nav-text">二、Object.entries()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-getOwnPropertyNames"><span class="nav-number">4.</span> <span class="nav-text">Object.getOwnPropertyNames()</span></a></li></ol></div>
             
 
           </div>
