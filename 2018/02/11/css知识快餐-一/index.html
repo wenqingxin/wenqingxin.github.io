@@ -91,7 +91,7 @@
 <meta property="og:description" content="一、css的优先级类别通常情况下，我们可以按照一下优先级确定某个元素的样式  样式后面加!important的(权重值为Infinity)； 内联样式style添加的样式(权重值为1000)； id选择器添加的样式(权重值为100)； 类选择器、属性选择器、伪类选择器添加的样式(权重值为10)； 标签选择器添加的样式(权重值为1); 通配符选择器,&amp;gt;子选择器，+相邻元素选择器添加的样式(权重">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/02/11/css知识快餐-一/css_weight.jpg">
-<meta property="og:updated_time" content="2018-02-11T16:30:29.306Z">
+<meta property="og:updated_time" content="2018-02-23T06:07:41.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css知识快餐(一) 样式优先级">
 <meta name="twitter:description" content="一、css的优先级类别通常情况下，我们可以按照一下优先级确定某个元素的样式  样式后面加!important的(权重值为Infinity)； 内联样式style添加的样式(权重值为1000)； id选择器添加的样式(权重值为100)； 类选择器、属性选择器、伪类选择器添加的样式(权重值为10)； 标签选择器添加的样式(权重值为1); 通配符选择器,&amp;gt;子选择器，+相邻元素选择器添加的样式(权重">
@@ -312,7 +312,8 @@
 <li>id选择器添加的样式(权重值为<font color="red"><strong>100</strong></font>)；</li>
 <li>类选择器、属性选择器、伪类选择器添加的样式(权重值为<font color="red"><strong>10</strong></font>)；</li>
 <li>标签选择器添加的样式(权重值为<font color="red"><strong>1</strong></font>);</li>
-<li>通配符选择器,&gt;子选择器，+相邻元素选择器添加的样式(权重值为<font color="red"><strong>0</strong></font>)；</li>
+<li>通配符选择器,&gt;子选择器，+相邻元素选择器添加的样式(权重值为<font color="red"><strong>0</strong></font>)；<a id="more"></a>
+</li>
 </ol>
 <h2 id="二、样式类别的权重"><a href="#二、样式类别的权重" class="headerlink" title="二、样式类别的权重"></a>二、样式类别的权重</h2><p>在实际开发当中，某个元素的某个样式往往是多种上述类别的样式优先级的组合，那这种情况我们又如何确定样式的优先级呢？一般情况下，就是从左到右<font color="red"><strong>计算样式权重的和，权重值大的优先级就高</strong></font>(更准确的做法请看第三点)。<br><img src="/2018/02/11/css知识快餐-一/css_weight.jpg" title="css样式权重"><br>举个栗子：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span><span class="selector-class">.cls-p</span> <span class="selector-tag">p</span><span class="selector-class">.cls-c</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: yellow;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-id">#ide</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"cls-p"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"ide"</span> <span class="attr">class</span>=<span class="string">"cls-c"</span>&gt;</span>我是什么颜色<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -428,7 +429,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -465,7 +466,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、css的优先级类别"><span class="nav-number">1.</span> <span class="nav-text">一、css的优先级类别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、样式类别的权重"><span class="nav-number">2.</span> <span class="nav-text">二、样式类别的权重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、需要注意的点"><span class="nav-number">3.</span> <span class="nav-text">三、需要注意的点</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、css的优先级类别"><span class="nav-text">一、css的优先级类别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、样式类别的权重"><span class="nav-text">二、样式类别的权重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、需要注意的点"><span class="nav-text">三、需要注意的点</span></a></li></ol></div>
             
 
           </div>

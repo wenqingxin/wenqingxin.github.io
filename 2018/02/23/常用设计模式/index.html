@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Maserati总裁的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="设计模式是一套反复实践、多数人知晓的、被人们分类出来的设计经验总结，我们使用设计模式是为了代码的复用性，更容易被他人理解，提高代码的可靠性。下面介绍常用的9种设计模式。 一、单例模式一个类方法始终只提供单个实例，节约内存。下面代码只会创建一个实例：1234567891011function Foo() &amp;#123;&amp;#125;Foo.getInstance = function () &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用设计模式">
+<meta property="og:url" content="http://yoursite.com/2018/02/23/常用设计模式/index.html">
+<meta property="og:site_name" content="Maserati总裁的博客">
+<meta property="og:description" content="设计模式是一套反复实践、多数人知晓的、被人们分类出来的设计经验总结，我们使用设计模式是为了代码的复用性，更容易被他人理解，提高代码的可靠性。下面介绍常用的9种设计模式。 一、单例模式一个类方法始终只提供单个实例，节约内存。下面代码只会创建一个实例：1234567891011function Foo() &amp;#123;&amp;#125;Foo.getInstance = function () &amp;#123;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-27T02:08:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常用设计模式">
+<meta name="twitter:description" content="设计模式是一套反复实践、多数人知晓的、被人们分类出来的设计经验总结，我们使用设计模式是为了代码的复用性，更容易被他人理解，提高代码的可靠性。下面介绍常用的9种设计模式。 一、单例模式一个类方法始终只提供单个实例，节约内存。下面代码只会创建一个实例：1234567891011function Foo() &amp;#123;&amp;#125;Foo.getInstance = function () &amp;#123;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/23/常用设计模式/"/>
+
+
+
+
+
+  <title>常用设计模式 | Maserati总裁的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Maserati总裁的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/23/常用设计模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">常用设计模式</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-23T11:14:42+08:00">
+                2018-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>设计模式是一套反复实践、多数人知晓的、被人们分类出来的设计经验总结，我们使用设计模式是为了代码的复用性，更容易被他人理解，提高代码的可靠性。下面介绍常用的9种设计模式。</p>
+<h2 id="一、单例模式"><a href="#一、单例模式" class="headerlink" title="一、单例模式"></a>一、单例模式</h2><p>一个类方法始终只提供单个实例，节约内存。下面代码只会创建一个实例：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">Foo.getInstance = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!Foo._instance) &#123;</span><br><span class="line">        Foo._instance = <span class="keyword">new</span> Foo();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Foo._instance;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> foo1 = Foo.getInstance();</span><br><span class="line"><span class="keyword">var</span> foo2 = Foo.getInstance();</span><br><span class="line"><span class="built_in">console</span>.log(foo1 === foo2);<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="二、工厂模式"><a href="#二、工厂模式" class="headerlink" title="二、工厂模式"></a>二、工厂模式</h2><p>利用共用的接口方法实现不同实例的创建，转移创建实例类的依赖性到工厂类中，统一了实例创建的职责。<br>举个栗子🌰<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"I'm foo"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"I'm bar."</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 工厂类</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Factory</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 工厂方法</span></span><br><span class="line">Factory.prototype.create = <span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (name === <span class="string">'Foo'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Foo();</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (name === <span class="string">'Bar'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Bar();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> factory = <span class="keyword">new</span> Factory();</span><br><span class="line"><span class="keyword">var</span> foo = factory.create(<span class="string">'Foo'</span>);</span><br><span class="line"><span class="keyword">var</span> bar = factory.create(<span class="string">'Bar'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(foo.name);</span><br><span class="line"><span class="built_in">console</span>.log(bar.name);</span><br></pre></td></tr></table></figure></p>
+<h2 id="三、外观模式"><a href="#三、外观模式" class="headerlink" title="三、外观模式"></a>三、外观模式</h2><p>遵守开闭原则，定义一个高层接口，对某些逻辑方法进行包装，使之对外不透明，只提供接口外部需要的方法，方便调用。<br>举个例子<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadData</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'加载数据'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeOldData</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'清除旧数据'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateNewData</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'更新数据到界面'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">showDialog</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'显示弹框'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 显示</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">show</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    loadData();</span><br><span class="line">    removeOldData();</span><br><span class="line">    updateNewData();</span><br><span class="line">    showDialog();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// show方法里封装了上面几个方法，我们从加载数据到弹框显示只需要调用一次show方法。</span></span><br><span class="line">show();</span><br></pre></td></tr></table></figure></p>
+<h2 id="四、适配器模式"><a href="#四、适配器模式" class="headerlink" title="四、适配器模式"></a>四、适配器模式</h2><p>对某些不支持的功能进行适配，在原有的功能加上新的功能逻辑而原有的功能不受影响。<br>举例<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">adapter</span>(<span class="params">cls, method</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> cls.prototype[method];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Page</span>(<span class="params">type</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(type === <span class="string">'mobile'</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.display = adapter(MobilePage,<span class="string">'display'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Page.prototype.display = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'我是PC页面'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MobilePage</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">MobilePage.prototype.display = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'我是mobile页面'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> pcPage = <span class="keyword">new</span> Page();</span><br><span class="line">pcPage.display();<span class="comment">// 我是PC页面</span></span><br><span class="line"><span class="keyword">var</span> mPage = <span class="keyword">new</span> Page(<span class="string">'mobile'</span>);</span><br><span class="line">mPage.display();<span class="comment">// 我是mobile页面</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="五、策略模式"><a href="#五、策略模式" class="headerlink" title="五、策略模式"></a>五、策略模式</h2><p>把操作封装成一个个的策略，在执行某段逻辑时，根据传递参数的不通，执行不通的策略。<br>举例<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">StrategyOne</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">StrategyOne.prototype.do = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'do 策略1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">StrategyTwo</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">StrategyTwo.prototype.do = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'do 策略2'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doStrategy</span>(<span class="params">strategy</span>) </span>&#123;</span><br><span class="line">    strategy &amp;&amp; strategy.do();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> strategyOne = <span class="keyword">new</span> StrategyOne();</span><br><span class="line"><span class="keyword">var</span> strategyTwo = <span class="keyword">new</span> StrategyTwo();</span><br><span class="line">doStrategy(strategyOne);<span class="comment">// do 策略1</span></span><br><span class="line">doStrategy(strategyTwo);<span class="comment">// do 策略2</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="六、观察者模式"><a href="#六、观察者模式" class="headerlink" title="六、观察者模式"></a>六、观察者模式</h2><p>被观察者依赖所有的观察者对象，当发出通知时，所有观察者都能够收到消息。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="comment">// 注册观察者</span></span><br><span class="line">Foo.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">event, fn</span>) </span>&#123;</span><br><span class="line">    Foo.listners = Foo.listners || &#123;&#125;;</span><br><span class="line">    Foo.listners[event] =  Foo.listners[event] || [];</span><br><span class="line">    Foo.listners[event].push(fn);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 被观察者触发事件</span></span><br><span class="line">Foo.prototype.fire = <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!Foo.listners || !Foo.listners[event]) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;Foo.listners[event].length; i++) &#123;</span><br><span class="line">        Foo.listners[event][i]();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();</span><br><span class="line">foo.bind(<span class="string">'say'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'hello!'</span>);</span><br><span class="line">&#125;)</span><br><span class="line">foo.bind(<span class="string">'say'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'hi!'</span>);</span><br><span class="line">&#125;)</span><br><span class="line">foo.fire(<span class="string">'say'</span>);<span class="comment">// hello! hi!</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="七、装饰模式"><a href="#七、装饰模式" class="headerlink" title="七、装饰模式"></a>七、装饰模式</h2><p>对已有的功能，再添加一些新的包装逻辑，以实现功能的拓展。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Money</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.money = num;</span><br><span class="line">&#125;</span><br><span class="line">Money.prototype.get = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.money;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Currency</span>(<span class="params">money</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.cny = <span class="string">"¥"</span> + money;</span><br><span class="line">&#125;</span><br><span class="line">Currency.prototype.get = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.cny;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 给数字加上金钱符号</span></span><br><span class="line"><span class="keyword">var</span> money = <span class="keyword">new</span> Money(<span class="number">110</span>);</span><br><span class="line"><span class="keyword">var</span> cny = <span class="keyword">new</span> Currency(money.get());</span><br><span class="line"><span class="built_in">console</span>.log(cny.get());<span class="comment">// ¥110</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="八、组合模式"><a href="#八、组合模式" class="headerlink" title="八、组合模式"></a>八、组合模式</h2><p>是功能实现模块化的逻辑，将模块组合起来以实现整体的功能。比如说树形结构图。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 二叉树节点</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Node</span>(<span class="params">key,left,right</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.key = key;</span><br><span class="line">    <span class="keyword">this</span>.left = left;</span><br><span class="line">    <span class="keyword">this</span>.right = right;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> leftChild = <span class="keyword">new</span> Node(<span class="number">1</span>, <span class="literal">null</span>, <span class="literal">null</span>);<span class="comment">// 左孩子</span></span><br><span class="line"><span class="keyword">var</span> rightChild = <span class="keyword">new</span> Node(<span class="number">3</span>, <span class="literal">null</span>, <span class="literal">null</span>);<span class="comment">// 右孩子</span></span><br><span class="line"><span class="keyword">var</span> root = <span class="keyword">new</span> Node(<span class="number">2</span>, leftChild, rightChild);<span class="comment">// 组合到根节点</span></span><br><span class="line"><span class="built_in">console</span>.log(root);</span><br></pre></td></tr></table></figure></p>
+<h2 id="九、备忘录模式"><a href="#九、备忘录模式" class="headerlink" title="九、备忘录模式"></a>九、备忘录模式</h2><p>在原有的逻辑中，加入记录状态的方法，将逻辑的状态转移到外部并保存。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 备忘发起者</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Originator</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">this</span>.memento = <span class="keyword">new</span> Memento();</span><br><span class="line">&#125;</span><br><span class="line">Originator.prototype.setState = <span class="function"><span class="keyword">function</span> (<span class="params">state</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.state = state;</span><br><span class="line">&#125;</span><br><span class="line">Originator.prototype.getState = <span class="function"><span class="keyword">function</span> (<span class="params">state</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.state;</span><br><span class="line">&#125;</span><br><span class="line">Originator.prototype.createMemento = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">this</span>.memento.save(<span class="keyword">this</span>.state);</span><br><span class="line">&#125;</span><br><span class="line">Originator.prototype.restoreMemento = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">this</span>.setState(<span class="keyword">this</span>.memento.read());</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 备忘录</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Memento</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.mementoes = [];</span><br><span class="line">&#125;</span><br><span class="line">Memento.prototype.save = <span class="function"><span class="keyword">function</span> (<span class="params">memento</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.mementoes.push(memento);</span><br><span class="line">&#125;</span><br><span class="line">Memento.prototype.read = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.mementoes.pop();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试一下</span></span><br><span class="line"><span class="keyword">var</span> ori = <span class="keyword">new</span> Originator();</span><br><span class="line">ori.setState(<span class="number">1</span>);</span><br><span class="line">ori.createMemento();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'状态改变为：'</span>+ori.getState());</span><br><span class="line"></span><br><span class="line">ori.setState(<span class="number">2</span>);</span><br><span class="line">ori.createMemento();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'状态改变为：'</span>+ori.getState());</span><br><span class="line"></span><br><span class="line">ori.setState(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'状态改变为：'</span>+ori.getState());</span><br><span class="line"></span><br><span class="line">ori.restoreMemento();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'状态恢复为：'</span>+ori.getState());</span><br><span class="line"></span><br><span class="line">ori.restoreMemento();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'状态恢复为：'</span>+ori.getState());</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/17/ES6中的面向对象/" rel="next" title="ES6中的面向对象">
+                <i class="fa fa-chevron-left"></i> ES6中的面向对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">wen qingxin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、单例模式"><span class="nav-text">一、单例模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、工厂模式"><span class="nav-text">二、工厂模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、外观模式"><span class="nav-text">三、外观模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、适配器模式"><span class="nav-text">四、适配器模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、策略模式"><span class="nav-text">五、策略模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、观察者模式"><span class="nav-text">六、观察者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、装饰模式"><span class="nav-text">七、装饰模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、组合模式"><span class="nav-text">八、组合模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#九、备忘录模式"><span class="nav-text">九、备忘录模式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wen qingxin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
