@@ -83,17 +83,19 @@
 
 
 
-<meta name="description" content="DOM事件级别 DOM0标准直接元素的属性或者标签上添加on…Element.onclick = function(){} DOM2标准增加addEventListener方法，并且可以确定是在捕获或冒泡时执行回调Element.addEventListener(‘click’, function(){}, false) DOM3标准在DOM2上增加了一些事件类型，比如键盘事件、鼠标事件之类Ele">
+<meta name="description" content="一、DOM事件级别 DOM0标准直接元素的属性或者标签上添加on…Element.onclick = function(){} DOM2标准增加addEventListener方法，并且可以确定是在捕获或冒泡时执行回调Element.addEventListener(‘click’, function(){}, false) DOM3标准在DOM2上增加了一些事件类型，比如键盘事件、鼠标事件之类E">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DOM事件总结">
 <meta property="og:url" content="http://yoursite.com/2018/03/02/DOM事件总结/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="DOM事件级别 DOM0标准直接元素的属性或者标签上添加on…Element.onclick = function(){} DOM2标准增加addEventListener方法，并且可以确定是在捕获或冒泡时执行回调Element.addEventListener(‘click’, function(){}, false) DOM3标准在DOM2上增加了一些事件类型，比如键盘事件、鼠标事件之类Ele">
+<meta property="og:description" content="一、DOM事件级别 DOM0标准直接元素的属性或者标签上添加on…Element.onclick = function(){} DOM2标准增加addEventListener方法，并且可以确定是在捕获或冒泡时执行回调Element.addEventListener(‘click’, function(){}, false) DOM3标准在DOM2上增加了一些事件类型，比如键盘事件、鼠标事件之类E">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-02T09:39:39.939Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/02/DOM事件总结/事件流.png">
+<meta property="og:updated_time" content="2018-03-02T09:50:35.146Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DOM事件总结">
-<meta name="twitter:description" content="DOM事件级别 DOM0标准直接元素的属性或者标签上添加on…Element.onclick = function(){} DOM2标准增加addEventListener方法，并且可以确定是在捕获或冒泡时执行回调Element.addEventListener(‘click’, function(){}, false) DOM3标准在DOM2上增加了一些事件类型，比如键盘事件、鼠标事件之类Ele">
+<meta name="twitter:description" content="一、DOM事件级别 DOM0标准直接元素的属性或者标签上添加on…Element.onclick = function(){} DOM2标准增加addEventListener方法，并且可以确定是在捕获或冒泡时执行回调Element.addEventListener(‘click’, function(){}, false) DOM3标准在DOM2上增加了一些事件类型，比如键盘事件、鼠标事件之类E">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/02/DOM事件总结/事件流.png">
 
 
 
@@ -303,17 +305,22 @@
       
 
       
-        <h2 id="DOM事件级别"><a href="#DOM事件级别" class="headerlink" title="DOM事件级别"></a>DOM事件级别</h2><ol>
+        <h2 id="一、DOM事件级别"><a href="#一、DOM事件级别" class="headerlink" title="一、DOM事件级别"></a>一、DOM事件级别</h2><ol>
 <li>DOM0标准<br>直接元素的属性或者标签上添加on…<br>Element.onclick = function(){}</li>
 <li>DOM2标准<br>增加addEventListener方法，并且可以确定是在捕获或冒泡时执行回调<br>Element.addEventListener(‘click’, function(){}, false)</li>
 <li>DOM3标准<br>在DOM2上增加了一些事件类型，比如键盘事件、鼠标事件之类<br>Element.addEventListener(‘keyup’, function(){}, false)<br>注：DOM1中没有事件相关的东西，所以没举例出来<a id="more"></a>
-<h2 id="DOM事件模型"><a href="#DOM事件模型" class="headerlink" title="DOM事件模型"></a>DOM事件模型</h2>捕获 从上往下<br>冒泡 从目标元素到上<h2 id="DOM事件流"><a href="#DOM事件流" class="headerlink" title="DOM事件流"></a>DOM事件流</h2>用户与浏览器的交互，当用户触发一个操作时，事件经过的流程。<br>完整的事件流分三个阶段</li>
-<li>捕获</li>
-<li>目标阶段</li>
-<li>冒泡阶段
-<h2 id="event对象的应用"><a href="#event对象的应用" class="headerlink" title="event对象的应用"></a>event对象的应用</h2>event.preventDefault()<br>event.stopPropation()<br>event.stopImmediatePropagation() //除了阻止冒泡外还阻止相同元素相同事件的其他绑定<br>event.currentTarget //当前绑定事件的元素<br>event.target //触发事件的元素<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2>通过Event对象进行创建自定义事件<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> element = <span class="built_in">document</span>.body;</span><br><span class="line"><span class="keyword">var</span> evt = <span class="keyword">new</span> Event(<span class="string">'custom'</span>,&#123;</span><br><span class="line">    bubbles: <span class="literal">true</span>,<span class="comment">// 是否冒泡</span></span><br><span class="line">    cancelable: <span class="literal">true</span><span class="comment">// 是否可取消</span></span><br><span class="line">&#125;);</span><br><span class="line">element.addEventListener(<span class="string">'custom'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'我被触发了'</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(e.bubbles);</span><br><span class="line">    <span class="built_in">console</span>.log(e.cancelable);</span><br><span class="line">&#125;);</span><br><span class="line">element.dispatchEvent(evt);<span class="comment">// 我被触发了</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<h2 id="二、DOM事件模型"><a href="#二、DOM事件模型" class="headerlink" title="二、DOM事件模型"></a>二、DOM事件模型</h2><p>捕获 从上往下<br>冒泡 从目标元素到上</p>
+<h2 id="三、DOM事件流"><a href="#三、DOM事件流" class="headerlink" title="三、DOM事件流"></a>三、DOM事件流</h2><p>用户与浏览器的交互，当用户触发一个操作时，事件经过的流程。<br>完整的事件流分三个阶段</p>
+<ol>
+<li>捕获</li>
+<li>目标阶段</li>
+<li>冒泡阶段<img src="/2018/03/02/DOM事件总结/事件流.png" title="事件流向">
+</li>
+</ol>
+<h2 id="四、event对象的应用"><a href="#四、event对象的应用" class="headerlink" title="四、event对象的应用"></a>四、event对象的应用</h2><p>event.preventDefault()<br>event.stopPropation()<br>event.stopImmediatePropagation() //除了阻止冒泡外还阻止相同元素相同事件的其他绑定<br>event.currentTarget //当前绑定事件的元素<br>event.target //触发事件的元素</p>
+<h2 id="五、自定义事件"><a href="#五、自定义事件" class="headerlink" title="五、自定义事件"></a>五、自定义事件</h2><p>通过Event对象进行创建自定义事件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> element = <span class="built_in">document</span>.body;</span><br><span class="line"><span class="keyword">var</span> evt = <span class="keyword">new</span> Event(<span class="string">'custom'</span>,&#123;</span><br><span class="line">    bubbles: <span class="literal">true</span>,<span class="comment">// 是否冒泡</span></span><br><span class="line">    cancelable: <span class="literal">true</span><span class="comment">// 是否可取消</span></span><br><span class="line">&#125;);</span><br><span class="line">element.addEventListener(<span class="string">'custom'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'我被触发了'</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(e.bubbles);</span><br><span class="line">    <span class="built_in">console</span>.log(e.cancelable);</span><br><span class="line">&#125;);</span><br><span class="line">element.dispatchEvent(evt);<span class="comment">// 我被触发了</span></span><br></pre></td></tr></table></figure></p>
 <p>另外，CustomEvent也可自定义事件，不通的是在创建对象的时候可以多传一个detail字段来传递数据</p>
 
       
@@ -465,7 +472,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM事件级别"><span class="nav-text">DOM事件级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM事件模型"><span class="nav-text">DOM事件模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM事件流"><span class="nav-text">DOM事件流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#event对象的应用"><span class="nav-text">event对象的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义事件"><span class="nav-text">自定义事件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、DOM事件级别"><span class="nav-text">一、DOM事件级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、DOM事件模型"><span class="nav-text">二、DOM事件模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、DOM事件流"><span class="nav-text">三、DOM事件流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、event对象的应用"><span class="nav-text">四、event对象的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、自定义事件"><span class="nav-text">五、自定义事件</span></a></li></ol></div>
             
 
           </div>

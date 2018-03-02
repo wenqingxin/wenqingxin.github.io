@@ -83,17 +83,17 @@
 
 
 
-<meta name="description" content="requestAnimationFrame 是什么requestAnimationFrame是window对象的一个函数，目的是请求浏览器进行重绘，这个函数接收一个回掉函数；回掉函数执行的时机是在页面重绘之前。 与setTimeout或者setInterval动画的区别setTimeout或者setInterval的缺点大多数显示器以及w3c建议的浏览器刷新频率是每秒60次，也就是浏览器每次重绘的">
+<meta name="description" content="一、requestAnimationFrame 是什么requestAnimationFrame是window对象的一个函数，目的是请求浏览器进行重绘，这个函数接收一个回掉函数；回掉函数执行的时机是在页面重绘之前。 二、与setTimeout或者setInterval动画的区别1.setTimeout或者setInterval的缺点大多数显示器以及w3c建议的浏览器刷新频率是每秒60次，也就是浏览">
 <meta property="og:type" content="article">
 <meta property="og:title" content="requestAnimationFrame写动画">
 <meta property="og:url" content="http://yoursite.com/2018/03/02/requestAnimationFrame/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="requestAnimationFrame 是什么requestAnimationFrame是window对象的一个函数，目的是请求浏览器进行重绘，这个函数接收一个回掉函数；回掉函数执行的时机是在页面重绘之前。 与setTimeout或者setInterval动画的区别setTimeout或者setInterval的缺点大多数显示器以及w3c建议的浏览器刷新频率是每秒60次，也就是浏览器每次重绘的">
+<meta property="og:description" content="一、requestAnimationFrame 是什么requestAnimationFrame是window对象的一个函数，目的是请求浏览器进行重绘，这个函数接收一个回掉函数；回掉函数执行的时机是在页面重绘之前。 二、与setTimeout或者setInterval动画的区别1.setTimeout或者setInterval的缺点大多数显示器以及w3c建议的浏览器刷新频率是每秒60次，也就是浏览">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-02T09:39:26.019Z">
+<meta property="og:updated_time" content="2018-03-02T09:51:48.089Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="requestAnimationFrame写动画">
-<meta name="twitter:description" content="requestAnimationFrame 是什么requestAnimationFrame是window对象的一个函数，目的是请求浏览器进行重绘，这个函数接收一个回掉函数；回掉函数执行的时机是在页面重绘之前。 与setTimeout或者setInterval动画的区别setTimeout或者setInterval的缺点大多数显示器以及w3c建议的浏览器刷新频率是每秒60次，也就是浏览器每次重绘的">
+<meta name="twitter:description" content="一、requestAnimationFrame 是什么requestAnimationFrame是window对象的一个函数，目的是请求浏览器进行重绘，这个函数接收一个回掉函数；回掉函数执行的时机是在页面重绘之前。 二、与setTimeout或者setInterval动画的区别1.setTimeout或者setInterval的缺点大多数显示器以及w3c建议的浏览器刷新频率是每秒60次，也就是浏览">
 
 
 
@@ -303,16 +303,9 @@
       
 
       
-        <h2 id="requestAnimationFrame-是什么"><a href="#requestAnimationFrame-是什么" class="headerlink" title="requestAnimationFrame 是什么"></a>requestAnimationFrame 是什么</h2><p>requestAnimationFrame是window对象的一个函数，目的是请求浏览器进行重绘，这个函数接收一个回掉函数；回掉函数执行的时机是在页面重绘之前。</p>
-<h2 id="与setTimeout或者setInterval动画的区别"><a href="#与setTimeout或者setInterval动画的区别" class="headerlink" title="与setTimeout或者setInterval动画的区别"></a>与setTimeout或者setInterval动画的区别</h2><h3 id="setTimeout或者setInterval的缺点"><a href="#setTimeout或者setInterval的缺点" class="headerlink" title="setTimeout或者setInterval的缺点"></a>setTimeout或者setInterval的缺点</h3><p>大多数显示器以及w3c建议的浏览器刷新频率是每秒60次，也就是浏览器每次重绘的间隔时间是 1000ms/6于等于16.67ms。我们在写1. setTimeout动画的时候时间间隔往往就需要讲究了，太长动画不流畅，太短的话由于刷新频率的限制，小于16.67往往会掉帧；</p>
-<ol>
-<li>setTimeout由于js的运行机制，并不是严格按照间隔16.67ms执行一次，setTimeout只是在规定的时间后，将回掉任务加到执行队列里去，需要等主线程的任务以及队列里排在之前的任务执行完毕后才会执行回掉。所以动画肯定不是特别流畅<a id="more"></a>
-<h3 id="requestAnimationFrame的优点"><a href="#requestAnimationFrame的优点" class="headerlink" title="requestAnimationFrame的优点"></a>requestAnimationFrame的优点</h3>requestAnimationFrame就不会存在以上问题了。</li>
-<li>requestAnimationFrame会把每一帧中的所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率</li>
-<li>在隐藏或不可见的元素中，requestAnimationFrame将不会进行重绘或回流，这当然就意味着更少的CPU、GPU和内存使用量</li>
-<li>requestAnimationFrame是由浏览器专门为动画提供的API，在运行时浏览器会自动优化方法的调用，并且如果页面不是激活状态下的话，动画会自动暂停，有效节省了CPU开销<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">move</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	i++;</span><br><span class="line">	<span class="keyword">if</span>(i&gt;=<span class="number">10</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"> 	<span class="built_in">console</span>.log(<span class="string">'move'</span>);</span><br><span class="line">	requestAnimationFrame(move);</span><br><span class="line">&#125;</span><br><span class="line">requestAnimationFrame(move);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+        <h2 id="一、requestAnimationFrame-是什么"><a href="#一、requestAnimationFrame-是什么" class="headerlink" title="一、requestAnimationFrame 是什么"></a>一、requestAnimationFrame 是什么</h2><p>requestAnimationFrame是window对象的一个函数，目的是请求浏览器进行重绘，这个函数接收一个回掉函数；回掉函数执行的时机是在页面重绘之前。</p>
+<h2 id="二、与setTimeout或者setInterval动画的区别"><a href="#二、与setTimeout或者setInterval动画的区别" class="headerlink" title="二、与setTimeout或者setInterval动画的区别"></a>二、与setTimeout或者setInterval动画的区别</h2><h3 id="1-setTimeout或者setInterval的缺点"><a href="#1-setTimeout或者setInterval的缺点" class="headerlink" title="1.setTimeout或者setInterval的缺点"></a>1.setTimeout或者setInterval的缺点</h3><p>大多数显示器以及w3c建议的浏览器刷新频率是每秒60次，也就是浏览器每次重绘的间隔时间是 1000ms/6于等于16.67ms。<br><strong>缺点一</strong>. setTimeout动画的时候时间间隔往往就需要讲究了，太长动画不流畅，太短的话由于刷新频率的限制，小于16.67往往会掉帧,不通的浏览器有可能刷新频率不一样；<br><strong>缺点二</strong>. setTimeout由于js的运行机制，并不是严格按照间隔16.67ms执行一次，setTimeout只是在规定的时间后，将回掉任务加到执行队列里去，需要等主线程的任务以及队列里排在之前的任务执行完毕后才会执行回掉。所以动画肯定不是特别流畅<br><a id="more"></a></p>
+<h3 id="2-requestAnimationFrame的优点"><a href="#2-requestAnimationFrame的优点" class="headerlink" title="2.requestAnimationFrame的优点"></a>2.requestAnimationFrame的优点</h3><p>requestAnimationFrame就不会存在以上问题了。<br><strong>优点一</strong>. requestAnimationFrame会把每一帧中的所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率<br><strong>优点二</strong>. 在隐藏或不可见的元素中，requestAnimationFrame将不会进行重绘或回流，这当然就意味着更少的CPU、GPU和内存使用量<br><strong>优点三</strong>. requestAnimationFrame是由浏览器专门为动画提供的API，在运行时浏览器会自动优化方法的调用，并且如果页面不是激活状态下的话，动画会自动暂停，有效节省了CPU开销<br>举个例子<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">move</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	i++;</span><br><span class="line">	<span class="keyword">if</span>(i&gt;=<span class="number">10</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"> 	<span class="built_in">console</span>.log(<span class="string">'move'</span>);</span><br><span class="line">	requestAnimationFrame(move);</span><br><span class="line">&#125;</span><br><span class="line">requestAnimationFrame(move);</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -459,7 +452,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#requestAnimationFrame-是什么"><span class="nav-text">requestAnimationFrame 是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与setTimeout或者setInterval动画的区别"><span class="nav-text">与setTimeout或者setInterval动画的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setTimeout或者setInterval的缺点"><span class="nav-text">setTimeout或者setInterval的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#requestAnimationFrame的优点"><span class="nav-text">requestAnimationFrame的优点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、requestAnimationFrame-是什么"><span class="nav-text">一、requestAnimationFrame 是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、与setTimeout或者setInterval动画的区别"><span class="nav-text">二、与setTimeout或者setInterval动画的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-setTimeout或者setInterval的缺点"><span class="nav-text">1.setTimeout或者setInterval的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-requestAnimationFrame的优点"><span class="nav-text">2.requestAnimationFrame的优点</span></a></li></ol></li></ol></div>
             
 
           </div>
