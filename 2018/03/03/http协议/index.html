@@ -83,17 +83,17 @@
 
 
 
-<meta name="description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta name="description" content="一、http的主要特点 简单快速可以通过uri快速方式资源 灵活可以通过http获取各种类型的数据 无连接一个请求，就会建立一次连接，服务端响应后，就断开链接 无状态请求没有上下文，一次请求和响应后，下次请求，服务端并不能识别客户端的身份">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript的Object对象--常用静态方法(四)">
-<meta property="og:url" content="http://yoursite.com/2018/02/16/javascript的Object对象-四/index.html">
+<meta property="og:title" content="http协议">
+<meta property="og:url" content="http://yoursite.com/2018/03/03/http协议/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta property="og:description" content="一、http的主要特点 简单快速可以通过uri快速方式资源 灵活可以通过http获取各种类型的数据 无连接一个请求，就会建立一次连接，服务端响应后，就断开链接 无状态请求没有上下文，一次请求和响应后，下次请求，服务端并不能识别客户端的身份">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T06:09:20.597Z">
+<meta property="og:updated_time" content="2018-03-03T06:42:49.167Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript的Object对象--常用静态方法(四)">
-<meta name="twitter:description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta name="twitter:title" content="http协议">
+<meta name="twitter:description" content="一、http的主要特点 简单快速可以通过uri快速方式资源 灵活可以通过http获取各种类型的数据 无连接一个请求，就会建立一次连接，服务端响应后，就断开链接 无状态请求没有上下文，一次请求和响应后，下次请求，服务端并不能识别客户端的身份">
 
 
 
@@ -123,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/16/javascript的Object对象-四/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/03/http协议/"/>
 
 
 
 
 
-  <title>javascript的Object对象--常用静态方法(四) | Maserati总裁的博客</title>
+  <title>http协议 | Maserati总裁的博客</title>
   
 
 
@@ -236,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-四/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/http协议/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wen qingxin">
@@ -253,7 +253,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">javascript的Object对象--常用静态方法(四)</h2>
+          <h2 class="post-title" itemprop="name headline">http协议</h2>
         
 
         <div class="post-meta">
@@ -265,8 +265,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T21:55:52+08:00">
-                2018-02-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T10:10:20+08:00">
+                2018-03-03
               </time>
             
 
@@ -303,34 +303,44 @@
       
 
       
-        <h2 id="一、Object-assign"><a href="#一、Object-assign" class="headerlink" title="一、Object.assign()"></a>一、Object.assign()</h2><p>对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> newObj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span>,</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.assign(obj, newObj);</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;name: "xiaoming", age: 18&#125;</span></span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<h2 id="二、Object-create"><a href="#二、Object-create" class="headerlink" title="二、Object.create()"></a>二、Object.create()</h2><p>指定某个对象作为原型对象后创建一个新对象并返回。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> newObj = <span class="built_in">Object</span>.create(obj);</span><br><span class="line"><span class="built_in">console</span>.log(newObj.__proto__ === obj);<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="三、Object-is"><a href="#三、Object-is" class="headerlink" title="三、Object.is()"></a>三、Object.is()</h2><p>确定两个值是否是相同的值。可以解决+0、-0、NaN比较的问题</p>
-<pre><code class="javascript"><span class="comment">// 本应该不等的，实际却相等</span>
-<span class="built_in">console</span>.log(+<span class="number">0</span> === <span class="number">-0</span>);<span class="comment">// true</span>
-<span class="comment">// 本应该相等的实际却不等</span>
-<span class="built_in">console</span>.log(<span class="literal">NaN</span> === <span class="literal">NaN</span>);<span class="comment">// false</span>
-</code></pre>
-<p>用Object.is()更严谨的判断</p>
-<pre><code class="javascript"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.is(+<span class="number">0</span>, <span class="number">-0</span>));<span class="comment">// false</span>
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.is(<span class="literal">NaN</span>, <span class="literal">NaN</span>));<span class="comment">// true</span>
-</code></pre>
-<h2 id="四、Object-getPrototypeOf"><a href="#四、Object-getPrototypeOf" class="headerlink" title="四、Object.getPrototypeOf()"></a>四、Object.getPrototypeOf()</h2><p>获取对象的原型对象,通过这个来获取对象的原型对象，__proto__作为对象的内部属性，尽量少用，建议是用该方法代替。</p>
-<pre><code class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>{
-}
-<span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(foo) === foo.__proto__);<span class="comment">// true</span>
-</code></pre>
-<h2 id="五、Object-setPrototypeOf"><a href="#五、Object-setPrototypeOf" class="headerlink" title="五、Object.setPrototypeOf()"></a>五、Object.setPrototypeOf()</h2><p>给对象设置原型对象</p>
-<pre><code class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>{
-}
-<span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();
-<span class="keyword">var</span> newProto = {<span class="attr">name</span>: <span class="string">'xiaoming'</span>};
-<span class="built_in">Object</span>.setPrototypeOf(foo, newProto);
-<span class="built_in">console</span>.log(foo.name);<span class="comment">// xiaoming</span>
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(foo) === newProto)<span class="comment">// true</span>
-</code></pre>
+        <h2 id="一、http的主要特点"><a href="#一、http的主要特点" class="headerlink" title="一、http的主要特点"></a>一、http的主要特点</h2><ol>
+<li>简单快速<br>可以通过uri快速方式资源</li>
+<li>灵活<br>可以通过http获取各种类型的数据</li>
+<li>无连接<br>一个请求，就会建立一次连接，服务端响应后，就断开链接</li>
+<li>无状态<br>请求没有上下文，一次请求和响应后，下次请求，服务端并不能识别客户端的身份<a id="more"></a>
+<h2 id="二、http报文的组成"><a href="#二、http报文的组成" class="headerlink" title="二、http报文的组成"></a>二、http报文的组成</h2><h3 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h3></li>
+<li>请求行： 请求方式、请求地址、协议版本</li>
+<li>请求头：host、cookie、connection、user-agent等</li>
+<li>空行：表示请求头结束，请求体开始</li>
+<li>请求体：请求的数据<h3 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h3></li>
+<li>响应行：状态码、协议版本</li>
+<li>响应头：server、date、content-type等</li>
+<li>空行：表示响应头结束，响应体开始</li>
+<li>响应体：相应的数据<br>响应报文</li>
+</ol>
+<h2 id="三、http的方法"><a href="#三、http的方法" class="headerlink" title="三、http的方法"></a>三、http的方法</h2><ol>
+<li>get</li>
+<li>post</li>
+<li>put</li>
+<li>delete</li>
+<li>head</li>
+</ol>
+<h3 id="get、post的区别"><a href="#get、post的区别" class="headerlink" title="get、post的区别"></a>get、post的区别</h3><ol>
+<li>get请求的数据长度有限制，一般是2kb，而post没有限制</li>
+<li>get只能用ascII字符，post没有限制</li>
+<li>get回退是无害的，而post回退会再次提交</li>
+<li>get请求在被记录到浏览器的历史记录中，post请求不会</li>
+<li>get参数在url里，而post参数在request body里</li>
+</ol>
+<h2 id="四、http状态码"><a href="#四、http状态码" class="headerlink" title="四、http状态码"></a>四、http状态码</h2><h3 id="请求的类别"><a href="#请求的类别" class="headerlink" title="请求的类别"></a>请求的类别</h3><p>1xx 服务器已经接收到请求，正在处理当中<br>2xx 服务器已经成功接收请求<br>3xx 重定向，要完成请求必须再进一步的操作<br>4xx 客户端错误 客户端请求有语法错误<br>5xx 服务端错误 服务端未能实现合法的请求</p>
+<h3 id="常用的状态码"><a href="#常用的状态码" class="headerlink" title="常用的状态码"></a>常用的状态码</h3><p>200 客户端请求成果<br>206 Partial Content，客户端发送的一个请求头带range的get请求，描述数据的范围，比如多少字节到多少字节，服务器端返回这个范围的数据，常用的场景就是视频播放。<br>301 Moved parmanently永久重定向<br>302 Not Fund 临时重定向<br>304 Not modified 如果一个资源在返回时响应头里带有Last-Modified时间，下次再次访问这个资源的时候请求头里面就会带上If-Modified-Since时间，服务器确认这个时间的资源是否过期，如果没过期就会返回304，客户端直接用缓存的资源。<br>400 Bad Request 客户端语法错误，服务器无法理解<br>401 Unathorized 请求未经授权<br>403 Forbidden 请求的资源禁止访问<br>404 Not Found 未找到资源<br>500 Internal server error 服务器起内部错误<br>502 Server Unavailable 服务器暂时不能访问</p>
+<h2 id="五、持久连接"><a href="#五、持久连接" class="headerlink" title="五、持久连接"></a>五、持久连接</h2><p>普通模式下，http采用请求-应答的模式，每个请求都会建立一个连接，当应答完成后，就会断开连接。<br>http1.1默认采用持久连接，在请求头里添加吃Connection:keep-alive.发起请求建立连接后，不马上断开连接，后续的请求就直接利用这个连接发送和接收数据，在达到一定的时间后才断开连接，达到节约网络资源的目的。</p>
+<h2 id="六、管线化"><a href="#六、管线化" class="headerlink" title="六、管线化"></a>六、管线化</h2><p>常规的http请求就是发起请求返回响应，而管线化是将几个请求打包后，一次性发送给服务器，服务器再把这几次请求的响应打包一次性返回回来。<br>特点：</p>
+<ol>
+<li>开启持久连接</li>
+<li>get、head以及post有所限制</li>
+<li>初次创建连接时，不要使用管线化，对方可能不支持</li>
+</ol>
 
       
     </div>
@@ -355,8 +365,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象-三/" rel="next" title="javascript的Object对象--属性遍历相关(三)">
-                <i class="fa fa-chevron-left"></i> javascript的Object对象--属性遍历相关(三)
+              <a href="/2018/03/02/requestAnimationFrame/" rel="next" title="requestAnimationFrame写动画">
+                <i class="fa fa-chevron-left"></i> requestAnimationFrame写动画
               </a>
             
           </div>
@@ -365,8 +375,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象-五/" rel="prev" title="javascript的Object对象--实例方法(五)">
-                javascript的Object对象--实例方法(五) <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/04/原型、原型链/" rel="prev" title="原型、原型链">
+                原型、原型链 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -481,7 +491,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Object-assign"><span class="nav-text">一、Object.assign()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Object-create"><span class="nav-text">二、Object.create()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Object-is"><span class="nav-text">三、Object.is()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Object-getPrototypeOf"><span class="nav-text">四、Object.getPrototypeOf()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、Object-setPrototypeOf"><span class="nav-text">五、Object.setPrototypeOf()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、http的主要特点"><span class="nav-text">一、http的主要特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、http报文的组成"><span class="nav-text">二、http报文的组成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求报文"><span class="nav-text">请求报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应报文"><span class="nav-text">响应报文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、http的方法"><span class="nav-text">三、http的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get、post的区别"><span class="nav-text">get、post的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、http状态码"><span class="nav-text">四、http状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求的类别"><span class="nav-text">请求的类别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的状态码"><span class="nav-text">常用的状态码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、持久连接"><span class="nav-text">五、持久连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、管线化"><span class="nav-text">六、管线化</span></a></li></ol></div>
             
 
           </div>

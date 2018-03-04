@@ -233,6 +233,514 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/04/javascript面向对象-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/04/javascript面向对象-二/" itemprop="url">javascript面向对象(二)-new运算符的模拟实现</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-04T22:12:53+08:00">
+                2018-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="new运算符做了什么"><a href="#new运算符做了什么" class="headerlink" title="new运算符做了什么"></a>new运算符做了什么</h2><ol>
+<li>创建一个新对象，使该对象的<strong>proto</strong>指向构造函数的prototype</li>
+<li>让this指向该对象</li>
+<li>执行构造函数</li>
+<li>判断构造函数的返回值是引用类型，如果是就返回该值，如果不是就返回新创建的对象<br>让我们按照以上步骤模拟实现一下<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">new1</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> obj = <span class="built_in">Object</span>.create(fn.prototype);</span><br><span class="line">  <span class="keyword">var</span> res = fn.call(obj);</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> res === <span class="string">'object'</span> || <span class="keyword">typeof</span> res === <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">"foo"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> foo = new1(Foo);</span><br><span class="line"><span class="built_in">console</span>.log(foo.name);<span class="comment">// foo</span></span><br><span class="line"><span class="built_in">console</span>.log(foo <span class="keyword">instanceof</span> Foo);<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.__proto__.constructor === Foo);<span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/04/javascript面向对象-二/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/04/javascript面向对象-一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/04/javascript面向对象-一/" itemprop="url">javascript面向对象(一)js继承的实现方法</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-04T19:47:55+08:00">
+                2018-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="一、构造函数继承"><a href="#一、构造函数继承" class="headerlink" title="一、构造函数继承"></a>一、构造函数继承</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'parent'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  Parent.call(<span class="keyword">this</span>);</span><br><span class="line">  <span class="keyword">this</span>.age = <span class="number">11</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> child = <span class="keyword">new</span> Child();</span><br><span class="line"><span class="built_in">console</span>.log(child.name); <span class="comment">//parent</span></span><br></pre></td></tr></table></figure>
+<p>缺点：那就是父类原型上的方法无法继承到子类<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/04/javascript面向对象-一/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/04/原型、原型链/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/04/原型、原型链/" itemprop="url">原型、原型链</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-04T16:39:04+08:00">
+                2018-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="一、什么是原型"><a href="#一、什么是原型" class="headerlink" title="一、什么是原型"></a>一、什么是原型</h2><p>每个函数都有一个prototype属性，这个属性指向原型对象。</p>
+<h2 id="二、原型的作用"><a href="#二、原型的作用" class="headerlink" title="二、原型的作用"></a>二、原型的作用</h2><p>每个对象都有__proto__属性，这个属性指向创建它的构造函数的原型。当访问这个对象上的方法和属性的时候，首先在对象本身上查找，如果从查找不到就会到__proto__指向的原型对象上查找。我们可以在原型对象上定义一些实例共享的方法和属性。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/04/原型、原型链/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/http协议/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/03/http协议/" itemprop="url">http协议</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T10:10:20+08:00">
+                2018-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="一、http的主要特点"><a href="#一、http的主要特点" class="headerlink" title="一、http的主要特点"></a>一、http的主要特点</h2><ol>
+<li>简单快速<br>可以通过uri快速方式资源</li>
+<li>灵活<br>可以通过http获取各种类型的数据</li>
+<li>无连接<br>一个请求，就会建立一次连接，服务端响应后，就断开链接</li>
+<li>无状态<br>请求没有上下文，一次请求和响应后，下次请求，服务端并不能识别客户端的身份
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/03/http协议/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/02/requestAnimationFrame/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1000,503 +1508,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/17/ES6中的面向对象/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/17/ES6中的面向对象/" itemprop="url">ES6中的面向对象</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-17T23:06:35+08:00">
-                2018-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="一、ES6中类的声明方式"><a href="#一、ES6中类的声明方式" class="headerlink" title="一、ES6中类的声明方式"></a>一、ES6中类的声明方式</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = <span class="string">'xiaoming'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 原型上的方法</span></span><br><span class="line">    sayName() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 静态方法</span></span><br><span class="line">    <span class="keyword">static</span> showName() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'static showName'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 直接调用静态方法</span></span><br><span class="line">Foo.showName();</span><br><span class="line"><span class="keyword">let</span> foo = <span class="keyword">new</span> Foo();</span><br><span class="line"><span class="comment">// 实例方法</span></span><br><span class="line">foo.sayName();</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/17/ES6中的面向对象/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-五/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/16/javascript的Object对象-五/" itemprop="url">javascript的Object对象--实例方法(五)</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T22:20:48+08:00">
-                2018-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="一、hasOwnProperty"><a href="#一、hasOwnProperty" class="headerlink" title="一、hasOwnProperty()"></a>一、hasOwnProperty()</h2><p>判断对象的某个属性是自身属性还是原型链上的属性。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'xiaoming'</span>;</span><br><span class="line">&#125;</span><br><span class="line">Foo.prototype.age = <span class="number">18</span>;</span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();</span><br><span class="line"><span class="built_in">console</span>.log(foo.hasOwnProperty(<span class="string">'name'</span>));<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.hasOwnProperty(<span class="string">'age'</span>));<span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/16/javascript的Object对象-五/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-四/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/16/javascript的Object对象-四/" itemprop="url">javascript的Object对象--常用静态方法(四)</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T21:55:52+08:00">
-                2018-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="一、Object-assign"><a href="#一、Object-assign" class="headerlink" title="一、Object.assign()"></a>一、Object.assign()</h2><p>对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> newObj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span>,</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.assign(obj, newObj);</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;name: "xiaoming", age: 18&#125;</span></span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/16/javascript的Object对象-四/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-三/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/16/javascript的Object对象-三/" itemprop="url">javascript的Object对象--属性遍历相关(三)</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T21:41:49+08:00">
-                2018-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="一、Object-keys"><a href="#一、Object-keys" class="headerlink" title="一、Object.keys()"></a>一、Object.keys()</h2><p>返回对象自身属性key的数组，不包括原型链上的属性,不包括不可枚举属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span>,</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> keys = <span class="built_in">Object</span>.keys(obj);</span><br><span class="line"><span class="built_in">console</span>.log(keys);<span class="comment">// ["name", "age"]</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="二、Object-values"><a href="#二、Object-values" class="headerlink" title="二、Object.values()"></a>二、Object.values()</h2><p>返回自身属性value的数组，不包括原型链上的属性,不包括不可枚举属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span>,</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> values = <span class="built_in">Object</span>.values(obj);</span><br><span class="line"><span class="built_in">console</span>.log(values);<span class="comment">// ["xiaoming", 18]</span></span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/16/javascript的Object对象-三/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1547,7 +1558,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
