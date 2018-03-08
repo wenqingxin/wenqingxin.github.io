@@ -83,17 +83,17 @@
 
 
 
-<meta name="description" content="一、什么是同源策略及限制一个源加载的文档和脚本无法和另一个源的文档和脚本进行交互，以起到隔离恶意文件的目的，是浏览器的一种安全机制。 如何判断同源？ 协议相同 域名相同 端口相同 有哪些限制？ Cookie、localstoage、indexDB无法获取 DOM无法获取 Ajax请求不能发送">
+<meta name="description" content="一、什么是同源策略及限制一个源加载的文档和脚本无法和另一个源的文档和脚本进行交互，以起到隔离恶意文件的目的，是浏览器的一种安全机制。 如何判断同源？ 协议相同 域名相同 端口相同  有哪些限制？ Cookie、localstoage、indexDB无法获取 DOM无法获取 Ajax请求不能发送">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何解决跨域问题">
 <meta property="og:url" content="http://yoursite.com/2018/03/07/如何解决跨域问题/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="一、什么是同源策略及限制一个源加载的文档和脚本无法和另一个源的文档和脚本进行交互，以起到隔离恶意文件的目的，是浏览器的一种安全机制。 如何判断同源？ 协议相同 域名相同 端口相同 有哪些限制？ Cookie、localstoage、indexDB无法获取 DOM无法获取 Ajax请求不能发送">
+<meta property="og:description" content="一、什么是同源策略及限制一个源加载的文档和脚本无法和另一个源的文档和脚本进行交互，以起到隔离恶意文件的目的，是浏览器的一种安全机制。 如何判断同源？ 协议相同 域名相同 端口相同  有哪些限制？ Cookie、localstoage、indexDB无法获取 DOM无法获取 Ajax请求不能发送">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-08T14:47:41.000Z">
+<meta property="og:updated_time" content="2018-03-08T14:54:53.032Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何解决跨域问题">
-<meta name="twitter:description" content="一、什么是同源策略及限制一个源加载的文档和脚本无法和另一个源的文档和脚本进行交互，以起到隔离恶意文件的目的，是浏览器的一种安全机制。 如何判断同源？ 协议相同 域名相同 端口相同 有哪些限制？ Cookie、localstoage、indexDB无法获取 DOM无法获取 Ajax请求不能发送">
+<meta name="twitter:description" content="一、什么是同源策略及限制一个源加载的文档和脚本无法和另一个源的文档和脚本进行交互，以起到隔离恶意文件的目的，是浏览器的一种安全机制。 如何判断同源？ 协议相同 域名相同 端口相同  有哪些限制？ Cookie、localstoage、indexDB无法获取 DOM无法获取 Ajax请求不能发送">
 
 
 
@@ -308,7 +308,8 @@
 <li>协议相同</li>
 <li>域名相同</li>
 <li>端口相同</li>
-<li><h3 id="有哪些限制？"><a href="#有哪些限制？" class="headerlink" title="有哪些限制？"></a>有哪些限制？</h3></li>
+</ol>
+<h3 id="有哪些限制？"><a href="#有哪些限制？" class="headerlink" title="有哪些限制？"></a>有哪些限制？</h3><ol>
 <li>Cookie、localstoage、indexDB无法获取</li>
 <li>DOM无法获取</li>
 <li>Ajax请求不能发送<a id="more"></a>
@@ -337,7 +338,7 @@
 </ol>
 <p>同样的，子窗口也可以利用这种方式向父窗口传递数据 parent.location.href = parent.location.href + ‘#’ +data;</p>
 <ol>
-<li>postMessage<br>postMessage是h5里专门不同窗口进行通信的api，不存在跨域问题。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 窗口A</span></span><br><span class="line"><span class="built_in">window</span>.postMessage(<span class="string">'hello'</span>, <span class="string">'http://a.com'</span>);</span><br><span class="line"><span class="comment">// 窗口B</span></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(event.source);</span><br><span class="line">    <span class="built_in">console</span>.log(event.origin);</span><br><span class="line">    <span class="built_in">console</span>.log(event.data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<li>postMessage<br>postMessage是h5里专门不同窗口进行通信的api，不存在跨域问题。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 窗口A</span></span><br><span class="line"><span class="built_in">window</span>.postMessage(<span class="string">'hello'</span>, <span class="string">'http://a.com'</span>);</span><br><span class="line"><span class="comment">// 窗口B</span></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(event.source);</span><br><span class="line">    <span class="built_in">console</span>.log(event.origin);</span><br><span class="line">    <span class="built_in">console</span>.log(event.data);</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 
