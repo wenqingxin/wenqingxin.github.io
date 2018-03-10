@@ -83,17 +83,19 @@
 
 
 
-<meta name="description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta name="description" content="一、前端攻击种类 xss跨站脚本攻击(cross site scripting) csrf跨站请求伪造(cross site request forgery)  二、xss1.基本原理通过网站暴露给用户的输入接口，攻击者可以输入一些攻击的脚本，提交到后台后，如果后台直接把该脚本作为数据的一部分返回到前端，脚本就会被浏览器解析执行，从而达到攻击的目的。 2.常见攻击场景攻击者可以在以下场景输入攻击脚">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript的Object对象--配置限制相关(二)">
-<meta property="og:url" content="http://yoursite.com/2018/02/16/javascript的Object对象-二/index.html">
+<meta property="og:title" content="前端安全">
+<meta property="og:url" content="http://yoursite.com/2018/03/10/前端安全/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta property="og:description" content="一、前端攻击种类 xss跨站脚本攻击(cross site scripting) csrf跨站请求伪造(cross site request forgery)  二、xss1.基本原理通过网站暴露给用户的输入接口，攻击者可以输入一些攻击的脚本，提交到后台后，如果后台直接把该脚本作为数据的一部分返回到前端，脚本就会被浏览器解析执行，从而达到攻击的目的。 2.常见攻击场景攻击者可以在以下场景输入攻击脚">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T06:09:37.338Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/10/前端安全/CSRF.png">
+<meta property="og:updated_time" content="2018-03-10T03:31:22.892Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript的Object对象--配置限制相关(二)">
-<meta name="twitter:description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta name="twitter:title" content="前端安全">
+<meta name="twitter:description" content="一、前端攻击种类 xss跨站脚本攻击(cross site scripting) csrf跨站请求伪造(cross site request forgery)  二、xss1.基本原理通过网站暴露给用户的输入接口，攻击者可以输入一些攻击的脚本，提交到后台后，如果后台直接把该脚本作为数据的一部分返回到前端，脚本就会被浏览器解析执行，从而达到攻击的目的。 2.常见攻击场景攻击者可以在以下场景输入攻击脚">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/10/前端安全/CSRF.png">
 
 
 
@@ -123,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/16/javascript的Object对象-二/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/10/前端安全/"/>
 
 
 
 
 
-  <title>javascript的Object对象--配置限制相关(二) | Maserati总裁的博客</title>
+  <title>前端安全 | Maserati总裁的博客</title>
   
 
 
@@ -236,7 +238,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-二/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/前端安全/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wen qingxin">
@@ -253,7 +255,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">javascript的Object对象--配置限制相关(二)</h2>
+          <h2 class="post-title" itemprop="name headline">前端安全</h2>
         
 
         <div class="post-meta">
@@ -265,8 +267,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T21:25:42+08:00">
-                2018-02-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T09:40:24+08:00">
+                2018-03-10
               </time>
             
 
@@ -303,13 +305,43 @@
       
 
       
-        <h2 id="一、Object-seal"><a href="#一、Object-seal" class="headerlink" title="一、Object.seal()"></a>一、Object.seal()</h2><p> 禁止对象配置，描述符种的configurable设置为flase<br> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.seal(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="string">'name'</span>));<span class="comment">// &#123;value: "xiaoming", writable: true, enumerable: true, configurable: false&#125;</span></span><br></pre></td></tr></table></figure></p>
- <a id="more"></a>
-<h2 id="二、Object-isSealed"><a href="#二、Object-isSealed" class="headerlink" title="二、Object.isSealed()"></a>二、Object.isSealed()</h2><p> 判断对象是否被禁止配置操作<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.seal(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isSealed(obj));<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="三、Object-freeze"><a href="#三、Object-freeze" class="headerlink" title="三、Object.freeze()"></a>三、Object.freeze()</h2><p>冻结对象，将描述符种的writeable、configurable设置为false;<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.freeze(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="string">'name'</span>));<span class="comment">// &#123;value: "xiaoming", writable: false, enumerable: true, configurable: false&#125;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="四、Object-isFrozen"><a href="#四、Object-isFrozen" class="headerlink" title="四、Object.isFrozen()"></a>四、Object.isFrozen()</h2><p>判断对象是否被冻结<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.freeze(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isFrozen(obj));<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="五、Object-preventExtensions"><a href="#五、Object-preventExtensions" class="headerlink" title="五、Object.preventExtensions()"></a>五、Object.preventExtensions()</h2><p>禁止对象添加扩展，不能添加新的属性，但是可以删除属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(obj);</span><br><span class="line">obj.age = <span class="number">18</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;name: "xiaoming"&#125;</span></span><br><span class="line"><span class="keyword">delete</span> obj.name;</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;&#125;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="六、Object-isExtensible"><a href="#六、Object-isExtensible" class="headerlink" title="六、Object.isExtensible()"></a>六、Object.isExtensible()</h2><p>判断对象是否可扩展<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isExtensible(obj));<span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isExtensible(obj));<span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
+        <h2 id="一、前端攻击种类"><a href="#一、前端攻击种类" class="headerlink" title="一、前端攻击种类"></a>一、前端攻击种类</h2><ol>
+<li>xss<br>跨站脚本攻击(cross site scripting)</li>
+<li>csrf<br>跨站请求伪造(cross site request forgery)</li>
+</ol>
+<h2 id="二、xss"><a href="#二、xss" class="headerlink" title="二、xss"></a>二、xss</h2><h3 id="1-基本原理"><a href="#1-基本原理" class="headerlink" title="1.基本原理"></a>1.基本原理</h3><p>通过网站暴露给用户的输入接口，攻击者可以输入一些攻击的脚本，提交到后台后，如果后台直接把该脚本作为数据的一部分返回到前端，脚本就会被浏览器解析执行，从而达到攻击的目的。</p>
+<h3 id="2-常见攻击场景"><a href="#2-常见攻击场景" class="headerlink" title="2.常见攻击场景"></a>2.常见攻击场景</h3><p>攻击者可以在以下场景输入攻击脚本</p>
+<ol>
+<li>评论区</li>
+<li>web在线聊天<a id="more"></a>
+</li>
+</ol>
+<h3 id="3-常见攻击方法"><a href="#3-常见攻击方法" class="headerlink" title="3.常见攻击方法"></a>3.常见攻击方法</h3><ol>
+<li><p>style标签修改样式<br>攻击者可以写css样式来修改页面，比如这个脚本可以让页面显示不出来</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    body &#123;</span></span><br><span class="line"><span class="undefined">        display: none !important;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>script标签<br>攻击者可以直接写script标签，然后在里面做想做的事情</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">alert(<span class="string">'xss'</span>);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>事件<br>攻击者可以通过事件来触发相应的脚本</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">""</span> <span class="attr">onerror</span>=<span class="string">"alert('xss')"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="4-防御方法"><a href="#4-防御方法" class="headerlink" title="4.防御方法"></a>4.防御方法</h3><ol>
+<li><p>编码<br>通过将攻击者输入的脚本进行html entity编码，已达到不被浏览器解析执行的目的。<br>以下6个特殊字符需要进行编码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&amp;     –&gt;     &amp;amp;</span><br><span class="line">&lt;     –&gt;     &amp;lt;</span><br><span class="line">\&gt;    –&gt;     &amp;gt;</span><br><span class="line">”     –&gt;     &amp;quot;</span><br><span class="line">‘     –&gt;     &amp;#x27;</span><br><span class="line">/     –&gt;     &amp;#x2f;</span><br><span class="line">空格   –&gt;      &amp;nbsp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>过滤<br>对输入脚本的标签事件属性进行过滤，比如onmouseover, onload，onerror事件等。</p>
+</li>
+</ol>
+<h2 id="三、xsrf"><a href="#三、xsrf" class="headerlink" title="三、xsrf"></a>三、xsrf</h2><h3 id="1-基本原理-1"><a href="#1-基本原理-1" class="headerlink" title="1.基本原理"></a>1.基本原理</h3><p>攻击者盗用用户的合法的身份信息，发送恶意请求。<br><img src="/2018/03/10/前端安全/CSRF.png" title="攻击原理"></p>
+<h3 id="2-常见攻击场景-1"><a href="#2-常见攻击场景-1" class="headerlink" title="2.常见攻击场景"></a>2.常见攻击场景</h3><p>用户在A网站登录，A网站返回保存有身份信息的cookie保存在浏览器中；用户又去访问恶意网站B，恶意网站通过引诱用户点击或者在用户不知情的情况下触发某些事件去访问A网站的接口，由于浏览器保存的cookie有用户的合法信息，所以B网站能以用户的身份调用A网站的所有接口，以达到攻击的目的。</p>
+<h3 id="3-防御方法"><a href="#3-防御方法" class="headerlink" title="3.防御方法"></a>3.防御方法</h3><ol>
+<li>get请求变成post请求<br>这种方式用攻击者不能直接以get请求的简单方式发送请求，在一定程度上加大了攻击成本，但攻击者仍然可以构造表单进行提交。</li>
+<li>referer检测<br>此种方式通过检测请求头里referer判断访问来源来判断请求来源是否来自可信任的网站。</li>
+<li>token验证<br>每次在访问网站接口时需要有网站生成的token作为身份信息以外的附加凭证，验证token通过才能访问。</li>
+<li>短信验证<br>每次在访问网站接口时需要有短信验证码附加凭证，验证通过才能访问。</li>
+</ol>
 
       
     </div>
@@ -334,8 +366,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象/" rel="next" title="javascript的Object对象--属性定义相关(一)">
-                <i class="fa fa-chevron-left"></i> javascript的Object对象--属性定义相关(一)
+              <a href="/2018/03/07/如何解决跨域问题/" rel="next" title="如何解决跨域问题">
+                <i class="fa fa-chevron-left"></i> 如何解决跨域问题
               </a>
             
           </div>
@@ -344,8 +376,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象-三/" rel="prev" title="javascript的Object对象--属性遍历相关(三)">
-                javascript的Object对象--属性遍历相关(三) <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/10/浏览器渲染机制/" rel="prev" title="浏览器渲染机制">
+                浏览器渲染机制 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -460,7 +492,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Object-seal"><span class="nav-text">一、Object.seal()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Object-isSealed"><span class="nav-text">二、Object.isSealed()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Object-freeze"><span class="nav-text">三、Object.freeze()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Object-isFrozen"><span class="nav-text">四、Object.isFrozen()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、Object-preventExtensions"><span class="nav-text">五、Object.preventExtensions()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、Object-isExtensible"><span class="nav-text">六、Object.isExtensible()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、前端攻击种类"><span class="nav-text">一、前端攻击种类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、xss"><span class="nav-text">二、xss</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基本原理"><span class="nav-text">1.基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-常见攻击场景"><span class="nav-text">2.常见攻击场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-常见攻击方法"><span class="nav-text">3.常见攻击方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-防御方法"><span class="nav-text">4.防御方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、xsrf"><span class="nav-text">三、xsrf</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基本原理-1"><span class="nav-text">1.基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-常见攻击场景-1"><span class="nav-text">2.常见攻击场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-防御方法"><span class="nav-text">3.防御方法</span></a></li></ol></li></ol></div>
             
 
           </div>
