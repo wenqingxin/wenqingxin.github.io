@@ -83,17 +83,17 @@
 
 
 
-<meta name="description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta name="description" content="1111">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript的Object对象--常用静态方法(四)">
-<meta property="og:url" content="http://yoursite.com/2018/02/16/javascript的Object对象-四/index.html">
+<meta property="og:title" content="Maserati总裁的博客">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/README/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta property="og:description" content="1111">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T06:09:20.597Z">
+<meta property="og:updated_time" content="2018-03-12T05:33:01.620Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript的Object对象--常用静态方法(四)">
-<meta name="twitter:description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta name="twitter:title" content="Maserati总裁的博客">
+<meta name="twitter:description" content="1111">
 
 
 
@@ -123,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/16/javascript的Object对象-四/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/README/"/>
 
 
 
 
 
-  <title>javascript的Object对象--常用静态方法(四) | Maserati总裁的博客</title>
+  <title> | Maserati总裁的博客</title>
   
 
 
@@ -236,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-四/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/README/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wen qingxin">
@@ -253,7 +253,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">javascript的Object对象--常用静态方法(四)</h2>
+          <h2 class="post-title" itemprop="name headline"></h2>
         
 
         <div class="post-meta">
@@ -265,8 +265,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T21:55:52+08:00">
-                2018-02-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T13:32:58+08:00">
+                2018-03-12
               </time>
             
 
@@ -303,34 +303,7 @@
       
 
       
-        <h2 id="一、Object-assign"><a href="#一、Object-assign" class="headerlink" title="一、Object.assign()"></a>一、Object.assign()</h2><p>对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> newObj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span>,</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.assign(obj, newObj);</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;name: "xiaoming", age: 18&#125;</span></span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<h2 id="二、Object-create"><a href="#二、Object-create" class="headerlink" title="二、Object.create()"></a>二、Object.create()</h2><p>指定某个对象作为原型对象后创建一个新对象并返回。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> newObj = <span class="built_in">Object</span>.create(obj);</span><br><span class="line"><span class="built_in">console</span>.log(newObj.__proto__ === obj);<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="三、Object-is"><a href="#三、Object-is" class="headerlink" title="三、Object.is()"></a>三、Object.is()</h2><p>确定两个值是否是相同的值。可以解决+0、-0、NaN比较的问题</p>
-<pre><code class="javascript"><span class="comment">// 本应该不等的，实际却相等</span>
-<span class="built_in">console</span>.log(+<span class="number">0</span> === <span class="number">-0</span>);<span class="comment">// true</span>
-<span class="comment">// 本应该相等的实际却不等</span>
-<span class="built_in">console</span>.log(<span class="literal">NaN</span> === <span class="literal">NaN</span>);<span class="comment">// false</span>
-</code></pre>
-<p>用Object.is()更严谨的判断</p>
-<pre><code class="javascript"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.is(+<span class="number">0</span>, <span class="number">-0</span>));<span class="comment">// false</span>
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.is(<span class="literal">NaN</span>, <span class="literal">NaN</span>));<span class="comment">// true</span>
-</code></pre>
-<h2 id="四、Object-getPrototypeOf"><a href="#四、Object-getPrototypeOf" class="headerlink" title="四、Object.getPrototypeOf()"></a>四、Object.getPrototypeOf()</h2><p>获取对象的原型对象,通过这个来获取对象的原型对象，__proto__作为对象的内部属性，尽量少用，建议是用该方法代替。</p>
-<pre><code class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>{
-}
-<span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(foo) === foo.__proto__);<span class="comment">// true</span>
-</code></pre>
-<h2 id="五、Object-setPrototypeOf"><a href="#五、Object-setPrototypeOf" class="headerlink" title="五、Object.setPrototypeOf()"></a>五、Object.setPrototypeOf()</h2><p>给对象设置原型对象</p>
-<pre><code class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>{
-}
-<span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();
-<span class="keyword">var</span> newProto = {<span class="attr">name</span>: <span class="string">'xiaoming'</span>};
-<span class="built_in">Object</span>.setPrototypeOf(foo, newProto);
-<span class="built_in">console</span>.log(foo.name);<span class="comment">// xiaoming</span>
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(foo) === newProto)<span class="comment">// true</span>
-</code></pre>
+        <p>1111</p>
 
       
     </div>
@@ -355,8 +328,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象-三/" rel="next" title="javascript的Object对象--属性遍历相关(三)">
-                <i class="fa fa-chevron-left"></i> javascript的Object对象--属性遍历相关(三)
+              <a href="/2018/03/11/XmlHttpRequest/" rel="next" title="XhlHttpRequest">
+                <i class="fa fa-chevron-left"></i> XhlHttpRequest
               </a>
             
           </div>
@@ -364,10 +337,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/16/javascript的Object对象-五/" rel="prev" title="javascript的Object对象--实例方法(五)">
-                javascript的Object对象--实例方法(五) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -419,17 +388,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -471,22 +431,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Object-assign"><span class="nav-text">一、Object.assign()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Object-create"><span class="nav-text">二、Object.create()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Object-is"><span class="nav-text">三、Object.is()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Object-getPrototypeOf"><span class="nav-text">四、Object.getPrototypeOf()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、Object-setPrototypeOf"><span class="nav-text">五、Object.setPrototypeOf()</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

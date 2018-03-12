@@ -83,17 +83,20 @@
 
 
 
-<meta name="description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta name="description" content="大家都知道js引擎是单线程的，那它是怎么实现单线程的呢？那就要提到事件循环了，在讲事件循环之前我们首先得搞清楚一下概念。 一、函数栈栈是一种数据结构，特点是数据先进后出，js在执行函数过程中其实也是将函数放进栈结构中，我们成为函数栈，函数执行完成后就拿出函数，当函数内部继续在调用其他函数的时候，我们也继续压入函数。现在，我们写了下面一段代码1234567891011121314function b">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript的Object对象--常用静态方法(四)">
-<meta property="og:url" content="http://yoursite.com/2018/02/16/javascript的Object对象-四/index.html">
+<meta property="og:title" content="js运行机制">
+<meta property="og:url" content="http://yoursite.com/2018/03/10/js运行机制/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta property="og:description" content="大家都知道js引擎是单线程的，那它是怎么实现单线程的呢？那就要提到事件循环了，在讲事件循环之前我们首先得搞清楚一下概念。 一、函数栈栈是一种数据结构，特点是数据先进后出，js在执行函数过程中其实也是将函数放进栈结构中，我们成为函数栈，函数执行完成后就拿出函数，当函数内部继续在调用其他函数的时候，我们也继续压入函数。现在，我们写了下面一段代码1234567891011121314function b">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T06:09:20.597Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/10/js运行机制/出栈入栈过程.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/10/js运行机制/栈、任务队列、事件循环.png">
+<meta property="og:updated_time" content="2018-03-10T08:34:03.180Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript的Object对象--常用静态方法(四)">
-<meta name="twitter:description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta name="twitter:title" content="js运行机制">
+<meta name="twitter:description" content="大家都知道js引擎是单线程的，那它是怎么实现单线程的呢？那就要提到事件循环了，在讲事件循环之前我们首先得搞清楚一下概念。 一、函数栈栈是一种数据结构，特点是数据先进后出，js在执行函数过程中其实也是将函数放进栈结构中，我们成为函数栈，函数执行完成后就拿出函数，当函数内部继续在调用其他函数的时候，我们也继续压入函数。现在，我们写了下面一段代码1234567891011121314function b">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/10/js运行机制/出栈入栈过程.png">
 
 
 
@@ -123,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/16/javascript的Object对象-四/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/10/js运行机制/"/>
 
 
 
 
 
-  <title>javascript的Object对象--常用静态方法(四) | Maserati总裁的博客</title>
+  <title>js运行机制 | Maserati总裁的博客</title>
   
 
 
@@ -236,7 +239,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-四/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/js运行机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wen qingxin">
@@ -253,7 +256,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">javascript的Object对象--常用静态方法(四)</h2>
+          <h2 class="post-title" itemprop="name headline">js运行机制</h2>
         
 
         <div class="post-meta">
@@ -265,8 +268,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T21:55:52+08:00">
-                2018-02-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T15:54:36+08:00">
+                2018-03-10
               </time>
             
 
@@ -303,35 +306,27 @@
       
 
       
-        <h2 id="一、Object-assign"><a href="#一、Object-assign" class="headerlink" title="一、Object.assign()"></a>一、Object.assign()</h2><p>对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> newObj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span>,</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.assign(obj, newObj);</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;name: "xiaoming", age: 18&#125;</span></span><br></pre></td></tr></table></figure></p>
+        <p>大家都知道js引擎是单线程的，那它是怎么实现单线程的呢？那就要提到事件循环了，在讲事件循环之前我们首先得搞清楚一下概念。</p>
+<h2 id="一、函数栈"><a href="#一、函数栈" class="headerlink" title="一、函数栈"></a>一、函数栈</h2><p>栈是一种数据结构，特点是数据先进后出，js在执行函数过程中其实也是将函数放进栈结构中，我们成为函数栈，函数执行完成后就拿出函数，当函数内部继续在调用其他函数的时候，我们也继续压入函数。现在，我们写了下面一段代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    far();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">foo();</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
-<h2 id="二、Object-create"><a href="#二、Object-create" class="headerlink" title="二、Object.create()"></a>二、Object.create()</h2><p>指定某个对象作为原型对象后创建一个新对象并返回。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> newObj = <span class="built_in">Object</span>.create(obj);</span><br><span class="line"><span class="built_in">console</span>.log(newObj.__proto__ === obj);<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="三、Object-is"><a href="#三、Object-is" class="headerlink" title="三、Object.is()"></a>三、Object.is()</h2><p>确定两个值是否是相同的值。可以解决+0、-0、NaN比较的问题</p>
-<pre><code class="javascript"><span class="comment">// 本应该不等的，实际却相等</span>
-<span class="built_in">console</span>.log(+<span class="number">0</span> === <span class="number">-0</span>);<span class="comment">// true</span>
-<span class="comment">// 本应该相等的实际却不等</span>
-<span class="built_in">console</span>.log(<span class="literal">NaN</span> === <span class="literal">NaN</span>);<span class="comment">// false</span>
-</code></pre>
-<p>用Object.is()更严谨的判断</p>
-<pre><code class="javascript"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.is(+<span class="number">0</span>, <span class="number">-0</span>));<span class="comment">// false</span>
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.is(<span class="literal">NaN</span>, <span class="literal">NaN</span>));<span class="comment">// true</span>
-</code></pre>
-<h2 id="四、Object-getPrototypeOf"><a href="#四、Object-getPrototypeOf" class="headerlink" title="四、Object.getPrototypeOf()"></a>四、Object.getPrototypeOf()</h2><p>获取对象的原型对象,通过这个来获取对象的原型对象，__proto__作为对象的内部属性，尽量少用，建议是用该方法代替。</p>
-<pre><code class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>{
-}
-<span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(foo) === foo.__proto__);<span class="comment">// true</span>
-</code></pre>
-<h2 id="五、Object-setPrototypeOf"><a href="#五、Object-setPrototypeOf" class="headerlink" title="五、Object.setPrototypeOf()"></a>五、Object.setPrototypeOf()</h2><p>给对象设置原型对象</p>
-<pre><code class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>{
-}
-<span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();
-<span class="keyword">var</span> newProto = {<span class="attr">name</span>: <span class="string">'xiaoming'</span>};
-<span class="built_in">Object</span>.setPrototypeOf(foo, newProto);
-<span class="built_in">console</span>.log(foo.name);<span class="comment">// xiaoming</span>
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(foo) === newProto)<span class="comment">// true</span>
-</code></pre>
-
+<p>这段代码的出栈入栈过程如下<br><img src="/2018/03/10/js运行机制/出栈入栈过程.png" title="出栈入栈过程"></p>
+<h2 id="二、异步处理模块"><a href="#二、异步处理模块" class="headerlink" title="二、异步处理模块"></a>二、异步处理模块</h2><p>浏览器的许多异步功能的实现，并不是js引擎完成的，而是依赖与其他异步处理模块。通常有以下几个</p>
+<ol>
+<li>定时器</li>
+<li>网络通信</li>
+<li>dom事件</li>
+<li>promise</li>
+<li>I/O</li>
+<li>UI渲染</li>
+</ol>
+<h2 id="三、任务队列"><a href="#三、任务队列" class="headerlink" title="三、任务队列"></a>三、任务队列</h2><p>任务队列存储回掉的函数，调用异步模块，异步模块完成执行达到回调函数触发条件的时候，会讲回调处理放到任务队列。<br>任务队列分为两类</p>
+<ol>
+<li>宏任务队列（macro task 每个异步模块都有对应的一个异步队列）</li>
+<li>微任务队列（micro task 只有一个）<br>那么哪个任务会被分配到哪个队列呢？<br>宏任务：script（全局任务）, setTimeout, setInterval, setImmediate, I/O, UI rendering.<br>微任务：process.nextTick, Promise, Object.observer, MutationObserver.</li>
+</ol>
+<h2 id="四、事件循环"><a href="#四、事件循环" class="headerlink" title="四、事件循环"></a>四、事件循环</h2><p>当函数栈里已经没有函数了，会在任务队列里取任务来执行，执行完毕后，发现没有函数了，又会在队列里拿出一个任务来执行。<br>宏任务与微任务的执行顺序<br>当一个宏任务队列执行完毕后就会执行微任务队列，比如下面的例子<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'script start'</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'promise 1'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'promise 2'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'script end'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>结果是：<br>script start<br>script end<br>promise 1<br>promise 2<br>setTimeout</p>
+<h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><img src="/2018/03/10/js运行机制/栈、任务队列、事件循环.png" title="概览">
       
     </div>
     
@@ -355,8 +350,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象-三/" rel="next" title="javascript的Object对象--属性遍历相关(三)">
-                <i class="fa fa-chevron-left"></i> javascript的Object对象--属性遍历相关(三)
+              <a href="/2018/03/10/浏览器渲染机制/" rel="next" title="浏览器渲染机制">
+                <i class="fa fa-chevron-left"></i> 浏览器渲染机制
               </a>
             
           </div>
@@ -365,8 +360,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象-五/" rel="prev" title="javascript的Object对象--实例方法(五)">
-                javascript的Object对象--实例方法(五) <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/10/页面性能优化/" rel="prev" title="页面性能优化">
+                页面性能优化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -481,7 +476,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Object-assign"><span class="nav-text">一、Object.assign()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Object-create"><span class="nav-text">二、Object.create()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Object-is"><span class="nav-text">三、Object.is()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Object-getPrototypeOf"><span class="nav-text">四、Object.getPrototypeOf()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、Object-setPrototypeOf"><span class="nav-text">五、Object.setPrototypeOf()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、函数栈"><span class="nav-text">一、函数栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、异步处理模块"><span class="nav-text">二、异步处理模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、任务队列"><span class="nav-text">三、任务队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、事件循环"><span class="nav-text">四、事件循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、总结"><span class="nav-text">五、总结</span></a></li></ol></div>
             
 
           </div>

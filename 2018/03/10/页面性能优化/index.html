@@ -83,17 +83,17 @@
 
 
 
-<meta name="description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta name="description" content="页面性能优化有哪些方法 一、资源压缩合并，减少http请求二、资源异步加载1.defer页面解析完成后执行，执行顺序跟加载顺序有关 2.async加载完成后立即执行 3.模块化异步加载在需要的时候js代码创建script标签，去加载资源">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript的Object对象--常用静态方法(四)">
-<meta property="og:url" content="http://yoursite.com/2018/02/16/javascript的Object对象-四/index.html">
+<meta property="og:title" content="页面性能优化">
+<meta property="og:url" content="http://yoursite.com/2018/03/10/页面性能优化/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta property="og:description" content="页面性能优化有哪些方法 一、资源压缩合并，减少http请求二、资源异步加载1.defer页面解析完成后执行，执行顺序跟加载顺序有关 2.async加载完成后立即执行 3.模块化异步加载在需要的时候js代码创建script标签，去加载资源">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T06:09:20.597Z">
+<meta property="og:updated_time" content="2018-03-11T02:38:24.531Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript的Object对象--常用静态方法(四)">
-<meta name="twitter:description" content="一、Object.assign()对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)1234567var obj = &amp;#123;&amp;#125;;var newObj = &amp;#123;    name: &apos;xiaoming&apos;,    age: 18&amp;#125;;Object.assign(obj, newObj);console.log(obj);// &amp;#123;name: &quot;xiaomi">
+<meta name="twitter:title" content="页面性能优化">
+<meta name="twitter:description" content="页面性能优化有哪些方法 一、资源压缩合并，减少http请求二、资源异步加载1.defer页面解析完成后执行，执行顺序跟加载顺序有关 2.async加载完成后立即执行 3.模块化异步加载在需要的时候js代码创建script标签，去加载资源">
 
 
 
@@ -123,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/16/javascript的Object对象-四/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/10/页面性能优化/"/>
 
 
 
 
 
-  <title>javascript的Object对象--常用静态方法(四) | Maserati总裁的博客</title>
+  <title>页面性能优化 | Maserati总裁的博客</title>
   
 
 
@@ -236,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-四/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/页面性能优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wen qingxin">
@@ -253,7 +253,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">javascript的Object对象--常用静态方法(四)</h2>
+          <h2 class="post-title" itemprop="name headline">页面性能优化</h2>
         
 
         <div class="post-meta">
@@ -265,8 +265,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T21:55:52+08:00">
-                2018-02-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T17:39:05+08:00">
+                2018-03-10
               </time>
             
 
@@ -303,34 +303,22 @@
       
 
       
-        <h2 id="一、Object-assign"><a href="#一、Object-assign" class="headerlink" title="一、Object.assign()"></a>一、Object.assign()</h2><p>对象浅拷贝(不能拷贝原型链上的属性，不能拷贝不可枚举属性)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> newObj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span>,</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.assign(obj, newObj);</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;name: "xiaoming", age: 18&#125;</span></span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<h2 id="二、Object-create"><a href="#二、Object-create" class="headerlink" title="二、Object.create()"></a>二、Object.create()</h2><p>指定某个对象作为原型对象后创建一个新对象并返回。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> newObj = <span class="built_in">Object</span>.create(obj);</span><br><span class="line"><span class="built_in">console</span>.log(newObj.__proto__ === obj);<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="三、Object-is"><a href="#三、Object-is" class="headerlink" title="三、Object.is()"></a>三、Object.is()</h2><p>确定两个值是否是相同的值。可以解决+0、-0、NaN比较的问题</p>
-<pre><code class="javascript"><span class="comment">// 本应该不等的，实际却相等</span>
-<span class="built_in">console</span>.log(+<span class="number">0</span> === <span class="number">-0</span>);<span class="comment">// true</span>
-<span class="comment">// 本应该相等的实际却不等</span>
-<span class="built_in">console</span>.log(<span class="literal">NaN</span> === <span class="literal">NaN</span>);<span class="comment">// false</span>
-</code></pre>
-<p>用Object.is()更严谨的判断</p>
-<pre><code class="javascript"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.is(+<span class="number">0</span>, <span class="number">-0</span>));<span class="comment">// false</span>
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.is(<span class="literal">NaN</span>, <span class="literal">NaN</span>));<span class="comment">// true</span>
-</code></pre>
-<h2 id="四、Object-getPrototypeOf"><a href="#四、Object-getPrototypeOf" class="headerlink" title="四、Object.getPrototypeOf()"></a>四、Object.getPrototypeOf()</h2><p>获取对象的原型对象,通过这个来获取对象的原型对象，__proto__作为对象的内部属性，尽量少用，建议是用该方法代替。</p>
-<pre><code class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>{
-}
-<span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(foo) === foo.__proto__);<span class="comment">// true</span>
-</code></pre>
-<h2 id="五、Object-setPrototypeOf"><a href="#五、Object-setPrototypeOf" class="headerlink" title="五、Object.setPrototypeOf()"></a>五、Object.setPrototypeOf()</h2><p>给对象设置原型对象</p>
-<pre><code class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>{
-}
-<span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();
-<span class="keyword">var</span> newProto = {<span class="attr">name</span>: <span class="string">'xiaoming'</span>};
-<span class="built_in">Object</span>.setPrototypeOf(foo, newProto);
-<span class="built_in">console</span>.log(foo.name);<span class="comment">// xiaoming</span>
-<span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(foo) === newProto)<span class="comment">// true</span>
-</code></pre>
+        <p>页面性能优化有哪些方法</p>
+<h2 id="一、资源压缩合并，减少http请求"><a href="#一、资源压缩合并，减少http请求" class="headerlink" title="一、资源压缩合并，减少http请求"></a>一、资源压缩合并，减少http请求</h2><h2 id="二、资源异步加载"><a href="#二、资源异步加载" class="headerlink" title="二、资源异步加载"></a>二、资源异步加载</h2><h3 id="1-defer"><a href="#1-defer" class="headerlink" title="1.defer"></a>1.defer</h3><p>页面解析完成后执行，执行顺序跟加载顺序有关</p>
+<h3 id="2-async"><a href="#2-async" class="headerlink" title="2.async"></a>2.async</h3><p>加载完成后立即执行</p>
+<h3 id="3-模块化异步加载"><a href="#3-模块化异步加载" class="headerlink" title="3.模块化异步加载"></a>3.模块化异步加载</h3><p>在需要的时候js代码创建script标签，去加载资源<br><a id="more"></a></p>
+<h2 id="三、缓存"><a href="#三、缓存" class="headerlink" title="三、缓存"></a>三、缓存</h2><p>cookie、localstorage、sessionstorage、indexDB、资源文件文件缓存（http缓存）</p>
+<h3 id="1-缓存分类"><a href="#1-缓存分类" class="headerlink" title="1.缓存分类"></a>1.缓存分类</h3><p>浏览器缓存分为强缓存和协商缓存。<br>区别：强缓存是浏览器换到到本地后直接就用的，而协商缓存是浏览器缓存后，在使用的时候要询问一下服务器能不能继续使用。<br>如果一个资源即时强缓存和协商缓存，如果该资源在强缓存规定的时间段以内，就不会询问服务器，如果在之外的话就会去询问服务器。</p>
+<h3 id="2-强缓存"><a href="#2-强缓存" class="headerlink" title="2.强缓存"></a>2.强缓存</h3><h4 id="2-1-响应头："><a href="#2-1-响应头：" class="headerlink" title="2.1 响应头："></a>2.1 响应头：</h4><p>Expires: Sat, 10 Mar 2018 11:02:46 GMT<br>Cache-Control: public, max-age=3539</p>
+<h4 id="2-2-Expires与Cache-Control区别"><a href="#2-2-Expires与Cache-Control区别" class="headerlink" title="2.2 Expires与Cache-Control区别"></a>2.2 Expires与Cache-Control区别</h4><p>Expires返回的是绝对时间，Cache-Control返回的是相对时间</p>
+<h4 id="2-3-Expires缺点"><a href="#2-3-Expires缺点" class="headerlink" title="2.3 Expires缺点"></a>2.3 Expires缺点</h4><p>服务器时间和客户端时间不一致，Cache-Control就是解决此问题。<br>注意：如果同时有Expires与Cache-Control，以Cache-Control为准</p>
+<h3 id="3-协商缓存"><a href="#3-协商缓存" class="headerlink" title="3.协商缓存"></a>3.协商缓存</h3><ol>
+<li>Last-Modify Last-Modify-Since<br>Last-Modify是服务器下发的资源修改时间，Last-Modify-Since是浏览器传给服务器的Last-Modify对应的时间，服务端对比此时间，如果相同，就是资源未经修改，返回304状态码，浏览器可以继续用本地的缓存，如果不同就需要重新下载了。<br>Last-Modify Last-Modify-Since缺点：<br>如果资源内容本身未修改，但是修改时间变化了，那也会重新去下载文件，但实际文件内容是没有变化的。</li>
+<li>Etag If-None-Match<br>Etag是服务器根据资源内容生成的一个hash值下发给浏览器，浏览器用If-None-Match发送Etag的值，服务器对比老的Etag值和新的Etag值是否相同，如果相同，就是资源未经修改，返回304状态码，浏览器可以继续用本地的缓存，如果不同就需要重新下载了。</li>
+</ol>
+<h2 id="四、CDN"><a href="#四、CDN" class="headerlink" title="四、CDN"></a>四、CDN</h2><p>资源上传CDN</p>
+<h2 id="五、DNS预解析"><a href="#五、DNS预解析" class="headerlink" title="五、DNS预解析"></a>五、DNS预解析</h2><p>开启页面DNS预解析<br>高级浏览器会默认开始页面上引用域名的预解析，但是https会关闭，用以下标签会让浏览器开启预解析<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta http-equiv=<span class="string">"x-dns-prefetch-control"</span> content=<span class="string">"on"</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p>对于页面上没有的域名，可以指定预解析<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=<span class="string">"dns-prefetch"</span> href=<span class="string">"//xxx.com"</span>&gt;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -355,8 +343,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象-三/" rel="next" title="javascript的Object对象--属性遍历相关(三)">
-                <i class="fa fa-chevron-left"></i> javascript的Object对象--属性遍历相关(三)
+              <a href="/2018/03/10/js运行机制/" rel="next" title="js运行机制">
+                <i class="fa fa-chevron-left"></i> js运行机制
               </a>
             
           </div>
@@ -365,8 +353,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象-五/" rel="prev" title="javascript的Object对象--实例方法(五)">
-                javascript的Object对象--实例方法(五) <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/10/错误监控/" rel="prev" title="错误监控">
+                错误监控 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -481,7 +469,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Object-assign"><span class="nav-text">一、Object.assign()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Object-create"><span class="nav-text">二、Object.create()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Object-is"><span class="nav-text">三、Object.is()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Object-getPrototypeOf"><span class="nav-text">四、Object.getPrototypeOf()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、Object-setPrototypeOf"><span class="nav-text">五、Object.setPrototypeOf()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、资源压缩合并，减少http请求"><span class="nav-text">一、资源压缩合并，减少http请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、资源异步加载"><span class="nav-text">二、资源异步加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-defer"><span class="nav-text">1.defer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-async"><span class="nav-text">2.async</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-模块化异步加载"><span class="nav-text">3.模块化异步加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、缓存"><span class="nav-text">三、缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-缓存分类"><span class="nav-text">1.缓存分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-强缓存"><span class="nav-text">2.强缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-响应头："><span class="nav-text">2.1 响应头：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Expires与Cache-Control区别"><span class="nav-text">2.2 Expires与Cache-Control区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-Expires缺点"><span class="nav-text">2.3 Expires缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-协商缓存"><span class="nav-text">3.协商缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、CDN"><span class="nav-text">四、CDN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、DNS预解析"><span class="nav-text">五、DNS预解析</span></a></li></ol></div>
             
 
           </div>
