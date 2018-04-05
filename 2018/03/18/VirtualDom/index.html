@@ -83,17 +83,17 @@
 
 
 
-<meta name="description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta name="description" content="一、什么是VirtualDom虚拟Dom，简称VDom，是用JavaScript对象来模拟真实的Dom对象。例如12345678910111213&amp;#123;    tag: &apos;div&apos;,    attrs: &amp;#123;        style: &apos;&apos;    &amp;#125;,    children: [        tag: &apos;div&apos;,        attrs: &amp;#123;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript的Object对象--配置限制相关(二)">
-<meta property="og:url" content="http://yoursite.com/2018/02/16/javascript的Object对象-二/index.html">
+<meta property="og:title" content="VirtualDom">
+<meta property="og:url" content="http://yoursite.com/2018/03/18/VirtualDom/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta property="og:description" content="一、什么是VirtualDom虚拟Dom，简称VDom，是用JavaScript对象来模拟真实的Dom对象。例如12345678910111213&amp;#123;    tag: &apos;div&apos;,    attrs: &amp;#123;        style: &apos;&apos;    &amp;#125;,    children: [        tag: &apos;div&apos;,        attrs: &amp;#123;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T06:09:37.338Z">
+<meta property="og:updated_time" content="2018-03-18T12:16:19.205Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript的Object对象--配置限制相关(二)">
-<meta name="twitter:description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta name="twitter:title" content="VirtualDom">
+<meta name="twitter:description" content="一、什么是VirtualDom虚拟Dom，简称VDom，是用JavaScript对象来模拟真实的Dom对象。例如12345678910111213&amp;#123;    tag: &apos;div&apos;,    attrs: &amp;#123;        style: &apos;&apos;    &amp;#125;,    children: [        tag: &apos;div&apos;,        attrs: &amp;#123;">
 
 
 
@@ -123,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/16/javascript的Object对象-二/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/18/VirtualDom/"/>
 
 
 
 
 
-  <title>javascript的Object对象--配置限制相关(二) | Maserati总裁的博客</title>
+  <title>VirtualDom | Maserati总裁的博客</title>
   
 
 
@@ -236,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-二/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/VirtualDom/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wen qingxin">
@@ -253,7 +253,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">javascript的Object对象--配置限制相关(二)</h2>
+          <h2 class="post-title" itemprop="name headline">VirtualDom</h2>
         
 
         <div class="post-meta">
@@ -265,8 +265,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T21:25:42+08:00">
-                2018-02-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T11:18:29+08:00">
+                2018-03-18
               </time>
             
 
@@ -285,8 +285,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2018/02/16/javascript的Object对象-二/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/02/16/javascript的Object对象-二/" itemprop="commentsCount"></span>
+                <a href="/2018/03/18/VirtualDom/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/03/18/VirtualDom/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -314,14 +314,18 @@
       
 
       
-        <h2 id="一、Object-seal"><a href="#一、Object-seal" class="headerlink" title="一、Object.seal()"></a>一、Object.seal()</h2><p> 禁止对象配置，描述符种的configurable设置为flase<br> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.seal(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="string">'name'</span>));<span class="comment">// &#123;value: "xiaoming", writable: true, enumerable: true, configurable: false&#125;</span></span><br></pre></td></tr></table></figure></p>
- <a id="more"></a>
-<h2 id="二、Object-isSealed"><a href="#二、Object-isSealed" class="headerlink" title="二、Object.isSealed()"></a>二、Object.isSealed()</h2><p> 判断对象是否被禁止配置操作<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.seal(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isSealed(obj));<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="三、Object-freeze"><a href="#三、Object-freeze" class="headerlink" title="三、Object.freeze()"></a>三、Object.freeze()</h2><p>冻结对象，将描述符种的writeable、configurable设置为false;<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.freeze(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="string">'name'</span>));<span class="comment">// &#123;value: "xiaoming", writable: false, enumerable: true, configurable: false&#125;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="四、Object-isFrozen"><a href="#四、Object-isFrozen" class="headerlink" title="四、Object.isFrozen()"></a>四、Object.isFrozen()</h2><p>判断对象是否被冻结<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.freeze(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isFrozen(obj));<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="五、Object-preventExtensions"><a href="#五、Object-preventExtensions" class="headerlink" title="五、Object.preventExtensions()"></a>五、Object.preventExtensions()</h2><p>禁止对象添加扩展，不能添加新的属性，但是可以删除属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(obj);</span><br><span class="line">obj.age = <span class="number">18</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;name: "xiaoming"&#125;</span></span><br><span class="line"><span class="keyword">delete</span> obj.name;</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;&#125;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="六、Object-isExtensible"><a href="#六、Object-isExtensible" class="headerlink" title="六、Object.isExtensible()"></a>六、Object.isExtensible()</h2><p>判断对象是否可扩展<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isExtensible(obj));<span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isExtensible(obj));<span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
-
+        <h2 id="一、什么是VirtualDom"><a href="#一、什么是VirtualDom" class="headerlink" title="一、什么是VirtualDom"></a>一、什么是VirtualDom</h2><p>虚拟Dom，简称VDom，是用JavaScript对象来模拟真实的Dom对象。例如<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    tag: <span class="string">'div'</span>,</span><br><span class="line">    attrs: &#123;</span><br><span class="line">        style: <span class="string">''</span></span><br><span class="line">    &#125;,</span><br><span class="line">    children: [</span><br><span class="line">        tag: <span class="string">'div'</span>,</span><br><span class="line">        attrs: &#123;</span><br><span class="line">            style: <span class="string">''</span></span><br><span class="line">        &#125;,</span><br><span class="line">        children: []</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="二、VirtualDom有什么用"><a href="#二、VirtualDom有什么用" class="headerlink" title="二、VirtualDom有什么用"></a>二、VirtualDom有什么用</h2><p>真实Dom的操作往往代价非常的高，因为创建一个Dom元素，往往会有几十个属性，同时可能还会触发重绘。用javascript来模拟的Dom对象，是相对来说简单的，同时javascript的操作效率也比真实dom高得多，通过这种VDOM的方式就能提高浏览器渲染的性能。</p>
+<h2 id="三、Virtual的库"><a href="#三、Virtual的库" class="headerlink" title="三、Virtual的库"></a>三、Virtual的库</h2><p>snabbdom库，vue就是基于这个库来实现vdom的。<br>api主要包括</p>
+<ol>
+<li>h()，帮助函数(渲染函数)</li>
+<li>patch(),dom拼接方法</li>
+</ol>
+<h2 id="四、VirtualDom的原理"><a href="#四、VirtualDom的原理" class="headerlink" title="四、VirtualDom的原理"></a>四、VirtualDom的原理</h2><ol>
+<li>通过将vnode放在内存中，只有涉及到真实dom节点时才去实际渲染；</li>
+<li>当需要将vnode拼接到真实dom对象的时候，通过diff算法比对出新旧dom对象之间的差异，只渲染有差异的地方，以达到性能最优。</li>
+</ol>
+<h2 id="五、diff算法"><a href="#五、diff算法" class="headerlink" title="五、diff算法"></a>五、diff算法</h2>
       
     </div>
     
@@ -345,8 +349,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象/" rel="next" title="javascript的Object对象--属性定义相关(一)">
-                <i class="fa fa-chevron-left"></i> javascript的Object对象--属性定义相关(一)
+              <a href="/2018/03/11/XmlHttpRequest/" rel="next" title="XhlHttpRequest">
+                <i class="fa fa-chevron-left"></i> XhlHttpRequest
               </a>
             
           </div>
@@ -355,8 +359,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象-三/" rel="prev" title="javascript的Object对象--属性遍历相关(三)">
-                javascript的Object对象--属性遍历相关(三) <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/18/mvvm与vue/" rel="prev" title="mvvm与vue">
+                mvvm与vue <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -476,7 +480,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Object-seal"><span class="nav-text">一、Object.seal()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Object-isSealed"><span class="nav-text">二、Object.isSealed()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Object-freeze"><span class="nav-text">三、Object.freeze()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Object-isFrozen"><span class="nav-text">四、Object.isFrozen()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、Object-preventExtensions"><span class="nav-text">五、Object.preventExtensions()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、Object-isExtensible"><span class="nav-text">六、Object.isExtensible()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、什么是VirtualDom"><span class="nav-text">一、什么是VirtualDom</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、VirtualDom有什么用"><span class="nav-text">二、VirtualDom有什么用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Virtual的库"><span class="nav-text">三、Virtual的库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、VirtualDom的原理"><span class="nav-text">四、VirtualDom的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、diff算法"><span class="nav-text">五、diff算法</span></a></li></ol></div>
             
 
           </div>

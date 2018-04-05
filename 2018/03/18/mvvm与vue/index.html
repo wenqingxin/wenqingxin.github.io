@@ -83,17 +83,17 @@
 
 
 
-<meta name="description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta name="description" content="一、mvvm是什么以后端mvc为原型，将设计模式移植到前端来的一种设计模式，称为mvvm（Model View ViewModel）。 二、vue三要素 响应式修改data属性后，vue立刻监听到data属性被代理到vm上 模板解析模板本质就是一段字符串，最终将转换成逻辑的js代码，render函数。 渲染vue的render函数中用来with（可能带来歧义，降低代码的可阅读性），返回vnode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript的Object对象--配置限制相关(二)">
-<meta property="og:url" content="http://yoursite.com/2018/02/16/javascript的Object对象-二/index.html">
+<meta property="og:title" content="mvvm与vue">
+<meta property="og:url" content="http://yoursite.com/2018/03/18/mvvm与vue/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta property="og:description" content="一、mvvm是什么以后端mvc为原型，将设计模式移植到前端来的一种设计模式，称为mvvm（Model View ViewModel）。 二、vue三要素 响应式修改data属性后，vue立刻监听到data属性被代理到vm上 模板解析模板本质就是一段字符串，最终将转换成逻辑的js代码，render函数。 渲染vue的render函数中用来with（可能带来歧义，降低代码的可阅读性），返回vnode">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T06:09:37.338Z">
+<meta property="og:updated_time" content="2018-03-19T14:32:37.170Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript的Object对象--配置限制相关(二)">
-<meta name="twitter:description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta name="twitter:title" content="mvvm与vue">
+<meta name="twitter:description" content="一、mvvm是什么以后端mvc为原型，将设计模式移植到前端来的一种设计模式，称为mvvm（Model View ViewModel）。 二、vue三要素 响应式修改data属性后，vue立刻监听到data属性被代理到vm上 模板解析模板本质就是一段字符串，最终将转换成逻辑的js代码，render函数。 渲染vue的render函数中用来with（可能带来歧义，降低代码的可阅读性），返回vnode">
 
 
 
@@ -123,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/16/javascript的Object对象-二/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/18/mvvm与vue/"/>
 
 
 
 
 
-  <title>javascript的Object对象--配置限制相关(二) | Maserati总裁的博客</title>
+  <title>mvvm与vue | Maserati总裁的博客</title>
   
 
 
@@ -236,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-二/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/mvvm与vue/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wen qingxin">
@@ -253,7 +253,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">javascript的Object对象--配置限制相关(二)</h2>
+          <h2 class="post-title" itemprop="name headline">mvvm与vue</h2>
         
 
         <div class="post-meta">
@@ -265,8 +265,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T21:25:42+08:00">
-                2018-02-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T14:40:44+08:00">
+                2018-03-18
               </time>
             
 
@@ -285,8 +285,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2018/02/16/javascript的Object对象-二/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/02/16/javascript的Object对象-二/" itemprop="commentsCount"></span>
+                <a href="/2018/03/18/mvvm与vue/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/03/18/mvvm与vue/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -314,13 +314,22 @@
       
 
       
-        <h2 id="一、Object-seal"><a href="#一、Object-seal" class="headerlink" title="一、Object.seal()"></a>一、Object.seal()</h2><p> 禁止对象配置，描述符种的configurable设置为flase<br> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.seal(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="string">'name'</span>));<span class="comment">// &#123;value: "xiaoming", writable: true, enumerable: true, configurable: false&#125;</span></span><br></pre></td></tr></table></figure></p>
- <a id="more"></a>
-<h2 id="二、Object-isSealed"><a href="#二、Object-isSealed" class="headerlink" title="二、Object.isSealed()"></a>二、Object.isSealed()</h2><p> 判断对象是否被禁止配置操作<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.seal(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isSealed(obj));<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="三、Object-freeze"><a href="#三、Object-freeze" class="headerlink" title="三、Object.freeze()"></a>三、Object.freeze()</h2><p>冻结对象，将描述符种的writeable、configurable设置为false;<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.freeze(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="string">'name'</span>));<span class="comment">// &#123;value: "xiaoming", writable: false, enumerable: true, configurable: false&#125;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="四、Object-isFrozen"><a href="#四、Object-isFrozen" class="headerlink" title="四、Object.isFrozen()"></a>四、Object.isFrozen()</h2><p>判断对象是否被冻结<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.freeze(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isFrozen(obj));<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="五、Object-preventExtensions"><a href="#五、Object-preventExtensions" class="headerlink" title="五、Object.preventExtensions()"></a>五、Object.preventExtensions()</h2><p>禁止对象添加扩展，不能添加新的属性，但是可以删除属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(obj);</span><br><span class="line">obj.age = <span class="number">18</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;name: "xiaoming"&#125;</span></span><br><span class="line"><span class="keyword">delete</span> obj.name;</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;&#125;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="六、Object-isExtensible"><a href="#六、Object-isExtensible" class="headerlink" title="六、Object.isExtensible()"></a>六、Object.isExtensible()</h2><p>判断对象是否可扩展<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isExtensible(obj));<span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isExtensible(obj));<span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
+        <h2 id="一、mvvm是什么"><a href="#一、mvvm是什么" class="headerlink" title="一、mvvm是什么"></a>一、mvvm是什么</h2><p>以后端mvc为原型，将设计模式移植到前端来的一种设计模式，称为mvvm（Model View ViewModel）。</p>
+<h2 id="二、vue三要素"><a href="#二、vue三要素" class="headerlink" title="二、vue三要素"></a>二、vue三要素</h2><ol>
+<li>响应式<br>修改data属性后，vue立刻监听到<br>data属性被代理到vm上</li>
+<li>模板解析<br>模板本质就是一段字符串，最终将转换成逻辑的js代码，render函数。</li>
+<li>渲染<br>vue的render函数中用来with（可能带来歧义，降低代码的可阅读性），返回vnode</li>
+</ol>
+<h2 id="三、vue的整个实现流程"><a href="#三、vue的整个实现流程" class="headerlink" title="三、vue的整个实现流程"></a>三、vue的整个实现流程</h2><ol>
+<li>初始化，钩子函数，事件初始化，响应式开始监听</li>
+<li>模板解析，生成render函数(_C返回vode)</li>
+<li>首次渲染，显示页面，收集依赖</li>
+<li>data属性变化，触发update</li>
+</ol>
+<h2 id="四、传统jquery与vue的区别"><a href="#四、传统jquery与vue的区别" class="headerlink" title="四、传统jquery与vue的区别"></a>四、传统jquery与vue的区别</h2><ol>
+<li>数据和视图分离</li>
+<li>数据驱动视图</li>
+</ol>
 
       
     </div>
@@ -345,8 +354,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象/" rel="next" title="javascript的Object对象--属性定义相关(一)">
-                <i class="fa fa-chevron-left"></i> javascript的Object对象--属性定义相关(一)
+              <a href="/2018/03/18/VirtualDom/" rel="next" title="VirtualDom">
+                <i class="fa fa-chevron-left"></i> VirtualDom
               </a>
             
           </div>
@@ -355,8 +364,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象-三/" rel="prev" title="javascript的Object对象--属性遍历相关(三)">
-                javascript的Object对象--属性遍历相关(三) <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/19/组件化与react/" rel="prev" title="组件化与react">
+                组件化与react <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -476,7 +485,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Object-seal"><span class="nav-text">一、Object.seal()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Object-isSealed"><span class="nav-text">二、Object.isSealed()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Object-freeze"><span class="nav-text">三、Object.freeze()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Object-isFrozen"><span class="nav-text">四、Object.isFrozen()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、Object-preventExtensions"><span class="nav-text">五、Object.preventExtensions()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、Object-isExtensible"><span class="nav-text">六、Object.isExtensible()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、mvvm是什么"><span class="nav-text">一、mvvm是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、vue三要素"><span class="nav-text">二、vue三要素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、vue的整个实现流程"><span class="nav-text">三、vue的整个实现流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、传统jquery与vue的区别"><span class="nav-text">四、传统jquery与vue的区别</span></a></li></ol></div>
             
 
           </div>
