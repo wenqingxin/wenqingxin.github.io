@@ -314,26 +314,15 @@
 
       
         
-          
-            <h2 id="一、ssh是什么"><a href="#一、ssh是什么" class="headerlink" title="一、ssh是什么"></a>一、ssh是什么</h2><p>SSH(安全外壳协议)为Secure Shell的缩写，是建立在应用层基础上的安全协议。SSH是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。</p>
-<h2 id="二、ssh的作用"><a href="#二、ssh的作用" class="headerlink" title="二、ssh的作用"></a>二、ssh的作用</h2><p>利用SSH协议可以有效防止远程管理过程中的信息泄露问题。SSH客户端最初是UNIX系统上的一个程序，后来又迅速扩展到其他操作平台。几乎所有UNIX平台—包括HP-UX、Linux、AIX、Solaris、Digital UNIX、Irix，以及其他平台，都可运行SSH。</p>
-<h2 id="三、ssh的使用"><a href="#三、ssh的使用" class="headerlink" title="三、ssh的使用"></a>三、ssh的使用</h2><h3 id="ssh服务端"><a href="#ssh服务端" class="headerlink" title="ssh服务端"></a>ssh服务端</h3><p>以centOS为例</p>
-<ol>
-<li>安装<br>yum install openssh-server</li>
-<li>启动<br>service sshd start</li>
-<li>设置开机运行<br>chkconfig sshd on</li>
-<li>配置文件<br>/etc/ssh/sshd_config</li>
-</ol>
-<h3 id="ssh客户端"><a href="#ssh客户端" class="headerlink" title="ssh客户端"></a>ssh客户端</h3><ol>
-<li>安装<br>yum install openssh-clients </li>
-<li>连接服务端<br>ssh username@host</li>
-<li>免密登录<br>1）生成sshkey<br>执行<br>ssh-keygen -t rsa -C “xxxx@qq.com”<br>会在.ssh文件夹生成密钥对，分别为id_rsa（私钥）与id_rsa.pub（公钥）。<br>2）开启ssh-agent<br>eval <code>ssh-agent</code><br>ssh-agent就是一个密钥管理器，运行ssh-agent以后，使用ssh-add将私钥交给ssh-agent保管，其他程序需要身份验证的时候可以将验证申请交给ssh-agent来完成整个认证过程<br>3）把私钥添加到ssh-agent缓存中<br>ssh-add ~/.ssh/id_dsa<br>4）服务器添加公钥<br>服务器的.ssh文件下需要新建一个authorized_keys文件，将本地生产的id_rsa.pub的内容复制到服务器athorized_keys里去。</li>
-<li>配置<br>～/.ssh/config 文件<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># github</span></span><br><span class="line"><span class="string">Host</span> <span class="string">github.com</span></span><br><span class="line">    <span class="string">HostName</span> <span class="string">github.com</span></span><br><span class="line">    <span class="string">PreferredAuthentications</span> <span class="string">publickey</span></span><br><span class="line">    <span class="string">IdentityFile</span> <span class="string">~/.ssh/id_rsa</span></span><br><span class="line"><span class="comment"># aliyun</span></span><br><span class="line"><span class="string">Host</span> <span class="string">aliyun</span></span><br><span class="line">    <span class="string">HostName</span> <span class="number">112.74</span><span class="number">.182</span><span class="number">.219</span></span><br><span class="line">    <span class="string">User</span> <span class="string">qxwen</span></span><br><span class="line">    <span class="string">Port</span> <span class="number">22</span></span><br><span class="line">    <span class="string">PreferredAuthentications</span> <span class="string">publickey</span></span><br><span class="line">    <span class="string">IdentityFile</span> <span class="string">~/.ssh/id_rsa</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>以上配置可实现ssh简写服务名与免密登陆</p>
-
-          
+          <h2 id="一、ssh是什么"><a href="#一、ssh是什么" class="headerlink" title="一、ssh是什么"></a>一、ssh是什么</h2><p>SSH(安全外壳协议)为Secure Shell的缩写，是建立在应用层基础上的安全协议。SSH是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。</p>
+<h2 id="二、ssh的作用"><a href="#二、ssh的作用" class="headerlink" title="二、ssh的作用"></a>二、ssh的作用</h2><p>利用SSH协议可以有效防止远程管理过程中的信息泄露问题。SSH客户端最初是UNIX系统上的一个程序，后来又迅速扩展到其他操作平台。几乎所有UNIX平台—包括HP-UX、Linux、AIX、Solaris、Digital UNIX、Irix，以及其他平台，都可运行SSH。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/05/ssh/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -464,7 +453,7 @@
           
             <h2 id="什么是组件"><a href="#什么是组件" class="headerlink" title="什么是组件"></a>什么是组件</h2><ol>
 <li>封装<br>对视图、数据、交互逻辑进行封装</li>
-<li>复用<br>通过传入props，实现功能上的复用<h2 id="jsx的本质"><a href="#jsx的本质" class="headerlink" title="jsx的本质"></a>jsx的本质</h2>创建vdom的语法糖，通过babel编译成js代码<h2 id="jsx与vdom"><a href="#jsx与vdom" class="headerlink" title="jsx与vdom"></a>jsx与vdom</h2>jsx变异后就是用React.createElement()方法创建vdom<h2 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h2>为什么是异步？<br>当连续重复setState的时候，数据更新没有必要每次都去更新视图，react内部将这部分操作汇总起来，只对最后的数据进行渲染</li>
+<li>复用<br>通过传入props，实现功能上的复用<h2 id="jsx的本质"><a href="#jsx的本质" class="headerlink" title="jsx的本质"></a>jsx的本质</h2>创建vdom的语法糖，通过babel编译成js代码<h2 id="jsx与vdom"><a href="#jsx与vdom" class="headerlink" title="jsx与vdom"></a>jsx与vdom</h2>jsx编译后就是用React.createElement()方法创建vdom<h2 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h2>为什么是异步？<br>当连续重复setState的时候，数据更新没有必要每次都去更新视图，react内部将这部分操作汇总起来，只对最后的数据进行渲染</li>
 </ol>
 
           
