@@ -90,12 +90,12 @@
 <meta property="og:site_name" content="Maserati总裁的博客">
 <meta property="og:description" content="一、什么是层叠上下文层叠上下文(stacking context)是html页面中的一个三维的概念，除了屏幕平面的x、y轴，在我们面向屏幕的方向上还有一个Z轴，页面元素在Z抽上的离我们最近的就会覆盖离我们远的元素，元素在Z轴上的远近也就是我们说的层叠顺序。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://image.zhangxinxu.com/image/blog/201601/2016-01-09_211116.png">
-<meta property="og:updated_time" content="2018-04-17T14:14:18.939Z">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528690762696&di=09dc96d6344a7f86d4598c48481c23ad&imgtype=0&src=http%3A%2F%2Fwww.th7.cn%2Fd%2Ffile%2Fp%2F2016%2F05%2F23%2Fd5214f2dea9b27fc409bf362f11056f3.jpg">
+<meta property="og:updated_time" content="2018-06-11T01:32:38.638Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css知识快餐-四 层叠上下文">
 <meta name="twitter:description" content="一、什么是层叠上下文层叠上下文(stacking context)是html页面中的一个三维的概念，除了屏幕平面的x、y轴，在我们面向屏幕的方向上还有一个Z轴，页面元素在Z抽上的离我们最近的就会覆盖离我们远的元素，元素在Z轴上的远近也就是我们说的层叠顺序。">
-<meta name="twitter:image" content="http://image.zhangxinxu.com/image/blog/201601/2016-01-09_211116.png">
+<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528690762696&di=09dc96d6344a7f86d4598c48481c23ad&imgtype=0&src=http%3A%2F%2Fwww.th7.cn%2Fd%2Ffile%2Fp%2F2016%2F05%2F23%2Fd5214f2dea9b27fc409bf362f11056f3.jpg">
 
 
 
@@ -317,15 +317,14 @@
 
       
         <h2 id="一、什么是层叠上下文"><a href="#一、什么是层叠上下文" class="headerlink" title="一、什么是层叠上下文"></a>一、什么是层叠上下文</h2><p>层叠上下文(stacking context)是html页面中的一个三维的概念，除了屏幕平面的x、y轴，在我们面向屏幕的方向上还有一个Z轴，页面元素在Z抽上的离我们最近的就会覆盖离我们远的元素，元素在Z轴上的远近也就是我们说的层叠顺序。<br><a id="more"></a></p>
-<h2 id="二、什么是层叠顺序"><a href="#二、什么是层叠顺序" class="headerlink" title="二、什么是层叠顺序"></a>二、什么是层叠顺序</h2><p>层叠顺序(stacking order)决定一个层叠上下文中元素在Z抽上的顺序。规则如下<br><img src="http://image.zhangxinxu.com/image/blog/201601/2016-01-09_211116.png" alt="层叠顺序" title="层叠顺序"></p>
+<h2 id="二、什么是层叠顺序"><a href="#二、什么是层叠顺序" class="headerlink" title="二、什么是层叠顺序"></a>二、什么是层叠顺序</h2><p>层叠顺序(stacking order)决定一个层叠上下文中元素在Z抽上的顺序。规则如下<br><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1528690762696&amp;di=09dc96d6344a7f86d4598c48481c23ad&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.th7.cn%2Fd%2Ffile%2Fp%2F2016%2F05%2F23%2Fd5214f2dea9b27fc409bf362f11056f3.jpg" alt="层叠顺序" title="层叠顺序"></p>
 <h2 id="三、层叠上下文的特点"><a href="#三、层叠上下文的特点" class="headerlink" title="三、层叠上下文的特点"></a>三、层叠上下文的特点</h2><ol>
 <li>层叠上下文的层叠水平要比普通元素高；</li>
 <li>层叠上下文可以阻断元素的混合模式（<a href="http://www.zhangxinxu.com/wordpress/2016/01/understand-css3-isolation-isolate/" target="_blank" rel="noopener">mix-blend-mode</a>）；</li>
-<li>层叠上下文可以嵌套，内部层叠上下文及其所有子元素均受制于外部的层叠上下文。</li>
-<li>每个层叠上下文和兄弟元素独立，也就是当进行层叠变化或渲染的时候，只需要考虑后代元素。</li>
-<li>每个层叠上下文是自成体系的，当元素发生层叠的时候，整个元素被认为是在父层叠上下文的层叠顺序中。</li>
+<li>层叠上下文可以嵌套，层叠顺序只会在该层叠上下文起作用而不会影响外部。</li>
 </ol>
-<h2 id="四、层叠上下文的创建"><a href="#四、层叠上下文的创建" class="headerlink" title="四、层叠上下文的创建"></a>四、层叠上下文的创建</h2><ol>
+<h2 id="四、z-index与positionde关系"><a href="#四、z-index与positionde关系" class="headerlink" title="四、z-index与positionde关系"></a>四、z-index与positionde关系</h2><p>z-index起作用的前提是设置了position 为relative、absolute、fixed中的一种。</p>
+<h2 id="五、层叠上下文的创建"><a href="#五、层叠上下文的创建" class="headerlink" title="五、层叠上下文的创建"></a>五、层叠上下文的创建</h2><ol>
 <li>根层叠上下文html</li>
 <li>对于包含有position:relative/position:absolute的定位元素，以及FireFox/IE浏览器（不包括Chrome等webkit内核浏览器）（目前，也就是2016年初是这样）下含有position:fixed声明的定位元素，当其z-index值不是auto的时候，会创建层叠上下文。</li>
 <li>z-index值不为auto的flex项(父元素display:flex|inline-flex).</li>
@@ -337,7 +336,7 @@
 <li>will-change指定的属性值为上面任意一个。</li>
 <li>元素的-webkit-overflow-scrolling设为touch.</li>
 </ol>
-<h2 id="五、层叠上下文与层叠顺序"><a href="#五、层叠上下文与层叠顺序" class="headerlink" title="五、层叠上下文与层叠顺序"></a>五、层叠上下文与层叠顺序</h2><p>层叠顺序的比较，要在同一个层叠上下文下才有意义，它们遵守以下原则：<br>谁大谁上：当具有明显的层叠水平标示的时候，如识别的z-indx值，在同一个层叠上下文领域，层叠水平值大的那一个覆盖小的那一个。<br>后来居上：当元素的层叠水平一致、层叠顺序相同的时候，在DOM流中处于后面的元素会覆盖前面的元素。</p>
+<h2 id="六、层叠上下文与层叠顺序"><a href="#六、层叠上下文与层叠顺序" class="headerlink" title="六、层叠上下文与层叠顺序"></a>六、层叠上下文与层叠顺序</h2><p>层叠顺序的比较，要在同一个层叠上下文下才有意义，它们遵守以下原则：<br>谁大谁上：当具有明显的层叠水平标示的时候，如识别的z-indx值，在同一个层叠上下文领域，层叠水平值大的那一个覆盖小的那一个。<br>后来居上：当元素的层叠水平一致、层叠顺序相同的时候，在DOM流中处于后面的元素会覆盖前面的元素。</p>
 <p>参考资料：<a href="http://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/" target="_blank" rel="noopener">深入理解CSS中的层叠上下文和层叠顺序</a></p>
 
       
@@ -372,6 +371,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/18/css知识快餐-五/" rel="prev" title="css知识快餐-五 line-height">
+                css知识快餐-五 line-height <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -453,7 +456,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -490,7 +493,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、什么是层叠上下文"><span class="nav-text">一、什么是层叠上下文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、什么是层叠顺序"><span class="nav-text">二、什么是层叠顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、层叠上下文的特点"><span class="nav-text">三、层叠上下文的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、层叠上下文的创建"><span class="nav-text">四、层叠上下文的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、层叠上下文与层叠顺序"><span class="nav-text">五、层叠上下文与层叠顺序</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、什么是层叠上下文"><span class="nav-text">一、什么是层叠上下文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、什么是层叠顺序"><span class="nav-text">二、什么是层叠顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、层叠上下文的特点"><span class="nav-text">三、层叠上下文的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、z-index与positionde关系"><span class="nav-text">四、z-index与positionde关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、层叠上下文的创建"><span class="nav-text">五、层叠上下文的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、层叠上下文与层叠顺序"><span class="nav-text">六、层叠上下文与层叠顺序</span></a></li></ol></div>
             
 
           </div>

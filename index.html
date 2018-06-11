@@ -233,6 +233,1214 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/21/promise的原理及实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/21/promise的原理及实现/" itemprop="url">promise的原理及实现</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-21T12:23:23+08:00">
+                2018-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/05/21/promise的原理及实现/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2018/05/21/promise的原理及实现/" class="cy_cmt_count" data-xid="2018/05/21/promise的原理及实现/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="异步回调函数的缺点"><a href="#异步回调函数的缺点" class="headerlink" title="异步回调函数的缺点"></a>异步回调函数的缺点</h2><ol>
+<li>书写顺序与代码执行顺序不一样，不利于维护与阅读</li>
+<li>异步操作顺序发生变更的时候，需要不规模的代码重构</li>
+<li>回调函数大多数都是匿名函数，导致bug不易追踪</li>
+</ol>
+<h2 id="Promise是什么"><a href="#Promise是什么" class="headerlink" title="Promise是什么"></a>Promise是什么</h2><p>Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。</p>
+<h2 id="Promise的使用"><a href="#Promise的使用" class="headerlink" title="Promise的使用"></a>Promise的使用</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> promiseA = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 异步操作，根据操作结果调用resolve或者reject方法</span></span><br><span class="line">    <span class="comment">// 调用后续所有then方法里的回调</span></span><br><span class="line">    resolve(<span class="number">1</span>);</span><br><span class="line">&#125;)</span><br><span class="line">promiseA.then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data); <span class="comment">// 1</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> promiseB = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 异步操作，根据操作结果调用resolve或者reject方法</span></span><br><span class="line">    <span class="comment">// 调用后续第一个catch方法里的回调</span></span><br><span class="line">    reject(<span class="number">1</span>);</span><br><span class="line">&#125;)</span><br><span class="line">promiseB.catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);<span class="comment">// 1</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Promise的状态"><a href="#Promise的状态" class="headerlink" title="Promise的状态"></a>Promise的状态</h2><ol>
+<li>pending<br>创建promise对象后的初始状态</li>
+<li>fullfiled<br>调用resolve后的状态，会执行所有then函数里面的回调函数</li>
+<li>reject<br>调用reject的状态，会执行第一个catch 函数里面的回调函数<br>注意：状态只能按照固定的方向变化，只能从pending=&gt;fullfiled或者从pending=&gt;reject</li>
+</ol>
+<h2 id="Promise的实例方法"><a href="#Promise的实例方法" class="headerlink" title="Promise的实例方法"></a>Promise的实例方法</h2><h2 id="then方法"><a href="#then方法" class="headerlink" title="then方法"></a>then方法</h2><ol>
+<li><p>then注册调用resolve后即状态变成fullfiled状态后会调用的回调函数，then方法会返回一个新的promise对象，所以可以支持链式的写法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task A"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskB</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task B"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;);</span><br><span class="line">promise</span><br><span class="line">    .then(taskA)</span><br><span class="line">    .then(taskB)</span><br><span class="line"> <span class="comment">// 结果 Task A Task B</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>then方法可接受第二个回调函数，改函数处理前面promise以及then中发生的异常或者reject的状态变更。<br>1) reject状态处理</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task A"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskB</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task B"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">errHandler</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"发生错误了"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    reject();</span><br><span class="line">&#125;);</span><br><span class="line">promise</span><br><span class="line">    .then(taskA)</span><br><span class="line">    .then(taskB, errHandler)</span><br><span class="line"> <span class="comment">// 结果 发生错误了</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>2）运行时异常处理<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task A"</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>();<span class="comment">// 抛出异常</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskB</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task B"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">errHandler</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"发生错误了"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;);</span><br><span class="line">promise</span><br><span class="line">    .then(taskA)</span><br><span class="line">    .then(taskB, errHandler)</span><br><span class="line"> <span class="comment">// 结果 Task A 发生错误了</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task A"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskB</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task B"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">errHandler</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"发生错误了"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>();<span class="comment">// 抛出异常</span></span><br><span class="line">&#125;);</span><br><span class="line">promise</span><br><span class="line">    .then(taskA)</span><br><span class="line">    .then(taskB, errHandler)</span><br><span class="line"> <span class="comment">// 结果 发生错误了</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task A"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskB</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task B"</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>();<span class="comment">// 抛出异常</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">errHandler</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"发生错误了"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;);</span><br><span class="line">promise</span><br><span class="line">    .then(taskA)</span><br><span class="line">    .then(taskB, errHandler)</span><br><span class="line"> <span class="comment">// 结果 无法捕获到异常</span></span><br></pre></td></tr></table></figure>
+<h1 id="catch方法"><a href="#catch方法" class="headerlink" title="catch方法"></a>catch方法</h1><ol>
+<li><p>catch注册调用reject后即状态变成fullfiled状态以及运行时发生异常后会调用的回调函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task A"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskB</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task B"</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>();<span class="comment">// 抛出异常</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">errHandler</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"发生错误了"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;);</span><br><span class="line">promise</span><br><span class="line">    .then(taskA)</span><br><span class="line">    .then(taskB)</span><br><span class="line">    .catch(errHandler)</span><br><span class="line"><span class="comment">// 结果 Task A Task B 发生错误了</span></span><br></pre></td></tr></table></figure>
+<p>注意catch只能捕获到catch函数之前的所有then的回调函数、promise内部逻辑的异常及reject状态。</p>
+<ol>
+<li>finally<br>实例对象promise状态变成fulfilled或者reject，在then或者catch方法执行完毕后执行。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task A"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskB</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task B"</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>();<span class="comment">// 抛出异常</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">errHandler</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"发生错误了"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">finalTask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task Final"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;);</span><br><span class="line">promise</span><br><span class="line">    .then(taskA)</span><br><span class="line">    .then(taskB)</span><br><span class="line">    .catch(errHandler)</span><br><span class="line">    .finally(finalTask)</span><br><span class="line"><span class="comment">// 结果 Task A Task B 发生错误了</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<p>注意，如果状态是pending状态，finally的回调是不会执行的</p>
+<h2 id="Promise静态方法"><a href="#Promise静态方法" class="headerlink" title="Promise静态方法"></a>Promise静态方法</h2><ol>
+<li><p>Promise.resolve<br>返回一个fulfilled状态的Promise实例对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Promise.resolve(&apos;hello&apos;).then(function(value)&#123;</span><br><span class="line">    console.log(value);// hello</span><br><span class="line">&#125;);</span><br><span class="line">// 等价于</span><br><span class="line">var promise = new Promise(function(resolve, reject) &#123;</span><br><span class="line">    resolve(&apos;hello&apos;);</span><br><span class="line">&#125;)</span><br><span class="line">promise.then(function(value) &#123;</span><br><span class="line">    console.log(value);// hello</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Promise.reject<br>返回一个reject状态的Promise实例对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Promise.reject(&apos;hello&apos;).catch(function(value)&#123;</span><br><span class="line">    console.log(value);// hello</span><br><span class="line">&#125;);</span><br><span class="line">// 等价于</span><br><span class="line">var promise = new Promise(function(resolve, reject) &#123;</span><br><span class="line">    reject(&apos;hello&apos;);</span><br><span class="line">&#125;)</span><br><span class="line">promise.catch(function(value) &#123;</span><br><span class="line">    console.log(value);// hello</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Promise.all<br>接受一个promise实例的数组，当数组的promise对象全部变为fulfilled后，执行回调函数，会滴哦啊函数接受promise执行完成后的结果数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="built_in">Promise</span>.resolve(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="built_in">Promise</span>.resolve(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p3 = <span class="built_in">Promise</span>.resolve(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.all([p1, p2, p3]).then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data); <span class="comment">// [1, 2, 3]</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>当其中一个发生异常就会走到catch的回调而不执行then回调<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="built_in">Promise</span>.resolve(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="built_in">Promise</span>.resolve(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p3 = <span class="built_in">Promise</span>.reject(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.all([p1, p2, p3]).then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err); <span class="comment">// 3</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>Promise.race<br>接受一个数组，只要有一个promise的状态变成fulfilled或者reject状态就会执行后续的回地调<br>1）变成fulfilled<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">timerPromisefy</span>(<span class="params">delay</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            resolve(delay);<span class="comment">// fulfilled状态</span></span><br><span class="line">        &#125;, delay);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.race([</span><br><span class="line">    timerPromisefy(<span class="number">10</span>),</span><br><span class="line">    timerPromisefy(<span class="number">20</span>),</span><br><span class="line">    timerPromisefy(<span class="number">30</span>)</span><br><span class="line">]).then(<span class="function"><span class="keyword">function</span> (<span class="params">values</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(values); <span class="comment">// 10</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>2）变成reject状态<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">timerPromisefy</span>(<span class="params">delay</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            reject(delay);<span class="comment">// reject状态</span></span><br><span class="line">        &#125;, delay);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.race([</span><br><span class="line">    timerPromisefy(<span class="number">10</span>),</span><br><span class="line">    timerPromisefy(<span class="number">20</span>),</span><br><span class="line">    timerPromisefy(<span class="number">30</span>)</span><br><span class="line">]).catch(<span class="function"><span class="keyword">function</span> (<span class="params">values</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(values); <span class="comment">// 10</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="Promise的代码实现"><a href="#Promise的代码实现" class="headerlink" title="Promise的代码实现"></a>Promise的代码实现</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Promise</span>(<span class="params">excutor</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> self = <span class="keyword">this</span></span><br><span class="line">  self.status = <span class="string">'pending'</span></span><br><span class="line">  self.value = <span class="literal">null</span></span><br><span class="line">  self.reason = <span class="literal">null</span></span><br><span class="line">  self.onFulfilledCallbacks = []</span><br><span class="line">  self.onRejectedCallbacks = []</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">resolve</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (self.status === <span class="string">'pending'</span>) &#123;</span><br><span class="line">      self.value = value</span><br><span class="line">      self.status = <span class="string">'fulfilled'</span></span><br><span class="line">      self.onFulfilledCallbacks.forEach(<span class="function"><span class="params">item</span> =&gt;</span> item())</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">reject</span>(<span class="params">reason</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (self.status === <span class="string">'pending'</span>) &#123;</span><br><span class="line">      self.reason = reason</span><br><span class="line">      self.status = <span class="string">'rejected'</span></span><br><span class="line">      self.onRejectedCallbacks.forEach(<span class="function"><span class="params">item</span> =&gt;</span> item())</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    excutor(resolve, reject)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    reject(err)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.prototype.then = <span class="function"><span class="keyword">function</span> (<span class="params">onFulfilled, onRejected</span>) </span>&#123;</span><br><span class="line">  onFulfilled = <span class="keyword">typeof</span> onFulfilled === <span class="string">'function'</span> ? onFulfilled :  <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;resolve(data)&#125;</span><br><span class="line">  onRejected = <span class="keyword">typeof</span> onRejected === <span class="string">'function'</span> ? onRejected : <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;<span class="keyword">throw</span> err&#125;</span><br><span class="line">  <span class="keyword">let</span> self = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">if</span> (self.status === <span class="string">'fulfilled'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> x = onFulfilled(self.value)</span><br><span class="line">        <span class="keyword">if</span> (x <span class="keyword">instanceof</span> <span class="built_in">Promise</span>) &#123;</span><br><span class="line">          x.then(resolve, reject)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          resolve(x)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        reject(err)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (self.status === <span class="string">'rejected'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> x = onRejected(self.reason)</span><br><span class="line">        <span class="keyword">if</span> (x <span class="keyword">instanceof</span> <span class="built_in">Promise</span>) &#123;</span><br><span class="line">          x.then(resolve, reject)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          resolve(x)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        reject(err)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (self.status === <span class="string">'pending'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      self.onFulfilledCallbacks.push(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> x = onFulfilled(self.value)</span><br><span class="line">        <span class="keyword">if</span> (x <span class="keyword">instanceof</span> <span class="built_in">Promise</span>) &#123;</span><br><span class="line">          x.then(resolve, reject)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          resolve(x)<span class="comment">// resolve这个新的promise，遍历下一个then函数收集的回调函数</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">      self.onRejectedCallbacks.push(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> x = onRejected(self.reason)</span><br><span class="line">        <span class="keyword">if</span> (x <span class="keyword">instanceof</span> <span class="built_in">Promise</span>) &#123;</span><br><span class="line">          x.then(resolve, reject)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          resolve(x)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.prototype.catch = <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.then(<span class="literal">null</span>, fn)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(参考资料)[<a href="https://juejin.im/post/5aab8cb8f265da239a5f9064" target="_blank" rel="noopener">https://juejin.im/post/5aab8cb8f265da239a5f9064</a>]</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/13/immutableJs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/13/immutableJs/" itemprop="url">immutableJs</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T17:08:04+08:00">
+                2018-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/05/13/immutableJs/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2018/05/13/immutableJs/" class="cy_cmt_count" data-xid="2018/05/13/immutableJs/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>创建一个不可改变的数据，可以用相应的api给予原immutable数据的时候会创建一个新的immutable数据，该数据是会共享原始数据未改变部分的属性。但和原来比较是不想等的，可以用 === 比较，这个可以解决react里shouldComponentUpdate里，因为引用相同，而不去更新组件，但是数据实际是改变里的情况。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/13/redux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/13/redux/" itemprop="url">redux</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T17:06:10+08:00">
+                2018-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/05/13/redux/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2018/05/13/redux/" class="cy_cmt_count" data-xid="2018/05/13/redux/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="单线数据流"><a href="#单线数据流" class="headerlink" title="单线数据流"></a>单线数据流</h2><p>用户触发action -&gt; reducer -&gt; state改变</p>
+<h2 id="三个要点"><a href="#三个要点" class="headerlink" title="三个要点"></a>三个要点</h2><ol>
+<li>单一store</li>
+<li>只读state</li>
+<li>reducer为纯函数</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/13/canvas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/13/canvas/" itemprop="url">canvas</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T17:03:01+08:00">
+                2018-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/05/13/canvas/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2018/05/13/canvas/" class="cy_cmt_count" data-xid="2018/05/13/canvas/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="canvas-常用api"><a href="#canvas-常用api" class="headerlink" title="canvas 常用api"></a>canvas 常用api</h2><p> (参考资料)[<a href="https://blog.csdn.net/SeekerTime/article/details/70255861" target="_blank" rel="noopener">https://blog.csdn.net/SeekerTime/article/details/70255861</a>]</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/28/js正则表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/28/js正则表达式/" itemprop="url">js正则表达式</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-28T13:44:22+08:00">
+                2018-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/04/28/js正则表达式/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2018/04/28/js正则表达式/" class="cy_cmt_count" data-xid="2018/04/28/js正则表达式/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="正则匹配的两种模式"><a href="#正则匹配的两种模式" class="headerlink" title="正则匹配的两种模式"></a>正则匹配的两种模式</h2><ol>
+<li>横向匹配<br>一个正则可匹配的字符串长度是不固定的，比如/a{m,n}/</li>
+<li>纵向匹配<br>一个正则匹配到的字符串，具体到其中某一位，可能有多种情况，如/[abc]/</li>
+</ol>
+<h2 id="字符组"><a href="#字符组" class="headerlink" title="字符组"></a>字符组</h2><ol>
+<li>含义<br>表示一个组合中其中的一个字符，如[abc],表示a、b、c其中的某一个</li>
+<li>范围表示法<br>当某一个字符组的范围太大的时候，为方便书写，可用范围表示法，如[a-z][A-Z]</li>
+<li>排除字符组<br>表示其中某一位不能是某个字符组里的任何一个，如[^abc],表示不能是abc中的任何一位</li>
+<li>字符组简写<br>1）/d 表示[0-9],表示任意一位数字。d就是digit(数字)的简写<br>2）/D 表示除数字外的任意一个字符<br>3）\w 表示[0-9a-zA-Z]中的任意一个字符，w就是word的简写，就是单词字符<br>4）\W 表示非单词字符<br>5）\s 表示空白字符，包括空格、制表符、换行符等，s就是space的意思<br>6）\S 表示非空白字符<br>7）. 就是[^\n\r\u2028\u2029]，表示除换行符、回车符、行分割符和段分隔符意外的任意字符</li>
+</ol>
+<p>小技巧，虽然.不能匹配任意字符，但可以用[\d\D]、[\s\S]、[\w\W]、[^]表示任意字符</p>
+<h2 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h2><ol>
+<li>含义<br>用来表示某个字符组出现的次数，比如{m,n}表示出现m到n次</li>
+<li>简写<br>1）{m,} 表示至少出现m次<br>2）{m} 等价于{m,m},表示至少出现m次<br>3）？ 等价于{0,1}，表示出现0次到1次。记忆方式，加个问号，表示有没有，没有就是0，有就是1个<br>4) + 等价于{1,},表示至少1次，记忆方式。+就是表示已经有一个了，还想要更多的<br>5) <em> 等价于{0,} 表示任意次数，有可能有，有可能没有。记忆方式，</em>号就是表示任意的</li>
+<li>贪婪匹配<br>例子：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> regex = <span class="regexp">/\d&#123;2,5&#125;/g</span>;</span><br><span class="line"><span class="keyword">var</span> string = <span class="string">"123 1234 12345 123456"</span>;</span><br><span class="line"><span class="built_in">console</span>.log( string.match(regex) ); </span><br><span class="line"><span class="comment">// =&gt; ["123", "1234", "12345", "12345"]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>其中/\d{2,5}/，表示匹配2到5个数字，连续的2个、3个、4个、5个数字都是满足匹配的，但是结果为什么不是[“12”,…]呢，原因就是贪婪匹配的原则。<br>因为正则匹配有量词的时候它是贪婪的，它会尽可能的去匹配更多的字符串，比如你给我3个字符，虽然两个字符也满足，但是我要匹配到尽量多的，所以我就要3个，同理，给我4个我就要4个，给我5个我就要5个，只要满足匹配，越多越好。</p>
+<ol>
+<li>惰性匹配<br>如果我们不想要贪婪匹配，而是想匹配尽量少的字符串，那么我们在量词后面加个?号就可以了，比如<br>{m,n}?<br>{m,}?<br>??<br>+?<br>*?<br>记忆方式，量词后面加？，问一问你满足了吗？你太贪婪了</li>
+</ol>
+<h2 id="多选分支"><a href="#多选分支" class="headerlink" title="多选分支"></a>多选分支</h2><p>一个模式可以实现横向或者纵向模糊匹配。而多个分支可以支持多</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/22/面试未答好问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/22/面试未答好问题/" itemprop="url">面试问题总结</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-22T17:31:42+08:00">
+                2018-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/04/22/面试未答好问题/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2018/04/22/面试未答好问题/" class="cy_cmt_count" data-xid="2018/04/22/面试未答好问题/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="一、http2-0"><a href="#一、http2-0" class="headerlink" title="一、http2.0"></a>一、http2.0</h3><ol>
+<li>先说说http1.x的缺点：<br>在http1.0的,再没开启connection：keep-alive的情况下。一次请求就会建立一个tcp连接，建立tcp连接是有延时的，因为需要经过三次握手。而浏览器对每个域名可创建的连接数是有限制的，因此资源的请求还需要排队（head of line blocking），同时，TCP连接会随着时间进行自我调谐，起初会限制连接的最大速度，如果数据传输成功，会随着时间的推移提高传输的速度，而http都是些短连接，tcp后续速度提升的特性不利用起来。这些归根结底就是没有复用连接，比较慢。<br>http1.1默认开启connection：keep-alive，一定程度上复用了连接，但是短时间的复用，一般15s，同时一个连接里面也只允许一个连接和一个响应。</li>
+<li>http2.0<br>http2就是针对http1.x的缺点而生的<br>1）单一长连接<br>2）多路复用<br>4）头部压缩、二进制分帧<br>4）服务端推送server push<br><a href="https://cloud.tencent.com/developer/article/1004874" target="_blank" rel="noopener">参考文章1</a><br><a href="https://www.zhihu.com/question/34074946" target="_blank" rel="noopener">参考文章2</a></li>
+<li>不定宽弹框上下居中<br>1）flex弹性盒子<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">	<span class="selector-class">.parent</span> &#123;</span></span><br><span class="line"><span class="undefined">			display: flex;</span></span><br><span class="line"><span class="undefined">			align-items: center;</span></span><br><span class="line"><span class="undefined">			justify-content: center;</span></span><br><span class="line"><span class="undefined">			height: 100%;</span></span><br><span class="line"><span class="undefined">			width: 100%;</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="css">	<span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">		background-color: red;</span></span><br><span class="line"><span class="undefined">	&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">      我是内容</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>优点：简单<br>缺点：PC端兼容性差<br>2）table 布局 + vertical-align<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.parent</span> &#123;</span></span><br><span class="line"><span class="undefined">  display: table;</span></span><br><span class="line"><span class="css">  <span class="selector-tag">text-align</span><span class="selector-pseudo">:center</span>;</span></span><br><span class="line"><span class="undefined">  width: 100%;</span></span><br><span class="line"><span class="undefined">  height: 100%;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"><span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">  display: table-cell;</span></span><br><span class="line"><span class="css">  <span class="selector-tag">vertical-align</span><span class="selector-pseudo">:middle</span>;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"><span class="selector-class">.content</span> &#123;</span></span><br><span class="line"><span class="undefined">	background-color: red;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span>我是内容<span class="tag">&lt;/<span class="name">span</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>有点：兼容性好<br>缺点：居中的子元素会有padding，导致设置背景颜色会占满整个父元素，解决办法是在子元素内在写一个元素</p>
+<p>3）postion + translate<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">	<span class="selector-class">.parent</span> &#123;</span></span><br><span class="line"><span class="undefined">	    position: relative;</span></span><br><span class="line"><span class="undefined">	    width: 100%;</span></span><br><span class="line"><span class="undefined">	    height: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">	<span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">		position: absolute;</span></span><br><span class="line"><span class="undefined">		top: 50%;</span></span><br><span class="line"><span class="undefined">		left: 50%;</span></span><br><span class="line"><span class="undefined">		transform: translate(-50%,-50%);</span></span><br><span class="line"><span class="undefined">	&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">      我是内容</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>优点：书写较简单<br>缺点：transform在PC端兼容性较差</p>
+<p>4）line-height+ vertical-align<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.parent</span> &#123;</span></span><br><span class="line"><span class="undefined">        line-height: 500px;</span></span><br><span class="line"><span class="undefined">        text-align: center;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">        display: inline-block;</span></span><br><span class="line"><span class="undefined">         vertical-align: middle;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">line-height</span>: <span class="selector-tag">normal</span>;<span class="comment">/*重置父元素继承的行高*/</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">p</span>&gt;</span>我是内容<span class="tag">&lt;/<span class="name">br</span>&gt;</span>我是内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>优点：可实现多行文本居中<br>缺点：由于line-height无法设置占满整个屏幕，因为100%对应的是父元素font-size的100%，所以无法自适应的实现竖直居中，需要给父元素设置具体的高度才行。</p>
+<p>5）before + vertical-align<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.parent</span> &#123;</span></span><br><span class="line"><span class="undefined">        width: 600px;</span></span><br><span class="line"><span class="undefined">        height: 400px;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">background</span>: <span class="selector-id">#f1f1f1</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.parent</span><span class="selector-pseudo">::before</span> &#123;</span></span><br><span class="line"><span class="undefined">        content: '';</span></span><br><span class="line"><span class="undefined">        display: inline-block;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">        vertical-align: middle;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">        background-color: red;</span></span><br><span class="line"><span class="undefined">            display: inline-block;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">      我是内容</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="二、str-replace，如何从一个字符串中替换出数字"><a href="#二、str-replace，如何从一个字符串中替换出数字" class="headerlink" title="二、str.replace，如何从一个字符串中替换出数字"></a>二、str.replace，如何从一个字符串中替换出数字</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'wdy7da767as67dada6d'</span>;</span><br><span class="line">str.replace(<span class="regexp">/\d+/g</span>,<span class="string">""</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="三、ul下第一个和最后一个交换位置"><a href="#三、ul下第一个和最后一个交换位置" class="headerlink" title="三、ul下第一个和最后一个交换位置"></a>三、ul下第一个和最后一个交换位置</h3><h3 id="四、require的原则"><a href="#四、require的原则" class="headerlink" title="四、require的原则"></a>四、require的原则</h3><p>假设Y是路径，X是文件名或目录名，当 Nodejs 遇到 require(Y+X) 时，按照下面的顺序处理：</p>
+<ol>
+<li>如果带路径<br>　　a.把X当成文件，从指定路径开始，依次查找下面文件：X、X.js、X.json、X.node，只要其中一个存在，就返回该文件，不再继续执行<br>　　b.把X当成目录，从指定路径开始，依次查找下面文件：X/package.json(main字段)、X/index.js、X/index.json、X/index.node，只要其中一个存在，就返回该文件，不再继续执行</li>
+<li>如果不带路径<br>a. 如果是核心模块<br>直接返回改模板<br>b. 如果不是核心模块<br>尝试从它的 /node_module 目录里加载模块，如果还是没有找到，则移动到再上一层父目录，直到文件系统的根目录<h3 id="五、数组的sort"><a href="#五、数组的sort" class="headerlink" title="五、数组的sort"></a>五、数组的sort</h3></li>
+<li><p>不传入compareFunction，默认的sort是按照unicode 编码排序的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fruit = [<span class="string">'cherries'</span>, <span class="string">'apples'</span>, <span class="string">'bananas'</span>];</span><br><span class="line">fruit.sort(); </span><br><span class="line"><span class="comment">// ['apples', 'bananas', 'cherries']</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>传入compareFunction<br>1）如果 compareFunction(a, b) 小于 0 ，那么 a 会被排列到 b 之前；<br>2）如果 compareFunction(a, b) 等于 0 ， a 和 b 的相对位置不变。备注： ECMAScript 标准并不保证这一行为，而且也不是所有浏览器都会遵守（例如 Mozilla 在 2003 年之前的版本）；<br>3）如果 compareFunction(a, b) 大于 0 ， b 会被排列到 a 之前。<br>4）compareFunction(a, b) 必须总是对相同的输入返回相同的比较结果，否则排序的结果将是不确定的。</p>
+</li>
+</ol>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/sort" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="六、一个div如何加两层border"><a href="#六、一个div如何加两层border" class="headerlink" title="六、一个div如何加两层border"></a>六、一个div如何加两层border</h3><ol>
+<li>设置box-shadow（内阴影、外阴影）</li>
+<li>设置outline<br><a href="http://www.jb51.net/css/464735.html" target="_blank" rel="noopener">参考资料</a><br>补充<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.box</span> &#123;</span></span><br><span class="line"><span class="undefined">    position: relative;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">width</span><span class="selector-pseudo">:100px</span>;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">height</span><span class="selector-pseudo">:100px</span>;</span></span><br><span class="line"><span class="undefined">    border: 5px splid balck;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"> <span class="selector-class">.box</span><span class="selector-pseudo">::before</span>&#123;</span></span><br><span class="line"><span class="undefined">    content: '';</span></span><br><span class="line"><span class="undefined">    display: inline-block;</span></span><br><span class="line"><span class="undefined">    position: absolute;</span></span><br><span class="line"><span class="undefined">    top: 0;</span></span><br><span class="line"><span class="undefined">    left: 0;</span></span><br><span class="line"><span class="undefined">    right: 0;</span></span><br><span class="line"><span class="undefined">    border: 5px solid yellow;</span></span><br><span class="line"><span class="undefined">    bottom: 0;</span></span><br><span class="line"><span class="undefined"> &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="七、https验证签名的算法"><a href="#七、https验证签名的算法" class="headerlink" title="七、https验证签名的算法"></a>七、https验证签名的算法</h3><ol>
+<li>服务器生成一对公钥私钥，服务器以公钥和其他相关信息会根据hash算法得到摘要信息，利用CA的私钥对摘要进行加密得到数字签名。</li>
+<li>将数字证书下发到浏览器后，浏览器首先根据同样的hash算法得到摘要，再用内置的CA公钥对签名进行解密得到原始的摘要信息，对两者进行比对，确定是否一致。不一致的话说明内容可能被修改过，或者说证书不是CA颁发的（因为用CA私钥加密的信息用CA公钥才能正确还原，也就是说证书签名不是用CA的私钥加密的）<br><a href="https://juejin.im/post/59e4c02151882578d02f4aca" target="_blank" rel="noopener">参考资料</a><br><a href="https://blog.csdn.net/abinge317/article/details/51791856" target="_blank" rel="noopener">参考资料</a></li>
+</ol>
+<h3 id="八、cookie、localstorage、sessionstorage本质区别"><a href="#八、cookie、localstorage、sessionstorage本质区别" class="headerlink" title="八、cookie、localstorage、sessionstorage本质区别"></a>八、cookie、localstorage、sessionstorage本质区别</h3><ol>
+<li>储存大小<br>localStorage和sessionStorage：可以保存5MB的信息。<br>cookie：4KB左右</li>
+<li><p>生命周期<br>1）cookie 可设置失效时间，exipre &gt; 0,存在磁盘上，exipre = 0，清除cookie，exipre &lt; 0存在内存，关闭浏览器自动清除（默认）<br>2）localStorage 除非被手动清除，否则将会永久保存<br>3）仅在当前网页会话下有效，关闭页面或浏览器后就会被清除。</p>
+</li>
+<li><p>与服务端交互<br>1）cookie 可在服务端响应头设置，同时发送请求时也会带上cookie<br>2）localStorage和sessionStorage于服务端无关联</p>
+</li>
+</ol>
+<p><a href="https://juejin.im/post/5a191c47f265da43111fe859" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="九、-call，apply，bind的异同"><a href="#九、-call，apply，bind的异同" class="headerlink" title="九、 call，apply，bind的异同"></a>九、 call，apply，bind的异同</h3><p>bind接受的第一个参数，是this的指向，后续的参数是函数对应的参数，一个一个传入，返回接受剩余参数的函数。<br>ES5中bind方法的特性， 这种技术也被称为函数柯里化<br>柯里化使用场景</p>
+<ol>
+<li>延迟计算</li>
+<li>复用参数</li>
+<li>动态创建函数<br><a href="https://www.zhihu.com/question/37774367/answer/192978122" target="_blank" rel="noopener">参考资料</a></li>
+</ol>
+<h3 id="十、cors的原理"><a href="#十、cors的原理" class="headerlink" title="十、cors的原理"></a>十、cors的原理</h3><p>cors请求分为简单请求和非简单请求</p>
+<ol>
+<li>简单请求<br>1）规则<br>满足以下下条件，就是简单请求<br> 请求方法是head、get、post之中的一种<br> 请求头不超出一下字段：Accept、Accept-Language、Content-language、Last-Event-ID、Content-Type（只限三个值 application/x-www-form-urlencoded、multipart/form-data、text-plain）</li>
+</ol>
+<p>Last-Event-ID是服务器推送事件中，如果与服务器端的连接中断，当浏览器端再次进行连接时，会通过 HTTP 头“Last-Event-ID”来声明最后一次接收到的事件的标识符。服务器端可以通过浏览器端发送的事件标识符来确定从哪个事件开始来继续连接。<br>2）流程<br> a. 浏览器发现异步请求是跨域的，就会在请求头里加上一个origin字段，表示当前请求所在的域名<br> b. 服务器收到该请求，根据Origin字段来判断是否在允许范围内，如果不在，服务器会返回一个正常的http响应，<br> c. 浏览器收到后，会根据Access-Control-Alow-Origin判断自己的源是否在Access-Control-Alow-Origin的允许范围内，如果在请求成功，不在，也会抛出异常。<br> 注意：有可能非简单请求数据是成功返回的200，并且也有数据。</p>
+<ol>
+<li>非简单请求<br>1）规则<br>除了简单请求意外的可能情况，比如put、delete请求方法，content-type是applocation/json<br>2)流程<br>a.当浏览器发现请求是一个非简单请求时，在正式请求之前会发送一个预检请求，该请求是option方法，该请求里会携带Origin字段，另外还有Access-Control-Request-Method（会用的到请求方法，比如put），Access-Control-Request-Header（会发送的请求头）<br>b.服务器收到option请求后，根据情况会返回对应的Access-Control-Allow-Origin，同时还有Access-Control-Allow-Methods以及Access-Control-Allow-Headers<br>c.浏览器收到后，会根据Access-Control-Alow-Origin、Access-Control-Allow-Methods以及Access-Control-Allow-Headers判断自己的源是否在Access-Control-Alow-Origin的允许范围内，如果在请求成功，不在，也会抛出异常<br>d.浏览器会缓存收到的option 请求，避免每次请求都发送预检option 请求，缓存的时间可由Access-Control-Max-Age控制。</li>
+</ol>
+<p><a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="noopener">cors参考资料</a><br><a href="https://blog.csdn.net/u011627980/article/details/51362799" target="_blank" rel="noopener">服务器推送参考资料</a></p>
+<h3 id="十一、promise"><a href="#十一、promise" class="headerlink" title="十一、promise"></a>十一、promise</h3><ol>
+<li>promise是什么？有什么作用？<br>Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。<br>2 promise的状态有哪些<br>1)pending<br>创建promise对象后的初始状态<br>2)fullfiled<br>调用resolve后的状态，会执行所有then函数里面的回调函数<br>3)reject<br>调用reject的状态，会执行第一个catch 函数里面的回调函数<br>注意：状态只能按照固定的方向变化，只能从pending=&gt;fullfiled或者从pending=&gt;reject</li>
+</ol>
+<p><a href="http://www.ituring.com.cn/article/120765" target="_blank" rel="noopener">参考资料</a></p>
+<p>###. 事件循环</p>
+<ol>
+<li>浏览器事件循环<br><a href="http://blog.wenqingxin.com/2018/03/10/js%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/" target="_blank" rel="noopener">参考资料</a></li>
+<li>node事件循环<br><a href="https://juejin.im/post/5ab88836f265da237410f701" target="_blank" rel="noopener">参考资料</a></li>
+<li>浏览器与node事件循环的差别<br>1）浏览器执行队列任务是按照概率来选择任务队列，而node执行队列的顺序是按照timer queue、IO queue、check queue、close queue<br>2）浏览器每次是每次先执行一个宏任务，然后执行并清空所有的微任务队列，node每次都执行清空当前阶段的全部任务，比如timer queue，然后再执行清空process.nextTick任务队列，最后再执行清空微任务队列。<br>3）浏览器里没有nextTick队列，而node有。</li>
+</ol>
+<p>###. 输入网址到页面呈现的流程<br><a href="https://segmentfault.com/a/1190000006879700" target="_blank" rel="noopener">参考资料</a></p>
+<ol>
+<li>301于302重定向的区别<br>1）301 永久重定向<br>2）302 临时重定向<br>302的时候搜索引擎会认为跳转是临时的，网站域名随时可以指向新的内容，搜索引擎会抓取新的内容而保留旧的地址。<br>301的时候，搜索引擎任务资源已经永久发生了变更，搜索引擎在抓取新的内容的同时也将旧的网址替换为了重定向之后的网址。</li>
+</ol>
+<p>###. var、let、const区别</p>
+<ol>
+<li>var存在变量提升，而let不会</li>
+<li>var是函数作用域，而let是块级作用域</li>
+<li>var能重复声明同一个变量，而let不会</li>
+</ol>
+<p>const</p>
+<ol>
+<li>声明的时候必须赋予初始值</li>
+<li>不能重新赋值</li>
+<li>是引用类型的时候可以改变内部的属性值</li>
+<li>不能重复声明同一变量</li>
+</ol>
+<h3 id="git-rebase"><a href="#git-rebase" class="headerlink" title="git rebase"></a>git rebase</h3><ol>
+<li>原理<br>将当前分支指向目标分支的最新提交版本，然后提取当前分支/从初始版本开始的修改依次应用到这个最新提交版本的后面</li>
+<li>黄金定律<br>不要对在你的仓库外有副本的分支执行变基。<br>变基操作的 实质是丢弃一些现有的提交，然后相应地新建一些内容一样但实际上不同的提交。 如果你已经将提交推送至某个仓库，而其他人也已经从该仓库拉取提交并进行了后续工作，此时，如果你用 git rebase 命令重新整理了提交并再次推送，你的同伴因此将不得不再次将他们手头的工作与你的提交进行整合，如果接下来你还要拉取并整合他们修改过的提交，事情就会变得一团糟。<br>总的原则是，只对尚未推送或分享给别人的本地修改执行变基操作清理历史，从不对已推送至别处的提交执行变基操作，这样，你才能享受到两种方式带来的便利。</li>
+</ol>
+<p>git merge的<br>Git会根据两个分支的最新提交进行一个三方合并，然后将合并中修改的内容生成一个新的版本提交。</p>
+<p>区别:<br>对于两个分支而言，rebase和merge没有区别，但是rebase更干净，因为log hisitory是线性的，但commit不一定按日期先后排，而是local commit总在后面,merge之后history变得比较复杂，但是commit按日期排序,stackoverflow上有个图示很好:<br><a href="https://www.jianshu.com/p/c17472d704a0" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h3><ol>
+<li>异步</li>
+<li>合并状态对象</li>
+<li>接受参数<br>1) 对象<br>2）对象，函数<br>3）函数 接受参数 prevState，props，计算结果同步<br><a href="https://juejin.im/post/5a155f906fb9a045284622b4" target="_blank" rel="noopener">参考资料</a></li>
+</ol>
+<h3 id="react-通信"><a href="#react-通信" class="headerlink" title="react 通信"></a>react 通信</h3><ol>
+<li>父子组件通信<br>父组件向子组件传递props</li>
+<li>子组件向父组件通信<br>父组件通过props向子组件传递一个函数，子组件通过调用这个函数并传递参数来传递数据。</li>
+<li>跨级组件通信<br>1）中间组件通过props层层传递信息<br>2）使用context对象<br>父组件需要声明自己支持 childContextTypes，并提供 context 中属性的 PropTypes<br>父组件需提供一个 getChildContext 函数，以返回一个初始的 context 对象<br>子组件需要声明自己需要使用 context，并提供其需要使用的 context 属性的 PropTypes</li>
+<li>非嵌套组件<br>非嵌套组件间通信：使用事件订阅</li>
+</ol>
+<p><a href="https://www.jianshu.com/p/fb915d9c99c4" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="async返回值"><a href="#async返回值" class="headerlink" title="async返回值"></a>async返回值</h3><p><a href="https://segmentfault.com/a/1190000007535316" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="css命名冲突的解决"><a href="#css命名冲突的解决" class="headerlink" title="css命名冲突的解决"></a>css命名冲突的解决</h3><ol>
+<li>命名规范 bem oocss</li>
+<li>weboack styleloader设置localIdentName<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> test: /\.css$/,</span><br><span class="line"> use: [</span><br><span class="line">    'style-loader',</span><br><span class="line">   &#123;</span><br><span class="line">     loader: 'css-loader',</span><br><span class="line">     options: &#123;</span><br><span class="line">       modules: true,</span><br><span class="line">       localIdentName: '[path][name]__[local]--[hash:base64:5]'</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="css文件目录的规划"><a href="#css文件目录的规划" class="headerlink" title="css文件目录的规划"></a>css文件目录的规划</h3><p><a href="http://www.zhangxinxu.com/wordpress/2010/07/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%AF%B9%E7%BD%91%E7%AB%99css%E8%BF%9B%E8%A1%8C%E6%9E%B6%E6%9E%84%E7%9A%84/" target="_blank" rel="noopener">参考资料</a><br><a href="https://www.w3cplus.com/css/css-architecture-3.html" target="_blank" rel="noopener">参考资料</a></p>
+<ol>
+<li>base 里面存放一些样式的reset、normalize的样式</li>
+<li>varibles 里面存放一些变量，比如字体大小、颜色等</li>
+<li>layouts 里面存放一些全局的布局样式，比如页面的某一块的背景颜色、margin、padding等</li>
+<li>util 里面存放一些工具类的公共样式，比如清除浮动clearfix、三角形、一像素等</li>
+<li>styles 包含页面会用到的上述所有公共样式</li>
+<li>具体的业务组件的样式写在对应的组件文件夹中，引用style</li>
+</ol>
+<h3 id="float、position、div的层叠关系"><a href="#float、position、div的层叠关系" class="headerlink" title="float、position、div的层叠关系"></a>float、position、div的层叠关系</h3><p>遵守层叠顺序<br><a href="http://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="vuex-mutation与action的区别以及具体用法"><a href="#vuex-mutation与action的区别以及具体用法" class="headerlink" title="vuex mutation与action的区别以及具体用法"></a>vuex mutation与action的区别以及具体用法</h3><ol>
+<li>mutation可以改变state状态，action不能</li>
+<li>mutation里面只能写同步操作，action可以异步</li>
+<li>触发mutation用commit，触发action用dispatch</li>
+</ol>
+<h3 id="vue响应式的实现原理"><a href="#vue响应式的实现原理" class="headerlink" title="vue响应式的实现原理"></a>vue响应式的实现原理</h3><p>实现流程</p>
+<ol>
+<li>在new vue()实例化的过程中，会遍历data数据，给每一个属性添加get、set方法。每一次属性对应一个dep对象。通过get方法收集依赖，向dep同过addsubs添加watcher对象；通过set方法监听数据变化，调用dep的notify方法。</li>
+<li>mount方法新建一个watcher实例，wacher实例化的过程中，会将Dep.target设置为自身实例，调用render进行首次渲染，通过渲染函数里调用数据触发get收集依赖。</li>
+</ol>
+<p>一个组件对应一个新建一个watcher，当前dep.target指向watcher的实例<br>响应式遍历data里的属性，每个属性设置defineProperty，并新建一个dep对象<br>每次触发get方法时对当前的dep对象里添加watcher，set方法触发dep搜集的所有watcher的update方法。</p>
+<p>注意：在watch里面将Dep.target设置为null的原因是如果数据发生变化，就会触发dep的notify方法，notify会触发wather的update方法，update会调用render方法，render里面会触发set监听，set就会调用depend方法向subs里面添加watcher，相当与subs的循环里面执行一次，又往subs数组本身添加内容，那么这个数组回无限增加，永远也循环不完，造成死循环。<br><a href="https://github.com/answershuto/learnVue/blob/master/docs/响应式原理.MarkDown" target="_blank" rel="noopener">参考资料</a><br><a href="https://juejin.im/post/5adf0085518825673123da9a" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="position有哪些值"><a href="#position有哪些值" class="headerlink" title="position有哪些值"></a>position有哪些值</h3><ol>
+<li>absolute<br>生成绝对定位的元素，相对于 static 定位以外的第一个父元素进行定位。<br>元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。</li>
+<li>fixed<br>生成绝对定位的元素，相对于浏览器窗口进行定位。<br>元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。</li>
+<li>relative<br>生成相对定位的元素，相对于其正常位置进行定位。<br>因此，”left:20” 会向元素的 LEFT 位置添加 20 像素。</li>
+<li>static    默认值。没有定位，元素出现在正常的流中（忽略 top, bottom, left, right 或者 z-index 声明）。</li>
+<li>sticky    对象在常态时遵循常规流。它就像是relative和fixed的合体，在屏幕中时按照常规流排版，当滑动某个设定的值后，该属性变现得就想fixed一样吸附到某个地方。</li>
+<li>inherit 继承父元素的定位属性</li>
+<li>initial</li>
+</ol>
+<h3 id="vuejs与jquery有什么区别"><a href="#vuejs与jquery有什么区别" class="headerlink" title="vuejs与jquery有什么区别"></a>vuejs与jquery有什么区别</h3><ol>
+<li>视图与数据的分离</li>
+<li>数据驱动视图</li>
+</ol>
+<h3 id="jsbradge的原理"><a href="#jsbradge的原理" class="headerlink" title="jsbradge的原理"></a>jsbradge的原理</h3><ol>
+<li>js api的注入（兼容性随系统版本可能有问题）</li>
+<li>urlshchema（兼容性好，但效率差，并且数据传递有限）</li>
+</ol>
+<p><a href="https://juejin.im/post/5abca877f265da238155b6bc" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="css命名规则"><a href="#css命名规则" class="headerlink" title="css命名规则"></a>css命名规则</h3><ol>
+<li>oocss<br>1) 增强复用性<br>2) 结构样式与表现样式的分离</li>
+</ol>
+<p><a href="http://ideazhao.com/2016/08/07/css_design_method/" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="css动画定格在最后一帧"><a href="#css动画定格在最后一帧" class="headerlink" title="css动画定格在最后一帧"></a>css动画定格在最后一帧</h3><p>animation-fill-mode: forwards;</p>
+<h3 id="ctrl-F5做了什么"><a href="#ctrl-F5做了什么" class="headerlink" title="ctrl+F5做了什么"></a>ctrl+F5做了什么</h3><ol>
+<li>Ctrl+F5不只是去掉了If-Modified-Since/If-None-Match</li>
+<li>还需要添加一些HTTP Headers。按照HTTP/1.1协议，Cache不光只是存在Browser终端，从Browser到Server之间的中间节点(比如Proxy)也可能扮演Cache的作用，为了防止获得的只是这些中间节点的Cache，需要告诉他们，别用自己的Cache敷衍我，往Upstream的节点要一个最新的copy吧。<br>Pragma: no-cache<br>Cache-Control: max-age=0</li>
+</ol>
+<h3 id="数组方法"><a href="#数组方法" class="headerlink" title="数组方法"></a>数组方法</h3><h3 id="改变自身的"><a href="#改变自身的" class="headerlink" title="改变自身的"></a>改变自身的</h3><ol>
+<li>push</li>
+<li>pop</li>
+<li>shift</li>
+<li>unshift</li>
+<li>splice</li>
+<li>reverse</li>
+<li>sort<h3 id="不改变自身的"><a href="#不改变自身的" class="headerlink" title="不改变自身的"></a>不改变自身的</h3></li>
+<li>concat</li>
+<li>slice</li>
+<li>join</li>
+<li>forEach</li>
+<li>find</li>
+<li>findIndex</li>
+</ol>
+<h3 id="vue中this-nextTick"><a href="#vue中this-nextTick" class="headerlink" title="vue中this.$nextTick"></a>vue中this.$nextTick</h3><ol>
+<li>作用<br>当数据改变后视图会发生改变，当我们需要确保视图dom已经随数据变化渲染完毕，就需要用$nextTick</li>
+<li>原理<br>利用promise的then方法获取ObserverMutation或者setTimeout的回调执行，目的就是将某个函数加入事件队列里面，让主线程函数栈执行完毕后执行。</li>
+</ol>
+<p><a href="https://www.cnblogs.com/xujiazheng/p/6852124.html" target="_blank" rel="noopener">参考资料</a></p>
+<h2 id="node-中的错误机制"><a href="#node-中的错误机制" class="headerlink" title="node 中的错误机制"></a>node 中的错误机制</h2><ol>
+<li>try catch 同步错误<br>Javascript 抛出的异常，是以 throw 方法抛出，未必都是 Error 的实例，但通过 nodeJs 或者 js 运行时发生的错误，都是 Error 的实例</li>
+<li>EventEmitter、callback 异步错误<br>Nodejs 形式的错误回调，大部分流 &amp; 异步事件都衍生自 EventEmitter 类 || 实例，如 fs, process, stream 等，Process<br>程序运行过程中抛出的异常，或由底层库抛出，或是运行中发生的一些 SyntaxError 之类<br>(参考资料)[<a href="https://www.jishux.com/plus/view-608027-1.html" target="_blank" rel="noopener">https://www.jishux.com/plus/view-608027-1.html</a>]</li>
+</ol>
+<h2 id="MutationObserver"><a href="#MutationObserver" class="headerlink" title="MutationObserver"></a>MutationObserver</h2><p>用来监听dom变化，用法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MutaitonObserver = <span class="built_in">window</span>.MutationObserver;</span><br><span class="line"><span class="keyword">var</span> observer = <span class="keyword">new</span> MutationObserver(<span class="function"><span class="keyword">function</span>(<span class="params">mutations</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(mutations)</span><br><span class="line">&#125;);</span><br><span class="line">observer.observe(<span class="string">'#id'</span>, &#123; <span class="attr">attributes</span>: <span class="literal">true</span>, <span class="attr">childList</span>: <span class="literal">true</span>, <span class="attr">characterData</span>: <span class="literal">true</span>, <span class="attr">subtree</span>:<span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>(参考资料)[<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver</a>]</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/css知识快餐-五/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/18/css知识快餐-五/" itemprop="url">css知识快餐-五 line-height</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-18T12:32:22+08:00">
+                2018-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/04/18/css知识快餐-五/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2018/04/18/css知识快餐-五/" class="cy_cmt_count" data-xid="2018/04/18/css知识快餐-五/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一、line-height的定义"><a href="#一、line-height的定义" class="headerlink" title="一、line-height的定义"></a>一、line-height的定义</h2><p>行高，两行文字基线之间的距离</p>
+<ol>
+<li>什么是基线<img src="/2018/04/18/css知识快餐-五/jixian.png" title="基线"></li>
+<li>为什么是基线<br>其他线比如顶线、底线都是基于基线定义的</li>
+</ol>
+<h2 id="二、line-height与行内框模型"><a href="#二、line-height与行内框模型" class="headerlink" title="二、line-height与行内框模型"></a>二、line-height与行内框模型</h2><p>行内框模型<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>一行文字，<span class="tag">&lt;<span class="name">em</span>&gt;</span>em<span class="tag">&lt;/<span class="name">em</span>&gt;</span>标签<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>内容区域 拖动文字选中 一行文字，</li>
+<li>内联盒子 em</li>
+<li>行框盒子 p标签内部的一行</li>
+<li>包含盒子 p标签内部包含的盒子</li>
+</ol>
+<h2 id="三、line-height高度原理"><a href="#三、line-height高度原理" class="headerlink" title="三、line-height高度原理"></a>三、line-height高度原理</h2><p>内联元素高度是由line-height决定的而不是字体。行高满足下面的公式<br>内容区域高度 + 行间距 = 行高<br>内容区域高度不一定等于字体大小，只有在simsum字体下内容区域高度等于字体大小</p>
+<h2 id="四-行高值的含义"><a href="#四-行高值的含义" class="headerlink" title="四 行高值的含义"></a>四 行高值的含义</h2><p> 1.5 当前元素内font-size<br> 150% 父元素font-size</p>
+<h2 id="五、会继承的css属性"><a href="#五、会继承的css属性" class="headerlink" title="五、会继承的css属性"></a>五、会继承的css属性</h2><p>font-size<br>line-height</p>
+<h2 id="六、vertical-align"><a href="#六、vertical-align" class="headerlink" title="六、vertical-align"></a>六、vertical-align</h2><h3 id="具体值"><a href="#具体值" class="headerlink" title="具体值"></a>具体值</h3><ol>
+<li>线类<br>top、middle、baseline、bottom</li>
+<li>文本类<br>text-top、text-bottom</li>
+<li>上标下标类<br>sub、super</li>
+<li>数值百分比<br>20px（相对于baseline的偏移）、20%（相对与行高的数值）、2em</li>
+</ol>
+<h3 id="vertical-align起作用的前提"><a href="#vertical-align起作用的前提" class="headerlink" title="vertical-align起作用的前提"></a>vertical-align起作用的前提</h3><p>作用的元素display必须是inline、inline-block、table-cell中的一种。<br>table-cell的vertical-align只作用自身，在子元素里没有效果。</p>
+<h3 id="inline-block如何确定base-line"><a href="#inline-block如何确定base-line" class="headerlink" title="inline-block如何确定base-line"></a>inline-block如何确定base-line</h3><p>inline-block的元素是空的，基线就是底边缘，否则就是受里面的文字或者图片决定的。<br><img src="/2018/04/18/css知识快餐-五/inline-block-baseline.png" title="对齐方式"></p>
+<h3 id="vertical-align线类对齐原则"><a href="#vertical-align线类对齐原则" class="headerlink" title="vertical-align线类对齐原则"></a>vertical-align线类对齐原则</h3><p>top: 元素的顶部与行的顶部对齐<br>bottom: 元素的顶部与行的底部部对齐<br>middle:<img src="/2018/04/18/css知识快餐-五/ver-mid.png" title="对齐原则"><br>要实现完全居中对齐，设置font-size为0</p>
+<h2 id="七、实际应用"><a href="#七、实际应用" class="headerlink" title="七、实际应用"></a>七、实际应用</h2><ol>
+<li>单行文本居中 </li>
+<li><p>多行文本居中</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.parent</span> &#123; </span></span><br><span class="line"><span class="undefined">    line-height: 100px;</span></span><br><span class="line"><span class="undefined">    vertical-align: middle;</span></span><br><span class="line"><span class="undefined">    text-align: center;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"><span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">    display: inline-block;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">line-height</span>: <span class="selector-tag">normal</span>;<span class="comment">/*重置父元素继承的行高*/</span></span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span>1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span>2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span>3<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消除图片下边缘的间隙<br>图片本身是inline-block元素，所以会受到默认的line-height与vertical-align的作用，由于图片默认是底部与行框盒子的baseline对齐，因此有一部分间隙。消除间隙的方式有三种<br>1)设置元素display为block，block元素没有vertical-align属性了。<br>2）设置vertical-align为bottom、middle、top中的一种<br>3）设置line-height等于0或者font-size（line-height为数字的情况下）等于0<br><a href="http://www.zhangxinxu.com/wordpress/2009/11/css%E8%A1%8C%E9%AB%98line-height%E7%9A%84%E4%B8%80%E4%BA%9B%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%8F%8A%E5%BA%94%E7%94%A8/" target="_blank" rel="noopener">参考资料</a></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/css知识快餐-四/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -625,983 +1833,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/mvvm与vue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/18/mvvm与vue/" itemprop="url">mvvm与vue</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T14:40:44+08:00">
-                2018-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2018/03/18/mvvm与vue/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2018/03/18/mvvm与vue/" class="cy_cmt_count" data-xid="2018/03/18/mvvm与vue/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="一、mvvm是什么"><a href="#一、mvvm是什么" class="headerlink" title="一、mvvm是什么"></a>一、mvvm是什么</h2><p>以后端mvc为原型，将设计模式移植到前端来的一种设计模式，称为mvvm（Model View ViewModel）。</p>
-<h2 id="二、vue三要素"><a href="#二、vue三要素" class="headerlink" title="二、vue三要素"></a>二、vue三要素</h2><ol>
-<li>响应式<br>修改data属性后，vue立刻监听到<br>data属性被代理到vm上</li>
-<li>模板解析<br>模板本质就是一段字符串，最终将转换成逻辑的js代码，render函数。</li>
-<li>渲染<br>vue的render函数中用来with（可能带来歧义，降低代码的可阅读性），返回vnode</li>
-</ol>
-<h2 id="三、vue的整个实现流程"><a href="#三、vue的整个实现流程" class="headerlink" title="三、vue的整个实现流程"></a>三、vue的整个实现流程</h2><ol>
-<li>初始化，钩子函数，事件初始化，响应式开始监听</li>
-<li>模板解析，生成render函数(_C返回vode)</li>
-<li>首次渲染，显示页面，收集依赖</li>
-<li>data属性变化，触发update</li>
-</ol>
-<h2 id="四、传统jquery与vue的区别"><a href="#四、传统jquery与vue的区别" class="headerlink" title="四、传统jquery与vue的区别"></a>四、传统jquery与vue的区别</h2><ol>
-<li>数据和视图分离</li>
-<li>数据驱动视图</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/VirtualDom/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/18/VirtualDom/" itemprop="url">VirtualDom</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T11:18:29+08:00">
-                2018-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2018/03/18/VirtualDom/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2018/03/18/VirtualDom/" class="cy_cmt_count" data-xid="2018/03/18/VirtualDom/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="一、什么是VirtualDom"><a href="#一、什么是VirtualDom" class="headerlink" title="一、什么是VirtualDom"></a>一、什么是VirtualDom</h2><p>虚拟Dom，简称VDom，是用JavaScript对象来模拟真实的Dom对象。例如<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    tag: <span class="string">'div'</span>,</span><br><span class="line">    attrs: &#123;</span><br><span class="line">        style: <span class="string">''</span></span><br><span class="line">    &#125;,</span><br><span class="line">    children: [</span><br><span class="line">        tag: <span class="string">'div'</span>,</span><br><span class="line">        attrs: &#123;</span><br><span class="line">            style: <span class="string">''</span></span><br><span class="line">        &#125;,</span><br><span class="line">        children: []</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="二、VirtualDom有什么用"><a href="#二、VirtualDom有什么用" class="headerlink" title="二、VirtualDom有什么用"></a>二、VirtualDom有什么用</h2><p>真实Dom的操作往往代价非常的高，因为创建一个Dom元素，往往会有几十个属性，同时可能还会触发重绘。用javascript来模拟的Dom对象，是相对来说简单的，同时javascript的操作效率也比真实dom高得多，通过这种VDOM的方式就能提高浏览器渲染的性能。</p>
-<h2 id="三、Virtual的库"><a href="#三、Virtual的库" class="headerlink" title="三、Virtual的库"></a>三、Virtual的库</h2><p>snabbdom库，vue就是基于这个库来实现vdom的。<br>api主要包括</p>
-<ol>
-<li>h()，帮助函数(渲染函数)</li>
-<li>patch(),dom拼接方法</li>
-</ol>
-<h2 id="四、VirtualDom的原理"><a href="#四、VirtualDom的原理" class="headerlink" title="四、VirtualDom的原理"></a>四、VirtualDom的原理</h2><ol>
-<li>通过将vnode放在内存中，只有涉及到真实dom节点时才去实际渲染；</li>
-<li>当需要将vnode拼接到真实dom对象的时候，通过diff算法比对出新旧dom对象之间的差异，只渲染有差异的地方，以达到性能最优。</li>
-</ol>
-<h2 id="五、diff算法"><a href="#五、diff算法" class="headerlink" title="五、diff算法"></a>五、diff算法</h2>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/XmlHttpRequest/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/11/XmlHttpRequest/" itemprop="url">XhlHttpRequest</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-11T11:12:42+08:00">
-                2018-03-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2018/03/11/XmlHttpRequest/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2018/03/11/XmlHttpRequest/" class="cy_cmt_count" data-xid="2018/03/11/XmlHttpRequest/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="一、什么是XmlHttpRequest"><a href="#一、什么是XmlHttpRequest" class="headerlink" title="一、什么是XmlHttpRequest"></a>一、什么是XmlHttpRequest</h2><p>XmlHttpRequest是ajax标准的实现，最先有微软公司设计，随后被Google,Mozilla等使用.现在已成为异步请求的标准所有现代浏览器均支持 XMLHttpRequest 对象（IE5和IE6 使用 ActiveXObject）。XMLHttpRequest用于在后台与服务器交换数据。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
-<h2 id="二、基本使用"><a href="#二、基本使用" class="headerlink" title="二、基本使用"></a>二、基本使用</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.创建xhr对象</span></span><br><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XmlHttpRequest();</span><br><span class="line"><span class="comment">// 2.打开连接</span></span><br><span class="line">xhr.open(<span class="string">'get'</span>, <span class="string">'http://a.com/data.php'</span>, <span class="literal">true</span>);</span><br><span class="line"><span class="comment">// 3.注册数据加载完毕的回调</span></span><br><span class="line">xhr.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(xhr.statu == <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(xhr.responseText);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 4.发送请求</span></span><br><span class="line">xhr.send();</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/11/XmlHttpRequest/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/错误监控/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/10/错误监控/" itemprop="url">错误监控</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T19:22:12+08:00">
-                2018-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2018/03/10/错误监控/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2018/03/10/错误监控/" class="cy_cmt_count" data-xid="2018/03/10/错误监控/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="一、前端错误的分类"><a href="#一、前端错误的分类" class="headerlink" title="一、前端错误的分类"></a>一、前端错误的分类</h2><ol>
-<li>即时运行错误（代码运行错误）</li>
-<li>资源加载错误</li>
-</ol>
-<h2 id="二、错误的捕获方式"><a href="#二、错误的捕获方式" class="headerlink" title="二、错误的捕获方式"></a>二、错误的捕获方式</h2><ol>
-<li>即时运行错误的捕获方式<br>1) try catch<br>2) window.onerror
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/10/错误监控/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/页面性能优化/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/10/页面性能优化/" itemprop="url">页面性能优化</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T17:39:05+08:00">
-                2018-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2018/03/10/页面性能优化/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2018/03/10/页面性能优化/" class="cy_cmt_count" data-xid="2018/03/10/页面性能优化/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>页面性能优化有哪些方法</p>
-<h2 id="一、资源压缩合并，减少http请求"><a href="#一、资源压缩合并，减少http请求" class="headerlink" title="一、资源压缩合并，减少http请求"></a>一、资源压缩合并，减少http请求</h2><h2 id="二、资源异步加载"><a href="#二、资源异步加载" class="headerlink" title="二、资源异步加载"></a>二、资源异步加载</h2><h3 id="1-defer"><a href="#1-defer" class="headerlink" title="1.defer"></a>1.defer</h3><p>页面解析完成后执行，执行顺序跟加载顺序有关</p>
-<h3 id="2-async"><a href="#2-async" class="headerlink" title="2.async"></a>2.async</h3><p>加载完成后立即执行</p>
-<h3 id="3-模块化异步加载"><a href="#3-模块化异步加载" class="headerlink" title="3.模块化异步加载"></a>3.模块化异步加载</h3><p>在需要的时候js代码创建script标签，去加载资源<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/10/页面性能优化/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/js运行机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/10/js运行机制/" itemprop="url">js运行机制</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T15:54:36+08:00">
-                2018-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2018/03/10/js运行机制/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2018/03/10/js运行机制/" class="cy_cmt_count" data-xid="2018/03/10/js运行机制/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>大家都知道js引擎是单线程的，那它是怎么实现单线程的呢？那就要提到事件循环了，在讲事件循环之前我们首先得搞清楚一下概念。</p>
-<h2 id="一、函数栈"><a href="#一、函数栈" class="headerlink" title="一、函数栈"></a>一、函数栈</h2><p>栈是一种数据结构，特点是数据先进后出，js在执行函数过程中其实也是将函数放进栈结构中，我们成为函数栈，函数执行完成后就拿出函数，当函数内部继续在调用其他函数的时候，我们也继续压入函数。现在，我们写了下面一段代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    far();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">foo();</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/10/js运行机制/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/浏览器渲染机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/10/浏览器渲染机制/" itemprop="url">浏览器渲染机制</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T13:41:20+08:00">
-                2018-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2018/03/10/浏览器渲染机制/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2018/03/10/浏览器渲染机制/" class="cy_cmt_count" data-xid="2018/03/10/浏览器渲染机制/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="一、DOCTYPE"><a href="#一、DOCTYPE" class="headerlink" title="一、DOCTYPE"></a>一、DOCTYPE</h2><h3 id="1-定义及作用"><a href="#1-定义及作用" class="headerlink" title="1.定义及作用"></a>1.定义及作用</h3><p>文档类型声明，声明html文档版本，在HTML4.01及以下版本中，&lt;!DOCTYPE&gt;声明引用 DTD，DTD规定了标记语言的规则，告诉浏览如何去解析html文档。HTML5 不基于 SGML，所以不需要引用 DTD。<br>如果html头部未声明，浏览器将怪异模式去解析文档。<br>我们可以通过document.compatMode来判断浏览器是哪一种模式<br>BackCompat：怪异模式。<br>CSS1Compat：标准模式。<br>在怪异模式中，IE6/7/8都不认识!important声明，这只是区别的一种，还有很多其它区别。想写出兼容性好的页面，所以建议还是统一采用W3C标准的标准模式。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/10/浏览器渲染机制/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1647,7 +1883,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

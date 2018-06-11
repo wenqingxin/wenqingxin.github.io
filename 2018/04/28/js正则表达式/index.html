@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Maserati总裁的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="正则匹配的两种模式 横向匹配一个正则可匹配的字符串长度是不固定的，比如/a{m,n}/ 纵向匹配一个正则匹配到的字符串，具体到其中某一位，可能有多种情况，如/[abc]/  字符组 含义表示一个组合中其中的一个字符，如[abc],表示a、b、c其中的某一个 范围表示法当某一个字符组的范围太大的时候，为方便书写，可用范围表示法，如[a-z][A-Z] 排除字符组表示其中某一位不能是某个字符组里的任何">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js正则表达式">
+<meta property="og:url" content="http://yoursite.com/2018/04/28/js正则表达式/index.html">
+<meta property="og:site_name" content="Maserati总裁的博客">
+<meta property="og:description" content="正则匹配的两种模式 横向匹配一个正则可匹配的字符串长度是不固定的，比如/a{m,n}/ 纵向匹配一个正则匹配到的字符串，具体到其中某一位，可能有多种情况，如/[abc]/  字符组 含义表示一个组合中其中的一个字符，如[abc],表示a、b、c其中的某一个 范围表示法当某一个字符组的范围太大的时候，为方便书写，可用范围表示法，如[a-z][A-Z] 排除字符组表示其中某一位不能是某个字符组里的任何">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-14T06:50:10.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js正则表达式">
+<meta name="twitter:description" content="正则匹配的两种模式 横向匹配一个正则可匹配的字符串长度是不固定的，比如/a{m,n}/ 纵向匹配一个正则匹配到的字符串，具体到其中某一位，可能有多种情况，如/[abc]/  字符组 含义表示一个组合中其中的一个字符，如[abc],表示a、b、c其中的某一个 范围表示法当某一个字符组的范围太大的时候，为方便书写，可用范围表示法，如[a-z][A-Z] 排除字符组表示其中某一位不能是某个字符组里的任何">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/28/js正则表达式/"/>
+
+
+
+
+
+  <title>js正则表达式 | Maserati总裁的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Maserati总裁的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/28/js正则表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">js正则表达式</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-28T13:44:22+08:00">
+                2018-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/04/28/js正则表达式/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/04/28/js正则表达式/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="正则匹配的两种模式"><a href="#正则匹配的两种模式" class="headerlink" title="正则匹配的两种模式"></a>正则匹配的两种模式</h2><ol>
+<li>横向匹配<br>一个正则可匹配的字符串长度是不固定的，比如/a{m,n}/</li>
+<li>纵向匹配<br>一个正则匹配到的字符串，具体到其中某一位，可能有多种情况，如/[abc]/</li>
+</ol>
+<h2 id="字符组"><a href="#字符组" class="headerlink" title="字符组"></a>字符组</h2><ol>
+<li>含义<br>表示一个组合中其中的一个字符，如[abc],表示a、b、c其中的某一个</li>
+<li>范围表示法<br>当某一个字符组的范围太大的时候，为方便书写，可用范围表示法，如[a-z][A-Z]</li>
+<li>排除字符组<br>表示其中某一位不能是某个字符组里的任何一个，如[^abc],表示不能是abc中的任何一位</li>
+<li>字符组简写<br>1）/d 表示[0-9],表示任意一位数字。d就是digit(数字)的简写<br>2）/D 表示除数字外的任意一个字符<br>3）\w 表示[0-9a-zA-Z]中的任意一个字符，w就是word的简写，就是单词字符<br>4）\W 表示非单词字符<br>5）\s 表示空白字符，包括空格、制表符、换行符等，s就是space的意思<br>6）\S 表示非空白字符<br>7）. 就是[^\n\r\u2028\u2029]，表示除换行符、回车符、行分割符和段分隔符意外的任意字符</li>
+</ol>
+<p>小技巧，虽然.不能匹配任意字符，但可以用[\d\D]、[\s\S]、[\w\W]、[^]表示任意字符</p>
+<h2 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h2><ol>
+<li>含义<br>用来表示某个字符组出现的次数，比如{m,n}表示出现m到n次</li>
+<li>简写<br>1）{m,} 表示至少出现m次<br>2）{m} 等价于{m,m},表示至少出现m次<br>3）？ 等价于{0,1}，表示出现0次到1次。记忆方式，加个问号，表示有没有，没有就是0，有就是1个<br>4) + 等价于{1,},表示至少1次，记忆方式。+就是表示已经有一个了，还想要更多的<br>5) <em> 等价于{0,} 表示任意次数，有可能有，有可能没有。记忆方式，</em>号就是表示任意的</li>
+<li>贪婪匹配<br>例子：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> regex = <span class="regexp">/\d&#123;2,5&#125;/g</span>;</span><br><span class="line"><span class="keyword">var</span> string = <span class="string">"123 1234 12345 123456"</span>;</span><br><span class="line"><span class="built_in">console</span>.log( string.match(regex) ); </span><br><span class="line"><span class="comment">// =&gt; ["123", "1234", "12345", "12345"]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>其中/\d{2,5}/，表示匹配2到5个数字，连续的2个、3个、4个、5个数字都是满足匹配的，但是结果为什么不是[“12”,…]呢，原因就是贪婪匹配的原则。<br>因为正则匹配有量词的时候它是贪婪的，它会尽可能的去匹配更多的字符串，比如你给我3个字符，虽然两个字符也满足，但是我要匹配到尽量多的，所以我就要3个，同理，给我4个我就要4个，给我5个我就要5个，只要满足匹配，越多越好。</p>
+<ol>
+<li>惰性匹配<br>如果我们不想要贪婪匹配，而是想匹配尽量少的字符串，那么我们在量词后面加个?号就可以了，比如<br>{m,n}?<br>{m,}?<br>??<br>+?<br>*?<br>记忆方式，量词后面加？，问一问你满足了吗？你太贪婪了</li>
+</ol>
+<h2 id="多选分支"><a href="#多选分支" class="headerlink" title="多选分支"></a>多选分支</h2><p>一个模式可以实现横向或者纵向模糊匹配。而多个分支可以支持多</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/22/面试未答好问题/" rel="next" title="面试问题总结">
+                <i class="fa fa-chevron-left"></i> 面试问题总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/13/canvas/" rel="prev" title="canvas">
+                canvas <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">wen qingxin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则匹配的两种模式"><span class="nav-text">正则匹配的两种模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符组"><span class="nav-text">字符组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#量词"><span class="nav-text">量词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多选分支"><span class="nav-text">多选分支</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wen qingxin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyty6JE6s';
+      var conf = 'b8bfd61daa1ccd94d3f8571876d702e4';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

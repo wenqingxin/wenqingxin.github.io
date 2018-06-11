@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Maserati总裁的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、http2.0 先说说http1.x的缺点：在http1.0的,再没开启connection：keep-alive的情况下。一次请求就会建立一个tcp连接，建立tcp连接是有延时的，因为需要经过三次握手。而浏览器对每个域名可创建的连接数是有限制的，因此资源的请求还需要排队（head of line blocking），同时，TCP连接会随着时间进行自我调谐，起初会限制连接的最大速度，如果数据传">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试问题总结">
+<meta property="og:url" content="http://yoursite.com/2018/04/22/面试未答好问题/index.html">
+<meta property="og:site_name" content="Maserati总裁的博客">
+<meta property="og:description" content="一、http2.0 先说说http1.x的缺点：在http1.0的,再没开启connection：keep-alive的情况下。一次请求就会建立一个tcp连接，建立tcp连接是有延时的，因为需要经过三次握手。而浏览器对每个域名可创建的连接数是有限制的，因此资源的请求还需要排队（head of line blocking），同时，TCP连接会随着时间进行自我调谐，起初会限制连接的最大速度，如果数据传">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-29T10:04:44.817Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面试问题总结">
+<meta name="twitter:description" content="一、http2.0 先说说http1.x的缺点：在http1.0的,再没开启connection：keep-alive的情况下。一次请求就会建立一个tcp连接，建立tcp连接是有延时的，因为需要经过三次握手。而浏览器对每个域名可创建的连接数是有限制的，因此资源的请求还需要排队（head of line blocking），同时，TCP连接会随着时间进行自我调谐，起初会限制连接的最大速度，如果数据传">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/22/面试未答好问题/"/>
+
+
+
+
+
+  <title>面试问题总结 | Maserati总裁的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Maserati总裁的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/22/面试未答好问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">面试问题总结</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-22T17:31:42+08:00">
+                2018-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/04/22/面试未答好问题/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/04/22/面试未答好问题/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一、http2-0"><a href="#一、http2-0" class="headerlink" title="一、http2.0"></a>一、http2.0</h3><ol>
+<li>先说说http1.x的缺点：<br>在http1.0的,再没开启connection：keep-alive的情况下。一次请求就会建立一个tcp连接，建立tcp连接是有延时的，因为需要经过三次握手。而浏览器对每个域名可创建的连接数是有限制的，因此资源的请求还需要排队（head of line blocking），同时，TCP连接会随着时间进行自我调谐，起初会限制连接的最大速度，如果数据传输成功，会随着时间的推移提高传输的速度，而http都是些短连接，tcp后续速度提升的特性不利用起来。这些归根结底就是没有复用连接，比较慢。<br>http1.1默认开启connection：keep-alive，一定程度上复用了连接，但是短时间的复用，一般15s，同时一个连接里面也只允许一个连接和一个响应。</li>
+<li>http2.0<br>http2就是针对http1.x的缺点而生的<br>1）单一长连接<br>2）多路复用<br>4）头部压缩、二进制分帧<br>4）服务端推送server push<br><a href="https://cloud.tencent.com/developer/article/1004874" target="_blank" rel="noopener">参考文章1</a><br><a href="https://www.zhihu.com/question/34074946" target="_blank" rel="noopener">参考文章2</a></li>
+<li>不定宽弹框上下居中<br>1）flex弹性盒子<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">	<span class="selector-class">.parent</span> &#123;</span></span><br><span class="line"><span class="undefined">			display: flex;</span></span><br><span class="line"><span class="undefined">			align-items: center;</span></span><br><span class="line"><span class="undefined">			justify-content: center;</span></span><br><span class="line"><span class="undefined">			height: 100%;</span></span><br><span class="line"><span class="undefined">			width: 100%;</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="css">	<span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">		background-color: red;</span></span><br><span class="line"><span class="undefined">	&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">      我是内容</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>优点：简单<br>缺点：PC端兼容性差<br>2）table 布局 + vertical-align<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.parent</span> &#123;</span></span><br><span class="line"><span class="undefined">  display: table;</span></span><br><span class="line"><span class="css">  <span class="selector-tag">text-align</span><span class="selector-pseudo">:center</span>;</span></span><br><span class="line"><span class="undefined">  width: 100%;</span></span><br><span class="line"><span class="undefined">  height: 100%;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"><span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">  display: table-cell;</span></span><br><span class="line"><span class="css">  <span class="selector-tag">vertical-align</span><span class="selector-pseudo">:middle</span>;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"><span class="selector-class">.content</span> &#123;</span></span><br><span class="line"><span class="undefined">	background-color: red;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span>我是内容<span class="tag">&lt;/<span class="name">span</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>有点：兼容性好<br>缺点：居中的子元素会有padding，导致设置背景颜色会占满整个父元素，解决办法是在子元素内在写一个元素</p>
+<p>3）postion + translate<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">	<span class="selector-class">.parent</span> &#123;</span></span><br><span class="line"><span class="undefined">	    position: relative;</span></span><br><span class="line"><span class="undefined">	    width: 100%;</span></span><br><span class="line"><span class="undefined">	    height: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">	<span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">		position: absolute;</span></span><br><span class="line"><span class="undefined">		top: 50%;</span></span><br><span class="line"><span class="undefined">		left: 50%;</span></span><br><span class="line"><span class="undefined">		transform: translate(-50%,-50%);</span></span><br><span class="line"><span class="undefined">	&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">      我是内容</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>优点：书写较简单<br>缺点：transform在PC端兼容性较差</p>
+<p>4）line-height+ vertical-align<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.parent</span> &#123;</span></span><br><span class="line"><span class="undefined">        line-height: 500px;</span></span><br><span class="line"><span class="undefined">        text-align: center;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">        display: inline-block;</span></span><br><span class="line"><span class="undefined">         vertical-align: middle;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">line-height</span>: <span class="selector-tag">normal</span>;<span class="comment">/*重置父元素继承的行高*/</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">p</span>&gt;</span>我是内容<span class="tag">&lt;/<span class="name">br</span>&gt;</span>我是内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>优点：可实现多行文本居中<br>缺点：由于line-height无法设置占满整个屏幕，因为100%对应的是父元素font-size的100%，所以无法自适应的实现竖直居中，需要给父元素设置具体的高度才行。</p>
+<p>5）before + vertical-align<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.parent</span> &#123;</span></span><br><span class="line"><span class="undefined">        width: 600px;</span></span><br><span class="line"><span class="undefined">        height: 400px;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">background</span>: <span class="selector-id">#f1f1f1</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.parent</span><span class="selector-pseudo">::before</span> &#123;</span></span><br><span class="line"><span class="undefined">        content: '';</span></span><br><span class="line"><span class="undefined">        display: inline-block;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">        vertical-align: middle;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">        background-color: red;</span></span><br><span class="line"><span class="undefined">            display: inline-block;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">      我是内容</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="二、str-replace，如何从一个字符串中替换出数字"><a href="#二、str-replace，如何从一个字符串中替换出数字" class="headerlink" title="二、str.replace，如何从一个字符串中替换出数字"></a>二、str.replace，如何从一个字符串中替换出数字</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'wdy7da767as67dada6d'</span>;</span><br><span class="line">str.replace(<span class="regexp">/\d+/g</span>,<span class="string">""</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="三、ul下第一个和最后一个交换位置"><a href="#三、ul下第一个和最后一个交换位置" class="headerlink" title="三、ul下第一个和最后一个交换位置"></a>三、ul下第一个和最后一个交换位置</h3><h3 id="四、require的原则"><a href="#四、require的原则" class="headerlink" title="四、require的原则"></a>四、require的原则</h3><p>假设Y是路径，X是文件名或目录名，当 Nodejs 遇到 require(Y+X) 时，按照下面的顺序处理：</p>
+<ol>
+<li>如果带路径<br>　　a.把X当成文件，从指定路径开始，依次查找下面文件：X、X.js、X.json、X.node，只要其中一个存在，就返回该文件，不再继续执行<br>　　b.把X当成目录，从指定路径开始，依次查找下面文件：X/package.json(main字段)、X/index.js、X/index.json、X/index.node，只要其中一个存在，就返回该文件，不再继续执行</li>
+<li>如果不带路径<br>a. 如果是核心模块<br>直接返回改模板<br>b. 如果不是核心模块<br>尝试从它的 /node_module 目录里加载模块，如果还是没有找到，则移动到再上一层父目录，直到文件系统的根目录<h3 id="五、数组的sort"><a href="#五、数组的sort" class="headerlink" title="五、数组的sort"></a>五、数组的sort</h3></li>
+<li><p>不传入compareFunction，默认的sort是按照unicode 编码排序的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fruit = [<span class="string">'cherries'</span>, <span class="string">'apples'</span>, <span class="string">'bananas'</span>];</span><br><span class="line">fruit.sort(); </span><br><span class="line"><span class="comment">// ['apples', 'bananas', 'cherries']</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>传入compareFunction<br>1）如果 compareFunction(a, b) 小于 0 ，那么 a 会被排列到 b 之前；<br>2）如果 compareFunction(a, b) 等于 0 ， a 和 b 的相对位置不变。备注： ECMAScript 标准并不保证这一行为，而且也不是所有浏览器都会遵守（例如 Mozilla 在 2003 年之前的版本）；<br>3）如果 compareFunction(a, b) 大于 0 ， b 会被排列到 a 之前。<br>4）compareFunction(a, b) 必须总是对相同的输入返回相同的比较结果，否则排序的结果将是不确定的。</p>
+</li>
+</ol>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/sort" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="六、一个div如何加两层border"><a href="#六、一个div如何加两层border" class="headerlink" title="六、一个div如何加两层border"></a>六、一个div如何加两层border</h3><ol>
+<li>设置box-shadow（内阴影、外阴影）</li>
+<li>设置outline<br><a href="http://www.jb51.net/css/464735.html" target="_blank" rel="noopener">参考资料</a><br>补充<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.box</span> &#123;</span></span><br><span class="line"><span class="undefined">    position: relative;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">width</span><span class="selector-pseudo">:100px</span>;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">height</span><span class="selector-pseudo">:100px</span>;</span></span><br><span class="line"><span class="undefined">    border: 5px splid balck;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"> <span class="selector-class">.box</span><span class="selector-pseudo">::before</span>&#123;</span></span><br><span class="line"><span class="undefined">    content: '';</span></span><br><span class="line"><span class="undefined">    display: inline-block;</span></span><br><span class="line"><span class="undefined">    position: absolute;</span></span><br><span class="line"><span class="undefined">    top: 0;</span></span><br><span class="line"><span class="undefined">    left: 0;</span></span><br><span class="line"><span class="undefined">    right: 0;</span></span><br><span class="line"><span class="undefined">    border: 5px solid yellow;</span></span><br><span class="line"><span class="undefined">    bottom: 0;</span></span><br><span class="line"><span class="undefined"> &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="七、https验证签名的算法"><a href="#七、https验证签名的算法" class="headerlink" title="七、https验证签名的算法"></a>七、https验证签名的算法</h3><ol>
+<li>服务器生成一对公钥私钥，服务器以公钥和其他相关信息会根据hash算法得到摘要信息，利用CA的私钥对摘要进行加密得到数字签名。</li>
+<li>将数字证书下发到浏览器后，浏览器首先根据同样的hash算法得到摘要，再用内置的CA公钥对签名进行解密得到原始的摘要信息，对两者进行比对，确定是否一致。不一致的话说明内容可能被修改过，或者说证书不是CA颁发的（因为用CA私钥加密的信息用CA公钥才能正确还原，也就是说证书签名不是用CA的私钥加密的）<br><a href="https://juejin.im/post/59e4c02151882578d02f4aca" target="_blank" rel="noopener">参考资料</a><br><a href="https://blog.csdn.net/abinge317/article/details/51791856" target="_blank" rel="noopener">参考资料</a></li>
+</ol>
+<h3 id="八、cookie、localstorage、sessionstorage本质区别"><a href="#八、cookie、localstorage、sessionstorage本质区别" class="headerlink" title="八、cookie、localstorage、sessionstorage本质区别"></a>八、cookie、localstorage、sessionstorage本质区别</h3><ol>
+<li>储存大小<br>localStorage和sessionStorage：可以保存5MB的信息。<br>cookie：4KB左右</li>
+<li><p>生命周期<br>1）cookie 可设置失效时间，exipre &gt; 0,存在磁盘上，exipre = 0，清除cookie，exipre &lt; 0存在内存，关闭浏览器自动清除（默认）<br>2）localStorage 除非被手动清除，否则将会永久保存<br>3）仅在当前网页会话下有效，关闭页面或浏览器后就会被清除。</p>
+</li>
+<li><p>与服务端交互<br>1）cookie 可在服务端响应头设置，同时发送请求时也会带上cookie<br>2）localStorage和sessionStorage于服务端无关联</p>
+</li>
+</ol>
+<p><a href="https://juejin.im/post/5a191c47f265da43111fe859" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="九、-call，apply，bind的异同"><a href="#九、-call，apply，bind的异同" class="headerlink" title="九、 call，apply，bind的异同"></a>九、 call，apply，bind的异同</h3><p>bind接受的第一个参数，是this的指向，后续的参数是函数对应的参数，一个一个传入，返回接受剩余参数的函数。<br>ES5中bind方法的特性， 这种技术也被称为函数柯里化<br>柯里化使用场景</p>
+<ol>
+<li>延迟计算</li>
+<li>复用参数</li>
+<li>动态创建函数<br><a href="https://www.zhihu.com/question/37774367/answer/192978122" target="_blank" rel="noopener">参考资料</a></li>
+</ol>
+<h3 id="十、cors的原理"><a href="#十、cors的原理" class="headerlink" title="十、cors的原理"></a>十、cors的原理</h3><p>cors请求分为简单请求和非简单请求</p>
+<ol>
+<li>简单请求<br>1）规则<br>满足以下下条件，就是简单请求<br> 请求方法是head、get、post之中的一种<br> 请求头不超出一下字段：Accept、Accept-Language、Content-language、Last-Event-ID、Content-Type（只限三个值 application/x-www-form-urlencoded、multipart/form-data、text-plain）</li>
+</ol>
+<p>Last-Event-ID是服务器推送事件中，如果与服务器端的连接中断，当浏览器端再次进行连接时，会通过 HTTP 头“Last-Event-ID”来声明最后一次接收到的事件的标识符。服务器端可以通过浏览器端发送的事件标识符来确定从哪个事件开始来继续连接。<br>2）流程<br> a. 浏览器发现异步请求是跨域的，就会在请求头里加上一个origin字段，表示当前请求所在的域名<br> b. 服务器收到该请求，根据Origin字段来判断是否在允许范围内，如果不在，服务器会返回一个正常的http响应，<br> c. 浏览器收到后，会根据Access-Control-Alow-Origin判断自己的源是否在Access-Control-Alow-Origin的允许范围内，如果在请求成功，不在，也会抛出异常。<br> 注意：有可能非简单请求数据是成功返回的200，并且也有数据。</p>
+<ol>
+<li>非简单请求<br>1）规则<br>除了简单请求意外的可能情况，比如put、delete请求方法，content-type是applocation/json<br>2)流程<br>a.当浏览器发现请求是一个非简单请求时，在正式请求之前会发送一个预检请求，该请求是option方法，该请求里会携带Origin字段，另外还有Access-Control-Request-Method（会用的到请求方法，比如put），Access-Control-Request-Header（会发送的请求头）<br>b.服务器收到option请求后，根据情况会返回对应的Access-Control-Allow-Origin，同时还有Access-Control-Allow-Methods以及Access-Control-Allow-Headers<br>c.浏览器收到后，会根据Access-Control-Alow-Origin、Access-Control-Allow-Methods以及Access-Control-Allow-Headers判断自己的源是否在Access-Control-Alow-Origin的允许范围内，如果在请求成功，不在，也会抛出异常<br>d.浏览器会缓存收到的option 请求，避免每次请求都发送预检option 请求，缓存的时间可由Access-Control-Max-Age控制。</li>
+</ol>
+<p><a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="noopener">cors参考资料</a><br><a href="https://blog.csdn.net/u011627980/article/details/51362799" target="_blank" rel="noopener">服务器推送参考资料</a></p>
+<h3 id="十一、promise"><a href="#十一、promise" class="headerlink" title="十一、promise"></a>十一、promise</h3><ol>
+<li>promise是什么？有什么作用？<br>Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。<br>2 promise的状态有哪些<br>1)pending<br>创建promise对象后的初始状态<br>2)fullfiled<br>调用resolve后的状态，会执行所有then函数里面的回调函数<br>3)reject<br>调用reject的状态，会执行第一个catch 函数里面的回调函数<br>注意：状态只能按照固定的方向变化，只能从pending=&gt;fullfiled或者从pending=&gt;reject</li>
+</ol>
+<p><a href="http://www.ituring.com.cn/article/120765" target="_blank" rel="noopener">参考资料</a></p>
+<p>###. 事件循环</p>
+<ol>
+<li>浏览器事件循环<br><a href="http://blog.wenqingxin.com/2018/03/10/js%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/" target="_blank" rel="noopener">参考资料</a></li>
+<li>node事件循环<br><a href="https://juejin.im/post/5ab88836f265da237410f701" target="_blank" rel="noopener">参考资料</a></li>
+<li>浏览器与node事件循环的差别<br>1）浏览器执行队列任务是按照概率来选择任务队列，而node执行队列的顺序是按照timer queue、IO queue、check queue、close queue<br>2）浏览器每次是每次先执行一个宏任务，然后执行并清空所有的微任务队列，node每次都执行清空当前阶段的全部任务，比如timer queue，然后再执行清空process.nextTick任务队列，最后再执行清空微任务队列。<br>3）浏览器里没有nextTick队列，而node有。</li>
+</ol>
+<p>###. 输入网址到页面呈现的流程<br><a href="https://segmentfault.com/a/1190000006879700" target="_blank" rel="noopener">参考资料</a></p>
+<ol>
+<li>301于302重定向的区别<br>1）301 永久重定向<br>2）302 临时重定向<br>302的时候搜索引擎会认为跳转是临时的，网站域名随时可以指向新的内容，搜索引擎会抓取新的内容而保留旧的地址。<br>301的时候，搜索引擎任务资源已经永久发生了变更，搜索引擎在抓取新的内容的同时也将旧的网址替换为了重定向之后的网址。</li>
+</ol>
+<p>###. var、let、const区别</p>
+<ol>
+<li>var存在变量提升，而let不会</li>
+<li>var是函数作用域，而let是块级作用域</li>
+<li>var能重复声明同一个变量，而let不会</li>
+</ol>
+<p>const</p>
+<ol>
+<li>声明的时候必须赋予初始值</li>
+<li>不能重新赋值</li>
+<li>是引用类型的时候可以改变内部的属性值</li>
+<li>不能重复声明同一变量</li>
+</ol>
+<h3 id="git-rebase"><a href="#git-rebase" class="headerlink" title="git rebase"></a>git rebase</h3><ol>
+<li>原理<br>将当前分支指向目标分支的最新提交版本，然后提取当前分支/从初始版本开始的修改依次应用到这个最新提交版本的后面</li>
+<li>黄金定律<br>不要对在你的仓库外有副本的分支执行变基。<br>变基操作的 实质是丢弃一些现有的提交，然后相应地新建一些内容一样但实际上不同的提交。 如果你已经将提交推送至某个仓库，而其他人也已经从该仓库拉取提交并进行了后续工作，此时，如果你用 git rebase 命令重新整理了提交并再次推送，你的同伴因此将不得不再次将他们手头的工作与你的提交进行整合，如果接下来你还要拉取并整合他们修改过的提交，事情就会变得一团糟。<br>总的原则是，只对尚未推送或分享给别人的本地修改执行变基操作清理历史，从不对已推送至别处的提交执行变基操作，这样，你才能享受到两种方式带来的便利。</li>
+</ol>
+<p>git merge的<br>Git会根据两个分支的最新提交进行一个三方合并，然后将合并中修改的内容生成一个新的版本提交。</p>
+<p>区别:<br>对于两个分支而言，rebase和merge没有区别，但是rebase更干净，因为log hisitory是线性的，但commit不一定按日期先后排，而是local commit总在后面,merge之后history变得比较复杂，但是commit按日期排序,stackoverflow上有个图示很好:<br><a href="https://www.jianshu.com/p/c17472d704a0" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h3><ol>
+<li>异步</li>
+<li>合并状态对象</li>
+<li>接受参数<br>1) 对象<br>2）对象，函数<br>3）函数 接受参数 prevState，props，计算结果同步<br><a href="https://juejin.im/post/5a155f906fb9a045284622b4" target="_blank" rel="noopener">参考资料</a></li>
+</ol>
+<h3 id="react-通信"><a href="#react-通信" class="headerlink" title="react 通信"></a>react 通信</h3><ol>
+<li>父子组件通信<br>父组件向子组件传递props</li>
+<li>子组件向父组件通信<br>父组件通过props向子组件传递一个函数，子组件通过调用这个函数并传递参数来传递数据。</li>
+<li>跨级组件通信<br>1）中间组件通过props层层传递信息<br>2）使用context对象<br>父组件需要声明自己支持 childContextTypes，并提供 context 中属性的 PropTypes<br>父组件需提供一个 getChildContext 函数，以返回一个初始的 context 对象<br>子组件需要声明自己需要使用 context，并提供其需要使用的 context 属性的 PropTypes</li>
+<li>非嵌套组件<br>非嵌套组件间通信：使用事件订阅</li>
+</ol>
+<p><a href="https://www.jianshu.com/p/fb915d9c99c4" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="async返回值"><a href="#async返回值" class="headerlink" title="async返回值"></a>async返回值</h3><p><a href="https://segmentfault.com/a/1190000007535316" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="css命名冲突的解决"><a href="#css命名冲突的解决" class="headerlink" title="css命名冲突的解决"></a>css命名冲突的解决</h3><ol>
+<li>命名规范 bem oocss</li>
+<li>weboack styleloader设置localIdentName<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> test: /\.css$/,</span><br><span class="line"> use: [</span><br><span class="line">    'style-loader',</span><br><span class="line">   &#123;</span><br><span class="line">     loader: 'css-loader',</span><br><span class="line">     options: &#123;</span><br><span class="line">       modules: true,</span><br><span class="line">       localIdentName: '[path][name]__[local]--[hash:base64:5]'</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="css文件目录的规划"><a href="#css文件目录的规划" class="headerlink" title="css文件目录的规划"></a>css文件目录的规划</h3><p><a href="http://www.zhangxinxu.com/wordpress/2010/07/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%AF%B9%E7%BD%91%E7%AB%99css%E8%BF%9B%E8%A1%8C%E6%9E%B6%E6%9E%84%E7%9A%84/" target="_blank" rel="noopener">参考资料</a><br><a href="https://www.w3cplus.com/css/css-architecture-3.html" target="_blank" rel="noopener">参考资料</a></p>
+<ol>
+<li>base 里面存放一些样式的reset、normalize的样式</li>
+<li>varibles 里面存放一些变量，比如字体大小、颜色等</li>
+<li>layouts 里面存放一些全局的布局样式，比如页面的某一块的背景颜色、margin、padding等</li>
+<li>util 里面存放一些工具类的公共样式，比如清除浮动clearfix、三角形、一像素等</li>
+<li>styles 包含页面会用到的上述所有公共样式</li>
+<li>具体的业务组件的样式写在对应的组件文件夹中，引用style</li>
+</ol>
+<h3 id="float、position、div的层叠关系"><a href="#float、position、div的层叠关系" class="headerlink" title="float、position、div的层叠关系"></a>float、position、div的层叠关系</h3><p>遵守层叠顺序<br><a href="http://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="vuex-mutation与action的区别以及具体用法"><a href="#vuex-mutation与action的区别以及具体用法" class="headerlink" title="vuex mutation与action的区别以及具体用法"></a>vuex mutation与action的区别以及具体用法</h3><ol>
+<li>mutation可以改变state状态，action不能</li>
+<li>mutation里面只能写同步操作，action可以异步</li>
+<li>触发mutation用commit，触发action用dispatch</li>
+</ol>
+<h3 id="vue响应式的实现原理"><a href="#vue响应式的实现原理" class="headerlink" title="vue响应式的实现原理"></a>vue响应式的实现原理</h3><p>实现流程</p>
+<ol>
+<li>在new vue()实例化的过程中，会遍历data数据，给每一个属性添加get、set方法。每一次属性对应一个dep对象。通过get方法收集依赖，向dep同过addsubs添加watcher对象；通过set方法监听数据变化，调用dep的notify方法。</li>
+<li>mount方法新建一个watcher实例，wacher实例化的过程中，会将Dep.target设置为自身实例，调用render进行首次渲染，通过渲染函数里调用数据触发get收集依赖。</li>
+</ol>
+<p>一个组件对应一个新建一个watcher，当前dep.target指向watcher的实例<br>响应式遍历data里的属性，每个属性设置defineProperty，并新建一个dep对象<br>每次触发get方法时对当前的dep对象里添加watcher，set方法触发dep搜集的所有watcher的update方法。</p>
+<p>注意：在watch里面将Dep.target设置为null的原因是如果数据发生变化，就会触发dep的notify方法，notify会触发wather的update方法，update会调用render方法，render里面会触发set监听，set就会调用depend方法向subs里面添加watcher，相当与subs的循环里面执行一次，又往subs数组本身添加内容，那么这个数组回无限增加，永远也循环不完，造成死循环。<br><a href="https://github.com/answershuto/learnVue/blob/master/docs/响应式原理.MarkDown" target="_blank" rel="noopener">参考资料</a><br><a href="https://juejin.im/post/5adf0085518825673123da9a" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="position有哪些值"><a href="#position有哪些值" class="headerlink" title="position有哪些值"></a>position有哪些值</h3><ol>
+<li>absolute<br>生成绝对定位的元素，相对于 static 定位以外的第一个父元素进行定位。<br>元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。</li>
+<li>fixed<br>生成绝对定位的元素，相对于浏览器窗口进行定位。<br>元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。</li>
+<li>relative<br>生成相对定位的元素，相对于其正常位置进行定位。<br>因此，”left:20” 会向元素的 LEFT 位置添加 20 像素。</li>
+<li>static    默认值。没有定位，元素出现在正常的流中（忽略 top, bottom, left, right 或者 z-index 声明）。</li>
+<li>sticky    对象在常态时遵循常规流。它就像是relative和fixed的合体，在屏幕中时按照常规流排版，当滑动某个设定的值后，该属性变现得就想fixed一样吸附到某个地方。</li>
+<li>inherit 继承父元素的定位属性</li>
+<li>initial</li>
+</ol>
+<h3 id="vuejs与jquery有什么区别"><a href="#vuejs与jquery有什么区别" class="headerlink" title="vuejs与jquery有什么区别"></a>vuejs与jquery有什么区别</h3><ol>
+<li>视图与数据的分离</li>
+<li>数据驱动视图</li>
+</ol>
+<h3 id="jsbradge的原理"><a href="#jsbradge的原理" class="headerlink" title="jsbradge的原理"></a>jsbradge的原理</h3><ol>
+<li>js api的注入（兼容性随系统版本可能有问题）</li>
+<li>urlshchema（兼容性好，但效率差，并且数据传递有限）</li>
+</ol>
+<p><a href="https://juejin.im/post/5abca877f265da238155b6bc" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="css命名规则"><a href="#css命名规则" class="headerlink" title="css命名规则"></a>css命名规则</h3><ol>
+<li>oocss<br>1) 增强复用性<br>2) 结构样式与表现样式的分离</li>
+</ol>
+<p><a href="http://ideazhao.com/2016/08/07/css_design_method/" target="_blank" rel="noopener">参考资料</a></p>
+<h3 id="css动画定格在最后一帧"><a href="#css动画定格在最后一帧" class="headerlink" title="css动画定格在最后一帧"></a>css动画定格在最后一帧</h3><p>animation-fill-mode: forwards;</p>
+<h3 id="ctrl-F5做了什么"><a href="#ctrl-F5做了什么" class="headerlink" title="ctrl+F5做了什么"></a>ctrl+F5做了什么</h3><ol>
+<li>Ctrl+F5不只是去掉了If-Modified-Since/If-None-Match</li>
+<li>还需要添加一些HTTP Headers。按照HTTP/1.1协议，Cache不光只是存在Browser终端，从Browser到Server之间的中间节点(比如Proxy)也可能扮演Cache的作用，为了防止获得的只是这些中间节点的Cache，需要告诉他们，别用自己的Cache敷衍我，往Upstream的节点要一个最新的copy吧。<br>Pragma: no-cache<br>Cache-Control: max-age=0</li>
+</ol>
+<h3 id="数组方法"><a href="#数组方法" class="headerlink" title="数组方法"></a>数组方法</h3><h3 id="改变自身的"><a href="#改变自身的" class="headerlink" title="改变自身的"></a>改变自身的</h3><ol>
+<li>push</li>
+<li>pop</li>
+<li>shift</li>
+<li>unshift</li>
+<li>splice</li>
+<li>reverse</li>
+<li>sort<h3 id="不改变自身的"><a href="#不改变自身的" class="headerlink" title="不改变自身的"></a>不改变自身的</h3></li>
+<li>concat</li>
+<li>slice</li>
+<li>join</li>
+<li>forEach</li>
+<li>find</li>
+<li>findIndex</li>
+</ol>
+<h3 id="vue中this-nextTick"><a href="#vue中this-nextTick" class="headerlink" title="vue中this.$nextTick"></a>vue中this.$nextTick</h3><ol>
+<li>作用<br>当数据改变后视图会发生改变，当我们需要确保视图dom已经随数据变化渲染完毕，就需要用$nextTick</li>
+<li>原理<br>利用promise的then方法获取ObserverMutation或者setTimeout的回调执行，目的就是将某个函数加入事件队列里面，让主线程函数栈执行完毕后执行。</li>
+</ol>
+<p><a href="https://www.cnblogs.com/xujiazheng/p/6852124.html" target="_blank" rel="noopener">参考资料</a></p>
+<h2 id="node-中的错误机制"><a href="#node-中的错误机制" class="headerlink" title="node 中的错误机制"></a>node 中的错误机制</h2><ol>
+<li>try catch 同步错误<br>Javascript 抛出的异常，是以 throw 方法抛出，未必都是 Error 的实例，但通过 nodeJs 或者 js 运行时发生的错误，都是 Error 的实例</li>
+<li>EventEmitter、callback 异步错误<br>Nodejs 形式的错误回调，大部分流 &amp; 异步事件都衍生自 EventEmitter 类 || 实例，如 fs, process, stream 等，Process<br>程序运行过程中抛出的异常，或由底层库抛出，或是运行中发生的一些 SyntaxError 之类<br>(参考资料)[<a href="https://www.jishux.com/plus/view-608027-1.html" target="_blank" rel="noopener">https://www.jishux.com/plus/view-608027-1.html</a>]</li>
+</ol>
+<h2 id="MutationObserver"><a href="#MutationObserver" class="headerlink" title="MutationObserver"></a>MutationObserver</h2><p>用来监听dom变化，用法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MutaitonObserver = <span class="built_in">window</span>.MutationObserver;</span><br><span class="line"><span class="keyword">var</span> observer = <span class="keyword">new</span> MutationObserver(<span class="function"><span class="keyword">function</span>(<span class="params">mutations</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(mutations)</span><br><span class="line">&#125;);</span><br><span class="line">observer.observe(<span class="string">'#id'</span>, &#123; <span class="attr">attributes</span>: <span class="literal">true</span>, <span class="attr">childList</span>: <span class="literal">true</span>, <span class="attr">characterData</span>: <span class="literal">true</span>, <span class="attr">subtree</span>:<span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>(参考资料)[<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver</a>]</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/18/css知识快餐-五/" rel="next" title="css知识快餐-五 line-height">
+                <i class="fa fa-chevron-left"></i> css知识快餐-五 line-height
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/28/js正则表达式/" rel="prev" title="js正则表达式">
+                js正则表达式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">wen qingxin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、http2-0"><span class="nav-text">一、http2.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、str-replace，如何从一个字符串中替换出数字"><span class="nav-text">二、str.replace，如何从一个字符串中替换出数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、ul下第一个和最后一个交换位置"><span class="nav-text">三、ul下第一个和最后一个交换位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、require的原则"><span class="nav-text">四、require的原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、数组的sort"><span class="nav-text">五、数组的sort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、一个div如何加两层border"><span class="nav-text">六、一个div如何加两层border</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、https验证签名的算法"><span class="nav-text">七、https验证签名的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#八、cookie、localstorage、sessionstorage本质区别"><span class="nav-text">八、cookie、localstorage、sessionstorage本质区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#九、-call，apply，bind的异同"><span class="nav-text">九、 call，apply，bind的异同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#十、cors的原理"><span class="nav-text">十、cors的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#十一、promise"><span class="nav-text">十一、promise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-rebase"><span class="nav-text">git rebase</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setState"><span class="nav-text">setState</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#react-通信"><span class="nav-text">react 通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#async返回值"><span class="nav-text">async返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css命名冲突的解决"><span class="nav-text">css命名冲突的解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css文件目录的规划"><span class="nav-text">css文件目录的规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#float、position、div的层叠关系"><span class="nav-text">float、position、div的层叠关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vuex-mutation与action的区别以及具体用法"><span class="nav-text">vuex mutation与action的区别以及具体用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue响应式的实现原理"><span class="nav-text">vue响应式的实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#position有哪些值"><span class="nav-text">position有哪些值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vuejs与jquery有什么区别"><span class="nav-text">vuejs与jquery有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jsbradge的原理"><span class="nav-text">jsbradge的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css命名规则"><span class="nav-text">css命名规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css动画定格在最后一帧"><span class="nav-text">css动画定格在最后一帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ctrl-F5做了什么"><span class="nav-text">ctrl+F5做了什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组方法"><span class="nav-text">数组方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改变自身的"><span class="nav-text">改变自身的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不改变自身的"><span class="nav-text">不改变自身的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue中this-nextTick"><span class="nav-text">vue中this.$nextTick</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node-中的错误机制"><span class="nav-text">node 中的错误机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MutationObserver"><span class="nav-text">MutationObserver</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wen qingxin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyty6JE6s';
+      var conf = 'b8bfd61daa1ccd94d3f8571876d702e4';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

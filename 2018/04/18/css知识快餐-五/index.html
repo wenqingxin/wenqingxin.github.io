@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Maserati总裁的博客" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、line-height的定义行高，两行文字基线之间的距离  什么是基线 为什么是基线其他线比如顶线、底线都是基于基线定义的  二、line-height与行内框模型行内框模型1&amp;lt;p&amp;gt;一行文字，&amp;lt;em&amp;gt;em&amp;lt;/em&amp;gt;标签&amp;lt;/p&amp;gt;  内容区域 拖动文字选中 一行文字， 内联盒子 em 行框盒子 p标签内部的一行 包含盒子 p标签内部包含的盒子  三、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css知识快餐-五 line-height">
+<meta property="og:url" content="http://yoursite.com/2018/04/18/css知识快餐-五/index.html">
+<meta property="og:site_name" content="Maserati总裁的博客">
+<meta property="og:description" content="一、line-height的定义行高，两行文字基线之间的距离  什么是基线 为什么是基线其他线比如顶线、底线都是基于基线定义的  二、line-height与行内框模型行内框模型1&amp;lt;p&amp;gt;一行文字，&amp;lt;em&amp;gt;em&amp;lt;/em&amp;gt;标签&amp;lt;/p&amp;gt;  内容区域 拖动文字选中 一行文字， 内联盒子 em 行框盒子 p标签内部的一行 包含盒子 p标签内部包含的盒子  三、">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/04/18/css知识快餐-五/jixian.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/18/css知识快餐-五/inline-block-baseline.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/18/css知识快餐-五/ver-mid.png">
+<meta property="og:updated_time" content="2018-05-17T10:03:24.503Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css知识快餐-五 line-height">
+<meta name="twitter:description" content="一、line-height的定义行高，两行文字基线之间的距离  什么是基线 为什么是基线其他线比如顶线、底线都是基于基线定义的  二、line-height与行内框模型行内框模型1&amp;lt;p&amp;gt;一行文字，&amp;lt;em&amp;gt;em&amp;lt;/em&amp;gt;标签&amp;lt;/p&amp;gt;  内容区域 拖动文字选中 一行文字， 内联盒子 em 行框盒子 p标签内部的一行 包含盒子 p标签内部包含的盒子  三、">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/18/css知识快餐-五/jixian.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/18/css知识快餐-五/"/>
+
+
+
+
+
+  <title>css知识快餐-五 line-height | Maserati总裁的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Maserati总裁的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/css知识快餐-五/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">css知识快餐-五 line-height</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-18T12:32:22+08:00">
+                2018-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/04/18/css知识快餐-五/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/04/18/css知识快餐-五/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、line-height的定义"><a href="#一、line-height的定义" class="headerlink" title="一、line-height的定义"></a>一、line-height的定义</h2><p>行高，两行文字基线之间的距离</p>
+<ol>
+<li>什么是基线<img src="/2018/04/18/css知识快餐-五/jixian.png" title="基线"></li>
+<li>为什么是基线<br>其他线比如顶线、底线都是基于基线定义的</li>
+</ol>
+<h2 id="二、line-height与行内框模型"><a href="#二、line-height与行内框模型" class="headerlink" title="二、line-height与行内框模型"></a>二、line-height与行内框模型</h2><p>行内框模型<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>一行文字，<span class="tag">&lt;<span class="name">em</span>&gt;</span>em<span class="tag">&lt;/<span class="name">em</span>&gt;</span>标签<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>内容区域 拖动文字选中 一行文字，</li>
+<li>内联盒子 em</li>
+<li>行框盒子 p标签内部的一行</li>
+<li>包含盒子 p标签内部包含的盒子</li>
+</ol>
+<h2 id="三、line-height高度原理"><a href="#三、line-height高度原理" class="headerlink" title="三、line-height高度原理"></a>三、line-height高度原理</h2><p>内联元素高度是由line-height决定的而不是字体。行高满足下面的公式<br>内容区域高度 + 行间距 = 行高<br>内容区域高度不一定等于字体大小，只有在simsum字体下内容区域高度等于字体大小</p>
+<h2 id="四-行高值的含义"><a href="#四-行高值的含义" class="headerlink" title="四 行高值的含义"></a>四 行高值的含义</h2><p> 1.5 当前元素内font-size<br> 150% 父元素font-size</p>
+<h2 id="五、会继承的css属性"><a href="#五、会继承的css属性" class="headerlink" title="五、会继承的css属性"></a>五、会继承的css属性</h2><p>font-size<br>line-height</p>
+<h2 id="六、vertical-align"><a href="#六、vertical-align" class="headerlink" title="六、vertical-align"></a>六、vertical-align</h2><h3 id="具体值"><a href="#具体值" class="headerlink" title="具体值"></a>具体值</h3><ol>
+<li>线类<br>top、middle、baseline、bottom</li>
+<li>文本类<br>text-top、text-bottom</li>
+<li>上标下标类<br>sub、super</li>
+<li>数值百分比<br>20px（相对于baseline的偏移）、20%（相对与行高的数值）、2em</li>
+</ol>
+<h3 id="vertical-align起作用的前提"><a href="#vertical-align起作用的前提" class="headerlink" title="vertical-align起作用的前提"></a>vertical-align起作用的前提</h3><p>作用的元素display必须是inline、inline-block、table-cell中的一种。<br>table-cell的vertical-align只作用自身，在子元素里没有效果。</p>
+<h3 id="inline-block如何确定base-line"><a href="#inline-block如何确定base-line" class="headerlink" title="inline-block如何确定base-line"></a>inline-block如何确定base-line</h3><p>inline-block的元素是空的，基线就是底边缘，否则就是受里面的文字或者图片决定的。<br><img src="/2018/04/18/css知识快餐-五/inline-block-baseline.png" title="对齐方式"></p>
+<h3 id="vertical-align线类对齐原则"><a href="#vertical-align线类对齐原则" class="headerlink" title="vertical-align线类对齐原则"></a>vertical-align线类对齐原则</h3><p>top: 元素的顶部与行的顶部对齐<br>bottom: 元素的顶部与行的底部部对齐<br>middle:<img src="/2018/04/18/css知识快餐-五/ver-mid.png" title="对齐原则"><br>要实现完全居中对齐，设置font-size为0</p>
+<h2 id="七、实际应用"><a href="#七、实际应用" class="headerlink" title="七、实际应用"></a>七、实际应用</h2><ol>
+<li>单行文本居中 </li>
+<li><p>多行文本居中</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.parent</span> &#123; </span></span><br><span class="line"><span class="undefined">    line-height: 100px;</span></span><br><span class="line"><span class="undefined">    vertical-align: middle;</span></span><br><span class="line"><span class="undefined">    text-align: center;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="css"><span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="undefined">    display: inline-block;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">line-height</span>: <span class="selector-tag">normal</span>;<span class="comment">/*重置父元素继承的行高*/</span></span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span>1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span>2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span>3<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消除图片下边缘的间隙<br>图片本身是inline-block元素，所以会受到默认的line-height与vertical-align的作用，由于图片默认是底部与行框盒子的baseline对齐，因此有一部分间隙。消除间隙的方式有三种<br>1)设置元素display为block，block元素没有vertical-align属性了。<br>2）设置vertical-align为bottom、middle、top中的一种<br>3）设置line-height等于0或者font-size（line-height为数字的情况下）等于0<br><a href="http://www.zhangxinxu.com/wordpress/2009/11/css%E8%A1%8C%E9%AB%98line-height%E7%9A%84%E4%B8%80%E4%BA%9B%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%8F%8A%E5%BA%94%E7%94%A8/" target="_blank" rel="noopener">参考资料</a></p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/16/css知识快餐-四/" rel="next" title="css知识快餐-四 层叠上下文">
+                <i class="fa fa-chevron-left"></i> css知识快餐-四 层叠上下文
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/22/面试未答好问题/" rel="prev" title="面试问题总结">
+                面试问题总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">wen qingxin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、line-height的定义"><span class="nav-text">一、line-height的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、line-height与行内框模型"><span class="nav-text">二、line-height与行内框模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、line-height高度原理"><span class="nav-text">三、line-height高度原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-行高值的含义"><span class="nav-text">四 行高值的含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、会继承的css属性"><span class="nav-text">五、会继承的css属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、vertical-align"><span class="nav-text">六、vertical-align</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#具体值"><span class="nav-text">具体值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vertical-align起作用的前提"><span class="nav-text">vertical-align起作用的前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inline-block如何确定base-line"><span class="nav-text">inline-block如何确定base-line</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vertical-align线类对齐原则"><span class="nav-text">vertical-align线类对齐原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、实际应用"><span class="nav-text">七、实际应用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wen qingxin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyty6JE6s';
+      var conf = 'b8bfd61daa1ccd94d3f8571876d702e4';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

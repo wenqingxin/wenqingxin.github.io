@@ -85,16 +85,16 @@
 
 <meta name="description" content="大家都知道js引擎是单线程的，那它是怎么实现单线程的呢？那就要提到事件循环了，在讲事件循环之前我们首先得搞清楚一下概念。 一、函数栈栈是一种数据结构，特点是数据先进后出，js在执行函数过程中其实也是将函数放进栈结构中，我们成为函数栈，函数执行完成后就拿出函数，当函数内部继续在调用其他函数的时候，我们也继续压入函数。现在，我们写了下面一段代码1234567891011121314function b">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js运行机制">
+<meta property="og:title" content="浏览器js运行机制">
 <meta property="og:url" content="http://yoursite.com/2018/03/10/js运行机制/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
 <meta property="og:description" content="大家都知道js引擎是单线程的，那它是怎么实现单线程的呢？那就要提到事件循环了，在讲事件循环之前我们首先得搞清楚一下概念。 一、函数栈栈是一种数据结构，特点是数据先进后出，js在执行函数过程中其实也是将函数放进栈结构中，我们成为函数栈，函数执行完成后就拿出函数，当函数内部继续在调用其他函数的时候，我们也继续压入函数。现在，我们写了下面一段代码1234567891011121314function b">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/03/10/js运行机制/出栈入栈过程.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/10/js运行机制/栈、任务队列、事件循环.png">
-<meta property="og:updated_time" content="2018-03-10T08:34:03.180Z">
+<meta property="og:updated_time" content="2018-05-09T05:31:42.637Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js运行机制">
+<meta name="twitter:title" content="浏览器js运行机制">
 <meta name="twitter:description" content="大家都知道js引擎是单线程的，那它是怎么实现单线程的呢？那就要提到事件循环了，在讲事件循环之前我们首先得搞清楚一下概念。 一、函数栈栈是一种数据结构，特点是数据先进后出，js在执行函数过程中其实也是将函数放进栈结构中，我们成为函数栈，函数执行完成后就拿出函数，当函数内部继续在调用其他函数的时候，我们也继续压入函数。现在，我们写了下面一段代码1234567891011121314function b">
 <meta name="twitter:image" content="http://yoursite.com/2018/03/10/js运行机制/出栈入栈过程.png">
 
@@ -132,7 +132,7 @@
 
 
 
-  <title>js运行机制 | Maserati总裁的博客</title>
+  <title>浏览器js运行机制 | Maserati总裁的博客</title>
   
 
 
@@ -256,7 +256,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">js运行机制</h2>
+          <h2 class="post-title" itemprop="name headline">浏览器js运行机制</h2>
         
 
         <div class="post-meta">
@@ -332,10 +332,17 @@
 </ol>
 <h2 id="三、任务队列"><a href="#三、任务队列" class="headerlink" title="三、任务队列"></a>三、任务队列</h2><p>任务队列存储回掉的函数，调用异步模块，异步模块完成执行达到回调函数触发条件的时候，会讲回调处理放到任务队列。<br>任务队列分为两类</p>
 <ol>
-<li>宏任务队列（macro task 每个异步模块都有对应的一个异步队列）</li>
-<li>微任务队列（micro task 只有一个）<br>那么哪个任务会被分配到哪个队列呢？<br>宏任务：script（全局任务）, setTimeout, setInterval, setImmediate, I/O, UI rendering.<br>微任务：process.nextTick, Promise, Object.observer, MutationObserver.</li>
+<li>宏任务队列（macro task 每个异步模块任务源都有对应的一个异步队列）<br>任务源：script（全局任务）, （setTimeout, setInterval, setImmediate）, I/O, UI rendering.<br>队列执行规则：<br>相同队列中的任务按照先进先出的顺序, 不同的队列按照提前设置的队列优先级来调用. 例如，用户代理可以有一个用于鼠标和键盘事件的任务队列（用户交互任务源），另一个用于其他任务。然后，用户代理75%概率调用键盘和鼠标事件任务队列，25%调用其他队列, 这样的话就保持界面响应而且不会饿死其他任务队列. 但是相同队列中的任务要按照先进先出的顺序。也就是说单独的任务队列中的任务总是按先进先出的顺序执行，但是不保证多个任务队列中的任务优先级，具体实现可能会交叉执行</li>
+<li>微任务队列（micro task 只有一个）<br>任务源： Promise, Object.observer, MutationObserver.</li>
 </ol>
-<h2 id="四、事件循环"><a href="#四、事件循环" class="headerlink" title="四、事件循环"></a>四、事件循环</h2><p>当函数栈里已经没有函数了，会在任务队列里取任务来执行，执行完毕后，发现没有函数了，又会在队列里拿出一个任务来执行。<br>宏任务与微任务的执行顺序<br>当一个宏任务队列执行完毕后就会执行微任务队列，比如下面的例子<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'script start'</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'promise 1'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'promise 2'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'script end'</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="四、事件循环"><a href="#四、事件循环" class="headerlink" title="四、事件循环"></a>四、事件循环</h2><ol>
+<li>执行完主执行线程中的任务。</li>
+<li>取出Microtask Queue中任务执行直到清空。</li>
+<li>取出Macrotask Queue中一个任务执行。</li>
+<li>取出Microtask Queue中任务执行直到清空。</li>
+<li>重复3和4。<br>比如下面的例子<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'script start'</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'promise 1'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'promise 2'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'script end'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 <p>结果是：<br>script start<br>script end<br>promise 1<br>promise 2<br>setTimeout</p>
 <h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><img src="/2018/03/10/js运行机制/栈、任务队列、事件循环.png" title="概览">
       
@@ -455,7 +462,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
