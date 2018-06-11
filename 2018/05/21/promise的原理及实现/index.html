@@ -83,17 +83,17 @@
 
 
 
-<meta name="description" content="异步回调函数的缺点 书写顺序与代码执行顺序不一样，不利于维护与阅读 异步操作顺序发生变更的时候，需要不规模的代码重构 回调函数大多数都是匿名函数，导致bug不易追踪  Promise是什么Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。 Promise">
+<meta name="description" content="异步回调函数的缺点 书写顺序与代码执行顺序不一样，不利于维护与阅读 异步操作顺序发生变更的时候，需要不规模的代码重构 回调函数大多数都是匿名函数，导致bug不易追踪  Promise是什么Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="promise的原理及实现">
 <meta property="og:url" content="http://yoursite.com/2018/05/21/promise的原理及实现/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="异步回调函数的缺点 书写顺序与代码执行顺序不一样，不利于维护与阅读 异步操作顺序发生变更的时候，需要不规模的代码重构 回调函数大多数都是匿名函数，导致bug不易追踪  Promise是什么Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。 Promise">
+<meta property="og:description" content="异步回调函数的缺点 书写顺序与代码执行顺序不一样，不利于维护与阅读 异步操作顺序发生变更的时候，需要不规模的代码重构 回调函数大多数都是匿名函数，导致bug不易追踪  Promise是什么Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-23T05:28:47.613Z">
+<meta property="og:updated_time" content="2018-06-11T01:39:20.890Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="promise的原理及实现">
-<meta name="twitter:description" content="异步回调函数的缺点 书写顺序与代码执行顺序不一样，不利于维护与阅读 异步操作顺序发生变更的时候，需要不规模的代码重构 回调函数大多数都是匿名函数，导致bug不易追踪  Promise是什么Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。 Promise">
+<meta name="twitter:description" content="异步回调函数的缺点 书写顺序与代码执行顺序不一样，不利于维护与阅读 异步操作顺序发生变更的时候，需要不规模的代码重构 回调函数大多数都是匿名函数，导致bug不易追踪  Promise是什么Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。">
 
 
 
@@ -319,7 +319,7 @@
 <li>异步操作顺序发生变更的时候，需要不规模的代码重构</li>
 <li>回调函数大多数都是匿名函数，导致bug不易追踪</li>
 </ol>
-<h2 id="Promise是什么"><a href="#Promise是什么" class="headerlink" title="Promise是什么"></a>Promise是什么</h2><p>Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。</p>
+<h2 id="Promise是什么"><a href="#Promise是什么" class="headerlink" title="Promise是什么"></a>Promise是什么</h2><p>Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。<br><a id="more"></a></p>
 <h2 id="Promise的使用"><a href="#Promise的使用" class="headerlink" title="Promise的使用"></a>Promise的使用</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> promiseA = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 异步操作，根据操作结果调用resolve或者reject方法</span></span><br><span class="line">    <span class="comment">// 调用后续所有then方法里的回调</span></span><br><span class="line">    resolve(<span class="number">1</span>);</span><br><span class="line">&#125;)</span><br><span class="line">promiseA.then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data); <span class="comment">// 1</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> promiseB = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 异步操作，根据操作结果调用resolve或者reject方法</span></span><br><span class="line">    <span class="comment">// 调用后续第一个catch方法里的回调</span></span><br><span class="line">    reject(<span class="number">1</span>);</span><br><span class="line">&#125;)</span><br><span class="line">promiseB.catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);<span class="comment">// 1</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h2 id="Promise的状态"><a href="#Promise的状态" class="headerlink" title="Promise的状态"></a>Promise的状态</h2><ol>
 <li>pending<br>创建promise对象后的初始状态</li>
