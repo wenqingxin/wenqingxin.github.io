@@ -90,7 +90,7 @@
 <meta property="og:site_name" content="Maserati总裁的博客">
 <meta property="og:description" content="一、http2.0 先说说http1.x的缺点：在http1.0的,再没开启connection：keep-alive的情况下。一次请求就会建立一个tcp连接，建立tcp连接是有延时的，因为需要经过三次握手。而浏览器对每个域名可创建的连接数是有限制的，因此资源的请求还需要排队（head of line blocking），同时，TCP连接会随着时间进行自我调谐，起初会限制连接的最大速度，如果数据传">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-11T01:39:35.792Z">
+<meta property="og:updated_time" content="2018-06-11T05:52:33.595Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试问题总结">
 <meta name="twitter:description" content="一、http2.0 先说说http1.x的缺点：在http1.0的,再没开启connection：keep-alive的情况下。一次请求就会建立一个tcp连接，建立tcp连接是有延时的，因为需要经过三次握手。而浏览器对每个域名可创建的连接数是有限制的，因此资源的请求还需要排队（head of line blocking），同时，TCP连接会随着时间进行自我调谐，起初会限制连接的最大速度，如果数据传">
@@ -316,7 +316,7 @@
       
         <h3 id="一、http2-0"><a href="#一、http2-0" class="headerlink" title="一、http2.0"></a>一、http2.0</h3><ol>
 <li>先说说http1.x的缺点：<br>在http1.0的,再没开启connection：keep-alive的情况下。一次请求就会建立一个tcp连接，建立tcp连接是有延时的，因为需要经过三次握手。而浏览器对每个域名可创建的连接数是有限制的，因此资源的请求还需要排队（head of line blocking），同时，TCP连接会随着时间进行自我调谐，起初会限制连接的最大速度，如果数据传输成功，会随着时间的推移提高传输的速度，而http都是些短连接，tcp后续速度提升的特性不利用起来。这些归根结底就是没有复用连接，比较慢。<br>http1.1默认开启connection：keep-alive，一定程度上复用了连接，但是短时间的复用，一般15s，同时一个连接里面也只允许一个连接和一个响应。</li>
-<li><p>http2.0<br>http2就是针对http1.x的缺点而生的<br>1）单一长连接<br>2）多路复用<br>4）头部压缩、二进制分帧<br>4）服务端推送server push<br><a href="https://cloud.tencent.com/developer/article/1004874" target="_blank" rel="noopener">参考文章1</a><br><a href="https://www.zhihu.com/question/34074946" target="_blank" rel="noopener">参考文章2</a></p>
+<li><p>http2.0<br>http2就是针对http1.x的缺点而生的<br>1）单一长连接、多路复用<br>2）头部压缩、二进制格式<br>3）服务端推送server push<br><a href="https://cloud.tencent.com/developer/article/1004874" target="_blank" rel="noopener">参考文章1</a><br><a href="https://www.zhihu.com/question/34074946" target="_blank" rel="noopener">参考文章2</a></p>
 <a id="more"></a>
 </li>
 <li><p>不定宽弹框上下居中<br>1）flex弹性盒子</p>
@@ -618,7 +618,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -736,9 +736,6 @@
 
 
 
-  
-  
-
 
 
 
@@ -775,16 +772,6 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/three.min.js"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
   
 
 

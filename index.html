@@ -233,6 +233,369 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/13/微信小程序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/13/微信小程序/" itemprop="url">微信小程序</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-13T09:36:07+08:00">
+                2018-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/06/13/微信小程序/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2018/06/13/微信小程序/" class="cy_cmt_count" data-xid="2018/06/13/微信小程序/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="什么是微信小程序、小程序的特点"><a href="#什么是微信小程序、小程序的特点" class="headerlink" title="什么是微信小程序、小程序的特点"></a>什么是微信小程序、小程序的特点</h2><p>使用场景：</p>
+<ol>
+<li>业务逻辑简单</li>
+<li>使用频率较低</li>
+<li>性能要求低</li>
+</ol>
+<p>小程序特点</p>
+<ol>
+<li>不需要下载安装</li>
+<li>用完即走，不需要安装过多应用</li>
+<li>无处不在，随时可用</li>
+</ol>
+<h2 id="开发总体流程"><a href="#开发总体流程" class="headerlink" title="开发总体流程"></a>开发总体流程</h2><p>注册小程序账号-&gt;配置小程序信息-&gt;开发-&gt;提交审核-&gt;发布</p>
+<h2 id="开发前期准备"><a href="#开发前期准备" class="headerlink" title="开发前期准备"></a>开发前期准备</h2><ol>
+<li>注册小程序账号<br><a href="https://mp.weixin.qq.com/wxopen/waregister?action=step1" target="_blank" rel="noopener">https://mp.weixin.qq.com/wxopen/waregister?action=step1</a></li>
+<li>配置小程序信息<br><a href="https://mp.weixin.qq.com/wxopen/initprofile?action=index&amp;lang=zh_CN&amp;token=923936880" target="_blank" rel="noopener">https://mp.weixin.qq.com/wxopen/initprofile?action=index&amp;lang=zh_CN&amp;token=923936880</a></li>
+<li>添加其他开发者</li>
+<li>下载安装开发工具<br><a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/devtools.html?t=2018413" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/devtools/devtools.html?t=2018413</a></li>
+<li>新建模板项目</li>
+</ol>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><h3 id="wxml"><a href="#wxml" class="headerlink" title="wxml"></a>wxml</h3><p>wxml就是小程序页面的骨架，可以理解为web开发中的html，不同的是小程序里的标签对(组件)是自己跟html不完全一样。<br>常用的如下：</p>
+<ol>
+<li>view划分页面结构无实际意义，相当于div</li>
+<li>image 图片</li>
+<li>text 有它才能选择文字加样式<br>模版语法</li>
+<li><p>条件语句<br>wx:if </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:if</span>=<span class="string">"&#123;&#123;condition&#125;&#125;"</span>&gt;</span> True <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>循环<br>wx:for </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:for</span>=<span class="string">"&#123;&#123;array&#125;&#125;"</span>&gt;</span></span><br><span class="line">  &#123;&#123;index&#125;&#125;: &#123;&#123;item.message&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>列表渲染 不写 item index 默认指代</p>
+<ol>
+<li>数据绑定 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span> &#123;&#123; message &#125;&#125; <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="wxss"><a href="#wxss" class="headerlink" title="wxss"></a>wxss</h3><ol>
+<li><p>style<br>可以直接在组件上写样式</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">style</span>=<span class="string">"color:red;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>class<br>在组件上引用wxss里定义的类样式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;view class=&quot;red&quot; /&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>需要注意的是，小程序为我们预定义好了一个相对尺寸单位rpx，参考基准位750rpx，可以根据屏幕宽度进行自适应，我们只需要按照750px的设计稿将px按照1:1转换成rpx就可以了。</p>
+<h3 id="js"><a href="#js" class="headerlink" title="js"></a>js</h3><ol>
+<li>模块化 commonJs ES6 module</li>
+<li>小程序运行时无Bom、Dom对象。</li>
+<li>数据绑定 单向数据绑定 方法setData</li>
+<li>事件支持<br><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/event.html" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/event.html</a><br>bindtap catchtap(阻止冒泡)</li>
+</ol>
+<h3 id="JSON-配置"><a href="#JSON-配置" class="headerlink" title="JSON 配置"></a>JSON 配置</h3><p>app.json 是对当前小程序的全局配置，包括了小程序的所有页面路径、界面表现、网络超时时间、底部 tab 等.<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"pages"</span>:[</span><br><span class="line">    <span class="string">"pages/index/index"</span>,</span><br><span class="line">    <span class="string">"pages/logs/logs"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"window"</span>:&#123;</span><br><span class="line">    <span class="attr">"backgroundTextStyle"</span>:<span class="string">"light"</span>,</span><br><span class="line">    <span class="attr">"navigationBarBackgroundColor"</span>: <span class="string">"#fff"</span>,</span><br><span class="line">    <span class="attr">"navigationBarTitleText"</span>: <span class="string">"WeChat"</span>,</span><br><span class="line">    <span class="attr">"navigationBarTextStyle"</span>:<span class="string">"black"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><p>微信相关原生能力APi挂在在wx对象上</p>
+<ol>
+<li>网络请求<br>wx.request(OBJECT)</li>
+<li>缓存<br><a href="https://developers.weixin.qq.com/miniprogram/dev/api/data.html" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/api/data.html</a></li>
+<li>页面跳转<br>wx.navigateTo 父页面-&gt;子页面 有返回按钮 父页面只是被隐藏了 触发onUnload<br>wx.redirectTo 跳向一个平行的页面 没有返回按钮 父页面被卸载了 触发onHide</li>
+</ol>
+<h2 id="小程序的组件化"><a href="#小程序的组件化" class="headerlink" title="小程序的组件化"></a>小程序的组件化</h2><ol>
+<li>利用预定义的组件<br><a href="https://developers.weixin.qq.com/miniprogram/dev/component/" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/component/</a></li>
+<li>自定义组件<br>利用开发工具直接新建一个component<br>需要使用自定义组件时需要在页面的配置文件申明<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"usingComponents"</span>: &#123;</span><br><span class="line">    <span class="attr">"component-tag-name"</span>: <span class="string">"path/to/the/custom/component"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="页面生命周期"><a href="#页面生命周期" class="headerlink" title="页面生命周期"></a>页面生命周期</h2><ol>
+<li>onLoad</li>
+<li>onShow</li>
+<li>onReady</li>
+<li>onHide</li>
+<li>onUnload</li>
+</ol>
+<h2 id="如何上线"><a href="#如何上线" class="headerlink" title="如何上线"></a>如何上线</h2><p>开发完成后提交版本，经过腾讯审核后即可上线。<br>审核点注意点</p>
+<ol>
+<li>取名<br>首先，小程序的名称一定要与功能相关，不能模糊形容，不能以电话、邮件、日历等广义归纳类、普遍且不具有识别性词语来命名。</li>
+<li>功能与类目要相符合<br>小程序服务类目所对应的页面中的核心内容必须与该类目一致，例如，不能选择的类目是工具类，小程序里却搞起了电商。千万不能搞一些挂羊头卖狗肉的小程序，这是肯定要禁止的。</li>
+<li>功能不能与微信官方的利息产生冲突<br>微信官方有的功能，就不要碰了</li>
+<li>不能含有诱导用户分享的内容</li>
+<li>不得展示和推荐第三方小程序</li>
+<li>必须登陆的小程序，必须提供测试账号<br>该微信号将提供给微信审核人员审核微信小程序时登录使用，微信号需能够体验小程序的全部功能。</li>
+<li>不能有bug，这是最基本的。</li>
+</ol>
+<h2 id="如何运维"><a href="#如何运维" class="headerlink" title="如何运维"></a>如何运维</h2><p>微信公众平台提供有简单的客户端日志查询。</p>
+<h2 id="原生小程序缺点"><a href="#原生小程序缺点" class="headerlink" title="原生小程序缺点"></a>原生小程序缺点</h2><ol>
+<li>不能直接使用npm的包，只能自己复制相关资源到小程序开发环境。</li>
+<li>一套代码不能复用，由于小程序页面特有的语法，还需要为小程序单独开发，已有的vue项目可以快速迁移到小程序。</li>
+<li>需要花更多的学习成本去学习小程序特有的组件等知识点。</li>
+</ol>
+<h2 id="mpvue"><a href="#mpvue" class="headerlink" title="mpvue"></a>mpvue</h2><h3 id="mpvue是什么？"><a href="#mpvue是什么？" class="headerlink" title="mpvue是什么？"></a>mpvue是什么？</h3><p>mpvue 是一个使用基于Vue.js 开发小程序的前端框架。<br><a href="http://mpvue.com/#_1" target="_blank" rel="noopener">http://mpvue.com/#_1</a></p>
+<h3 id="解决什么问题？"><a href="#解决什么问题？" class="headerlink" title="解决什么问题？"></a>解决什么问题？</h3><ol>
+<li>小程序引入了基于webpack的相关前端工程化工具链，带来了vue项目相同的开发体验。</li>
+<li>已有的基于vue的项目更容易迁移到小程序，只需要改一些配置。</li>
+</ol>
+<h3 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 先检查下 Node.js 是否安装成功</span></span><br><span class="line">$ node -v</span><br><span class="line">v8.9.0</span><br><span class="line"></span><br><span class="line">$ npm -v</span><br><span class="line">5.6.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 由于众所周知的原因，可以考虑切换源为 taobao 源</span></span><br><span class="line">$ npm <span class="built_in">set</span> registry https://registry.npm.taobao.org/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 全局安装 vue-cli</span></span><br><span class="line"><span class="comment"># 一般是要 sudo 权限的</span></span><br><span class="line">$ npm install --global vue-cli</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 创建一个基于 mpvue-quickstart 模板的新项目</span></span><br><span class="line"><span class="comment"># 新手一路回车选择默认就可以了</span></span><br><span class="line">$ vue init mpvue/mpvue-quickstart my-project</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 安装依赖，走你</span></span><br><span class="line">$ <span class="built_in">cd</span> my-project</span><br><span class="line">$ npm install</span><br><span class="line">$ npm run dev</span><br></pre></td></tr></table></figure>
+<p>用小程序开发工具打开项目即可</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/webpack学习-优化打包速度/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wen qingxin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maserati总裁的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/11/webpack学习-优化打包速度/" itemprop="url">webpack学习-优化打包速度</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-11T12:32:48+08:00">
+                2018-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/06/11/webpack学习-优化打包速度/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2018/06/11/webpack学习-优化打包速度/" class="cy_cmt_count" data-xid="2018/06/11/webpack学习-优化打包速度/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="分开vendor和app代码"><a href="#分开vendor和app代码" class="headerlink" title="分开vendor和app代码"></a>分开vendor和app代码</h3><p>第三方的库不必要每次都打包，可以引用以下插件<br>Dllplugin<br>DllReferencePlugin</p>
+<h3 id="UglifyJsPlugin"><a href="#UglifyJsPlugin" class="headerlink" title="UglifyJsPlugin"></a>UglifyJsPlugin</h3><p>压缩代码的速度很慢</p>
+<ol>
+<li>parallel 可以设置配置成多线程的方式并行执行</li>
+<li>cache 可以设置缓存，webpack每次执行都会缓存上一次uglify的结果，缓存的内容包含了文件名的hash和文件内容的hash，这样在下次uglify时，通过对比hash，如果可以在缓存中找到命中的文件，则跳过uglify直接使用缓存内容。</li>
+</ol>
+<h3 id="HappyPack"><a href="#HappyPack" class="headerlink" title="HappyPack"></a>HappyPack</h3><p>将loader并行的去处理，将文件处理变成并行</p>
+<h3 id="babel-loader"><a href="#babel-loader" class="headerlink" title="babel-loader"></a>babel-loader</h3><p>options.cacheDirectory<br>规定好范围进行编译<br>include<br>exclude</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>减少resolve<br>去除生成sourcemap<br>cache-loader</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/21/promise的原理及实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -592,6 +955,7 @@
 <li>只读state</li>
 <li>reducer为纯函数</li>
 </ol>
+<h2 id="异步action"><a href="#异步action" class="headerlink" title="异步action"></a>异步action</h2><p>用中间件redux-thunk或者redux-promise，原本dispatch只接受一个对象（action creater函数的返回值）作为参数，用了redux-thunk或者redux-promise后可以接受一个函数或者一个promise对象实现</p>
 
           
         
@@ -991,7 +1355,7 @@
         
           <h3 id="一、http2-0"><a href="#一、http2-0" class="headerlink" title="一、http2.0"></a>一、http2.0</h3><ol>
 <li>先说说http1.x的缺点：<br>在http1.0的,再没开启connection：keep-alive的情况下。一次请求就会建立一个tcp连接，建立tcp连接是有延时的，因为需要经过三次握手。而浏览器对每个域名可创建的连接数是有限制的，因此资源的请求还需要排队（head of line blocking），同时，TCP连接会随着时间进行自我调谐，起初会限制连接的最大速度，如果数据传输成功，会随着时间的推移提高传输的速度，而http都是些短连接，tcp后续速度提升的特性不利用起来。这些归根结底就是没有复用连接，比较慢。<br>http1.1默认开启connection：keep-alive，一定程度上复用了连接，但是短时间的复用，一般15s，同时一个连接里面也只允许一个连接和一个响应。</li>
-<li><p>http2.0<br>http2就是针对http1.x的缺点而生的<br>1）单一长连接<br>2）多路复用<br>4）头部压缩、二进制分帧<br>4）服务端推送server push<br><a href="https://cloud.tencent.com/developer/article/1004874" target="_blank" rel="noopener">参考文章1</a><br><a href="https://www.zhihu.com/question/34074946" target="_blank" rel="noopener">参考文章2</a></p>
+<li><p>http2.0<br>http2就是针对http1.x的缺点而生的<br>1）单一长连接、多路复用<br>2）头部压缩、二进制格式<br>3）服务端推送server push<br><a href="https://cloud.tencent.com/developer/article/1004874" target="_blank" rel="noopener">参考文章1</a><br><a href="https://www.zhihu.com/question/34074946" target="_blank" rel="noopener">参考文章2</a></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/04/22/面试未答好问题/#more" rel="contents">
@@ -1305,276 +1669,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/05/ssh/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/05/ssh/" itemprop="url">ssh</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T11:10:57+08:00">
-                2018-04-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2018/04/05/ssh/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2018/04/05/ssh/" class="cy_cmt_count" data-xid="2018/04/05/ssh/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="一、ssh是什么"><a href="#一、ssh是什么" class="headerlink" title="一、ssh是什么"></a>一、ssh是什么</h2><p>SSH(安全外壳协议)为Secure Shell的缩写，是建立在应用层基础上的安全协议。SSH是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。</p>
-<h2 id="二、ssh的作用"><a href="#二、ssh的作用" class="headerlink" title="二、ssh的作用"></a>二、ssh的作用</h2><p>利用SSH协议可以有效防止远程管理过程中的信息泄露问题。SSH客户端最初是UNIX系统上的一个程序，后来又迅速扩展到其他操作平台。几乎所有UNIX平台—包括HP-UX、Linux、AIX、Solaris、Digital UNIX、Irix，以及其他平台，都可运行SSH。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/05/ssh/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/19/组件化与react/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wen qingxin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Maserati总裁的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/19/组件化与react/" itemprop="url">组件化与react</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T21:14:30+08:00">
-                2018-03-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2018/03/19/组件化与react/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2018/03/19/组件化与react/" class="cy_cmt_count" data-xid="2018/03/19/组件化与react/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="什么是组件"><a href="#什么是组件" class="headerlink" title="什么是组件"></a>什么是组件</h2><ol>
-<li>封装<br>对视图、数据、交互逻辑进行封装</li>
-<li>复用<br>通过传入props，实现功能上的复用<h2 id="jsx的本质"><a href="#jsx的本质" class="headerlink" title="jsx的本质"></a>jsx的本质</h2>创建vdom的语法糖，通过babel编译成js代码<h2 id="jsx与vdom"><a href="#jsx与vdom" class="headerlink" title="jsx与vdom"></a>jsx与vdom</h2>jsx编译后就是用React.createElement()方法创建vdom<h2 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h2>为什么是异步？<br>当连续重复setState的时候，数据更新没有必要每次都去更新视图，react内部将这部分操作汇总起来，只对最后的数据进行渲染</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1625,7 +1719,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1727,9 +1821,6 @@
 
 
 
-  
-  
-
 
 
 
@@ -1766,16 +1857,6 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/three.min.js"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
   
 
 

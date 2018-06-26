@@ -83,17 +83,17 @@
 
 
 
-<meta name="description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta name="description" content="分开vendor和app代码第三方的库不必要每次都打包，可以引用以下插件DllpluginDllReferencePlugin UglifyJsPlugin压缩代码的速度很慢  parallel 可以设置配置成多线程的方式并行执行 cache 可以设置缓存，webpack每次执行都会缓存上一次uglify的结果，缓存的内容包含了文件名的hash和文件内容的hash，这样在下次uglify时，通过对">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript的Object对象--配置限制相关(二)">
-<meta property="og:url" content="http://yoursite.com/2018/02/16/javascript的Object对象-二/index.html">
+<meta property="og:title" content="webpack学习-优化打包速度">
+<meta property="og:url" content="http://yoursite.com/2018/06/11/webpack学习-优化打包速度/index.html">
 <meta property="og:site_name" content="Maserati总裁的博客">
-<meta property="og:description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta property="og:description" content="分开vendor和app代码第三方的库不必要每次都打包，可以引用以下插件DllpluginDllReferencePlugin UglifyJsPlugin压缩代码的速度很慢  parallel 可以设置配置成多线程的方式并行执行 cache 可以设置缓存，webpack每次执行都会缓存上一次uglify的结果，缓存的内容包含了文件名的hash和文件内容的hash，这样在下次uglify时，通过对">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T06:09:37.339Z">
+<meta property="og:updated_time" content="2018-06-11T10:35:04.649Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript的Object对象--配置限制相关(二)">
-<meta name="twitter:description" content="一、Object.seal() 禁止对象配置，描述符种的configurable设置为flase 12345var obj = &amp;#123;    name: &apos;xiaoming&apos;&amp;#125;;Object.seal(obj);console.log(Object.getOwnPropertyDescriptor(obj, &apos;name&apos;));// &amp;#123;value: &quot;xiaoming&quot;,">
+<meta name="twitter:title" content="webpack学习-优化打包速度">
+<meta name="twitter:description" content="分开vendor和app代码第三方的库不必要每次都打包，可以引用以下插件DllpluginDllReferencePlugin UglifyJsPlugin压缩代码的速度很慢  parallel 可以设置配置成多线程的方式并行执行 cache 可以设置缓存，webpack每次执行都会缓存上一次uglify的结果，缓存的内容包含了文件名的hash和文件内容的hash，这样在下次uglify时，通过对">
 
 
 
@@ -123,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/16/javascript的Object对象-二/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/11/webpack学习-优化打包速度/"/>
 
 
 
 
 
-  <title>javascript的Object对象--配置限制相关(二) | Maserati总裁的博客</title>
+  <title>webpack学习-优化打包速度 | Maserati总裁的博客</title>
   
 
 
@@ -236,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/javascript的Object对象-二/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/webpack学习-优化打包速度/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wen qingxin">
@@ -253,7 +253,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">javascript的Object对象--配置限制相关(二)</h2>
+          <h2 class="post-title" itemprop="name headline">webpack学习-优化打包速度</h2>
         
 
         <div class="post-meta">
@@ -265,8 +265,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T21:25:42+08:00">
-                2018-02-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-11T12:32:48+08:00">
+                2018-06-11
               </time>
             
 
@@ -285,8 +285,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2018/02/16/javascript的Object对象-二/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/02/16/javascript的Object对象-二/" itemprop="commentsCount"></span>
+                <a href="/2018/06/11/webpack学习-优化打包速度/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/06/11/webpack学习-优化打包速度/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -314,13 +314,15 @@
       
 
       
-        <h2 id="一、Object-seal"><a href="#一、Object-seal" class="headerlink" title="一、Object.seal()"></a>一、Object.seal()</h2><p> 禁止对象配置，描述符种的configurable设置为flase<br> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.seal(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="string">'name'</span>));<span class="comment">// &#123;value: "xiaoming", writable: true, enumerable: true, configurable: false&#125;</span></span><br></pre></td></tr></table></figure></p>
- <a id="more"></a>
-<h2 id="二、Object-isSealed"><a href="#二、Object-isSealed" class="headerlink" title="二、Object.isSealed()"></a>二、Object.isSealed()</h2><p> 判断对象是否被禁止配置操作<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.seal(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isSealed(obj));<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="三、Object-freeze"><a href="#三、Object-freeze" class="headerlink" title="三、Object.freeze()"></a>三、Object.freeze()</h2><p>冻结对象，将描述符种的writeable、configurable设置为false;<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.freeze(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="string">'name'</span>));<span class="comment">// &#123;value: "xiaoming", writable: false, enumerable: true, configurable: false&#125;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="四、Object-isFrozen"><a href="#四、Object-isFrozen" class="headerlink" title="四、Object.isFrozen()"></a>四、Object.isFrozen()</h2><p>判断对象是否被冻结<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.freeze(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isFrozen(obj));<span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="五、Object-preventExtensions"><a href="#五、Object-preventExtensions" class="headerlink" title="五、Object.preventExtensions()"></a>五、Object.preventExtensions()</h2><p>禁止对象添加扩展，不能添加新的属性，但是可以删除属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'xiaoming'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(obj);</span><br><span class="line">obj.age = <span class="number">18</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;name: "xiaoming"&#125;</span></span><br><span class="line"><span class="keyword">delete</span> obj.name;</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// &#123;&#125;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="六、Object-isExtensible"><a href="#六、Object-isExtensible" class="headerlink" title="六、Object.isExtensible()"></a>六、Object.isExtensible()</h2><p>判断对象是否可扩展<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isExtensible(obj));<span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(obj);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.isExtensible(obj));<span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
+        <h3 id="分开vendor和app代码"><a href="#分开vendor和app代码" class="headerlink" title="分开vendor和app代码"></a>分开vendor和app代码</h3><p>第三方的库不必要每次都打包，可以引用以下插件<br>Dllplugin<br>DllReferencePlugin</p>
+<h3 id="UglifyJsPlugin"><a href="#UglifyJsPlugin" class="headerlink" title="UglifyJsPlugin"></a>UglifyJsPlugin</h3><p>压缩代码的速度很慢</p>
+<ol>
+<li>parallel 可以设置配置成多线程的方式并行执行</li>
+<li>cache 可以设置缓存，webpack每次执行都会缓存上一次uglify的结果，缓存的内容包含了文件名的hash和文件内容的hash，这样在下次uglify时，通过对比hash，如果可以在缓存中找到命中的文件，则跳过uglify直接使用缓存内容。</li>
+</ol>
+<h3 id="HappyPack"><a href="#HappyPack" class="headerlink" title="HappyPack"></a>HappyPack</h3><p>将loader并行的去处理，将文件处理变成并行</p>
+<h3 id="babel-loader"><a href="#babel-loader" class="headerlink" title="babel-loader"></a>babel-loader</h3><p>options.cacheDirectory<br>规定好范围进行编译<br>include<br>exclude</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>减少resolve<br>去除生成sourcemap<br>cache-loader</p>
 
       
     </div>
@@ -345,8 +347,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象/" rel="next" title="javascript的Object对象--属性定义相关(一)">
-                <i class="fa fa-chevron-left"></i> javascript的Object对象--属性定义相关(一)
+              <a href="/2018/05/21/promise的原理及实现/" rel="next" title="promise的原理及实现">
+                <i class="fa fa-chevron-left"></i> promise的原理及实现
               </a>
             
           </div>
@@ -355,8 +357,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/16/javascript的Object对象-三/" rel="prev" title="javascript的Object对象--属性遍历相关(三)">
-                javascript的Object对象--属性遍历相关(三) <i class="fa fa-chevron-right"></i>
+              <a href="/2018/06/13/微信小程序/" rel="prev" title="微信小程序">
+                微信小程序 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -476,7 +478,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Object-seal"><span class="nav-text">一、Object.seal()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Object-isSealed"><span class="nav-text">二、Object.isSealed()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Object-freeze"><span class="nav-text">三、Object.freeze()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Object-isFrozen"><span class="nav-text">四、Object.isFrozen()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、Object-preventExtensions"><span class="nav-text">五、Object.preventExtensions()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、Object-isExtensible"><span class="nav-text">六、Object.isExtensible()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分开vendor和app代码"><span class="nav-text">分开vendor和app代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UglifyJsPlugin"><span class="nav-text">UglifyJsPlugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HappyPack"><span class="nav-text">HappyPack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#babel-loader"><span class="nav-text">babel-loader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></div>
             
 
           </div>

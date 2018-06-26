@@ -90,7 +90,7 @@
 <meta property="og:site_name" content="Maserati总裁的博客">
 <meta property="og:description" content="异步回调函数的缺点 书写顺序与代码执行顺序不一样，不利于维护与阅读 异步操作顺序发生变更的时候，需要不规模的代码重构 回调函数大多数都是匿名函数，导致bug不易追踪  Promise是什么Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-11T01:39:20.890Z">
+<meta property="og:updated_time" content="2018-06-11T05:03:49.105Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="promise的原理及实现">
 <meta name="twitter:description" content="异步回调函数的缺点 书写顺序与代码执行顺序不一样，不利于维护与阅读 异步操作顺序发生变更的时候，需要不规模的代码重构 回调函数大多数都是匿名函数，导致bug不易追踪  Promise是什么Promise是ES6中封装异步操作的规范，本身是一个构造函数。参数接收一个函数，该函数内部可以封装异步逻辑，通过改变promise的状态，来调用promise实例中的then或者catch方法。">
@@ -327,7 +327,7 @@
 <li>reject<br>调用reject的状态，会执行第一个catch 函数里面的回调函数<br>注意：状态只能按照固定的方向变化，只能从pending=&gt;fullfiled或者从pending=&gt;reject</li>
 </ol>
 <h2 id="Promise的实例方法"><a href="#Promise的实例方法" class="headerlink" title="Promise的实例方法"></a>Promise的实例方法</h2><h2 id="then方法"><a href="#then方法" class="headerlink" title="then方法"></a>then方法</h2><ol>
-<li><p>then注册调用resolve后即状态变成fullfiled状态后会调用的回调函数，then方法会返回一个新的promise对象，所以可以支持链式的写法。</p>
+<li><p>then注册调用resolve后即状态变成reject状态后会调用的回调函数，then方法会返回一个新的promise对象，所以可以支持链式的写法。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task A"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskB</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Task B"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    resolve();</span><br><span class="line">&#125;);</span><br><span class="line">promise</span><br><span class="line">    .then(taskA)</span><br><span class="line">    .then(taskB)</span><br><span class="line"> <span class="comment">// 结果 Task A Task B</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>then方法可接受第二个回调函数，改函数处理前面promise以及then中发生的异常或者reject的状态变更。<br>1) reject状态处理</p>
@@ -400,6 +400,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/11/webpack学习-优化打包速度/" rel="prev" title="webpack学习-优化打包速度">
+                webpack学习-优化打包速度 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -481,7 +485,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -599,9 +603,6 @@
 
 
 
-  
-  
-
 
 
 
@@ -638,16 +639,6 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/three.min.js"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
   
 
 
