@@ -453,7 +453,16 @@
           
             <h2 id="什么是组件"><a href="#什么是组件" class="headerlink" title="什么是组件"></a>什么是组件</h2><ol>
 <li>封装<br>对视图、数据、交互逻辑进行封装</li>
-<li>复用<br>通过传入props，实现功能上的复用<h2 id="jsx的本质"><a href="#jsx的本质" class="headerlink" title="jsx的本质"></a>jsx的本质</h2>创建vdom的语法糖，通过babel编译成js代码<h2 id="jsx与vdom"><a href="#jsx与vdom" class="headerlink" title="jsx与vdom"></a>jsx与vdom</h2>jsx编译后就是用React.createElement()方法创建vdom<h2 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h2>为什么是异步？<br>当连续重复setState的时候，数据更新没有必要每次都去更新视图，react内部将这部分操作汇总起来，只对最后的数据进行渲染</li>
+<li>复用<br>通过传入props，实现功能上的复用</li>
+</ol>
+<h2 id="jsx的本质"><a href="#jsx的本质" class="headerlink" title="jsx的本质"></a>jsx的本质</h2><p>创建vdom的语法糖，通过babel编译成js代码</p>
+<h2 id="jsx与vdom"><a href="#jsx与vdom" class="headerlink" title="jsx与vdom"></a>jsx与vdom</h2><p>jsx编译后就是用React.createElement()方法创建vdom</p>
+<h2 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h2><p>为什么是异步？<br>当连续重复setState的时候，数据更新没有必要每次都去更新视图，react内部将这部分操作汇总起来，只对最后的数据进行渲染</p>
+<h2 id="高阶"><a href="#高阶" class="headerlink" title="高阶"></a>高阶</h2><h3 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h3><p>1.函数可以作为参数被传递<br>2.函数可以作为返回值输出</p>
+<h3 id="高阶组件（HOC）"><a href="#高阶组件（HOC）" class="headerlink" title="高阶组件（HOC）"></a>高阶组件（HOC）</h3><p>接收一个组件，返回一个新组件(装饰模式)<br>使用方法：</p>
+<ol>
+<li>属性代理，加一些额外的属性</li>
+<li>反向继承，改写愿组件的生命周期等</li>
 </ol>
 
           
@@ -1696,7 +1705,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
